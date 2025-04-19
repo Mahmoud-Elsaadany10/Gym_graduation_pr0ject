@@ -1,0 +1,83 @@
+/* You can add global styles to this file, and also import other style files */
+:root{
+  --main-color :#55679C;
+  --secodanry-color :#7C93C3;
+  --color-third:#2C3552;
+  --background :#FFFFFF;
+  --drop-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  --gradient-bg: linear-gradient(90deg, var(--main-color), var(--secodanry-color));
+  --drop-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.pagination .page-item .page-link {
+  background-color: var(--color-third) !important;
+  color: white !important;
+  border: 1px solid #dee2e6 !important;
+  box-shadow: none !important;
+  outline: none !important;
+  margin-right: 8px !important;
+  border: none !important;
+  font-weight: bold !important;
+}
+.page-item:last-child .page-link {
+  border-top-right-radius: inherit !important;
+  border-bottom-right-radius:inherit !important;
+}
+
+/* Remove hover effect for all buttons */
+.pagination .page-item .page-link:hover {
+  background-color: rgb(92, 75, 172) !important; /* Change if needed */
+  color: white !important;
+  box-shadow: none !important;
+  border: none !important;
+
+}
+
+/* Remove focus outline */
+.pagination .page-item .page-link:focus {
+  box-shadow: none !important;
+  outline: none !important;
+  border: none !important;
+
+}
+
+/* Disable active styles for "Prev" button */
+.pagination .page-item:first-child .page-link {
+
+  display: none !important;
+}
+
+
+
+
+
+
+
+/* Ensure the active page looks distinct */
+.pagination .page-item.active .page-link {
+  background-color: rgb(92, 75, 172) !important;
+  color: white !important;
+  border-color: #5c4bac !important;
+  box-shadow: none !important;
+  border: none !important;
+
+}
+
+/* Ensure disabled buttons don't have focus or shadow */
+.pagination .page-item.disabled .page-link {
+  background-color: var(--color-third) !important;
+  color: white !important;
+  box-shadow: none !important;
+  pointer-events: none !important; /* Disable clicking */
+}
+
+
+
+html, body { height: 100%; }
+body { margin: 0;  font-family: 'Inria Serif', serif; }

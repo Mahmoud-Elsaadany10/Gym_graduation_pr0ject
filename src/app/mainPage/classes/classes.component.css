@@ -1,0 +1,49 @@
+#our-classes h2 {
+    color: #2C3552;
+    font-size: 50px;
+    font-family: Inria Serif;
+    font-weight: 700;
+    word-wrap: break-word
+}
+
+#our-classes p {
+    color: #2C3552;
+    font-size: 15px;
+    font-family: Inria Serif;
+    font-weight: 400;
+    word-wrap: break-word
+}
+
+.card img {
+    height: 250px;
+    object-fit: cover;
+}
+
+.card-body {
+    padding: 20px;
+    background: #55679C;
+}
+
+.card-title {
+    color: white;
+    font-size: 25px;
+    font-family: Inria Serif;
+    font-weight: 700;
+    word-wrap: break-word
+}
+
+.card-text {
+color: white  !important;
+font-size: 12px;
+font-family: Inria Serif;
+font-weight: 400;
+word-wrap: break-word
+}
+
+a {
+    color: #2C3552;
+    font-size: 16px;
+    font-family: Inria Serif;
+    font-weight: 700;
+    word-wrap: break-word
+}

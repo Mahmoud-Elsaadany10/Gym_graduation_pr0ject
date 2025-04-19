@@ -1,0 +1,13 @@
+<div class="toast-container">
+  <ngb-toast
+    *ngIf="toastService.showToast"
+    [autohide]="true"
+    [delay]="3000"
+    [class.bg-success]="toastService.toastType === 'success'"
+    [class.bg-danger]="toastService.toastType === 'error'"
+    [class.bg-warning]="toastService.toastType === 'warning'"
+    (hide)="toastService.showToast = false"
+  >
+    <strong>{{ toastService.toastMessage }}</strong>
+  </ngb-toast>
+</div>

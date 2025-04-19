@@ -1,0 +1,13 @@
+<div class="cont">
+  <!-- User Link -->
+  <a routerLink="/logging/user" routerLinkActive="active">User</a>
+
+  <!-- Coach Link -->
+  <a routerLink="/logging/coach"
+  routerLinkActive="active"
+  [ngClass]="{ changStyle: isCoach }"
+  >
+  Coach
+</a>
+
+</div>

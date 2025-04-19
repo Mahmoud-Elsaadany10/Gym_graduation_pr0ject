@@ -1,0 +1,37 @@
+/* Links Styling */
+.navbar .nav-link {
+    color: rgba(85, 103, 156, 0.6) !important;
+    font-size: 18px; /* Increased font size */
+    font-family: 'Inria Serif', serif;
+    font-weight: 400;
+    transition: color 0.3s;
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+    color: #55679C !important;
+}
+
+/* Join Button */
+.join-btn,.log-out {
+    border-radius: 40px;
+    border: 1px solid #55679C;
+    padding: 12px 35px;
+    color: #7C93C3;
+    font-size: 18px;
+    font-family: 'Inria Serif', serif;
+    font-weight: 400;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.join-btn:hover {
+    background-color: #55679C;
+    color: white;
+}
+.log-out:hover {
+    background-color: rgba(255, 0, 0, 0.644);
+    color: white;
+    border: 1px solid rgba(255, 0, 0, 0.644);
+}

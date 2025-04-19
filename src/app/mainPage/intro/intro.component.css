@@ -1,0 +1,237 @@
+/* الحاوية الرئيسية */
+.grid-container {
+    display: grid;
+    grid-template-columns: 50% 50%; /* عمودين متساويين */
+    height: 80vh;
+    width: 90%;
+    margin: 0 auto;
+    align-items: center;
+}
+
+/* المحتوى الأيسر */
+.left-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start; /* يجعل العناصر تبدأ من اليسار */
+    gap: 2vh;
+    padding: 5vh;
+    text-align: center; /* للنصوص */
+}
+
+.button {
+
+    background: #011962;
+    color: white;
+    border-radius: 0.5vw;
+    padding: 1.5vh 3vw;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-size: 20px;
+    font-family: Inria Serif;
+    font-weight: 400;
+    word-wrap: break-word
+}
+
+
+.left-content h1 {
+    color: #2C3552;
+    font-size: 3vw;
+    font-family: Inria Serif;
+    font-weight: 700;
+}
+
+.text-title {
+    color: #2C3552;
+    font-size: 1.2vw;
+    font-family: Inria Serif;
+    font-weight: 400;
+    margin-bottom: 2vh;
+}
+
+/* زر Get Started */
+
+.button:hover {
+    background: #022080;
+}
+
+/* الإحصائيات */
+.stats-container {
+    display: flex;
+    justify-content: center; /* تضمن أن الإحصائيات نفسها متسنترة */
+    gap: 3vw;
+    margin-top: 2vh;
+}
+
+.stat {
+    text-align: center;
+}
+
+.number {
+    color: #7C93C3;
+    font-size: 2.5vw;
+    font-weight: 700;
+}
+
+.label {
+    color: #7C93C3;
+    font-size: 1.2vw;
+    font-weight: 400;
+}
+
+/* المحتوى الأيمن */
+.right-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5vh;
+    
+}
+
+.image-card {
+    background: #7C93C3;
+    border-radius: 2vw;
+    width: 70%;
+    padding: 2vh;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+   
+}
+
+.image-card img {
+    width: 100%;
+    border-radius: 50%;
+    margin-bottom: 1.5vh;
+    position: relative;
+    top: -20%; /* تطلع فوق بنسبة 20% من ارتفاع الصورة */
+}
+
+.quote {
+    color: #ffffff;
+    font-size: 1.2vw;
+    font-style: italic;
+    margin-bottom: 1vh;
+}
+
+.author {
+    color: #ffffff;
+    font-size: 1.2vw;
+    font-weight: bold;
+}
+.background {
+    position: relative;
+}
+
+.background::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 33.33%; /* آخر ثلث من الشاشة */
+    min-height: 100vh; /* على الأقل يغطي ارتفاع الشاشة */
+    height: 100%; /* يغطي المحتوى بالكامل */
+    background: linear-gradient(90deg, #FFF1EB 0%, #ACE0F9 100%);
+    z-index: -1;
+}
+
+
+
+@media (max-width: 768px) {
+    .grid-container {
+        grid-template-columns: 1fr;
+        height: auto;
+        gap: 5vh;
+        text-align: center; /* جعل النصوص في المنتصف */
+    }
+
+    .left-content {
+        align-items: center; 
+        padding: 3vh; 
+    }
+
+    .left-content h1 {
+        font-size: 6vw;
+    }
+
+    .text-title {
+        font-size: 4vw;
+    }
+
+    .button {
+        font-size: 4vw;
+        padding: 2vh 4vw; 
+    }
+
+    .stats-container {
+        flex-direction: row; 
+        flex-wrap: wrap; 
+        gap: 4vw; 
+    }
+
+    .number {
+        font-size: 6vw;
+    }
+
+    .label {
+        font-size: 3.5vw;
+    }
+
+    .right-content {
+        padding: 3vh; 
+    }
+
+    .image-card {
+        width: 80%;
+        padding: 4vh 2vh 3vh;
+    }
+
+    .image-card img {
+        width: 80%;
+        top: -15%; 
+    }
+
+    .quote {
+        font-size: 3.5vw;
+        margin-top: -2vh; 
+    }
+
+    .author {
+        font-size: 3.5vw;
+    }
+}
+
+@media (max-width: 480px) {
+    .left-content h1 {
+        font-size: 7vw;
+    }
+
+    .text-title {
+        font-size: 4.5vw;
+    }
+
+    .button {
+        font-size: 5vw;
+    }
+
+    .number {
+        font-size: 7vw;
+    }
+
+    .label {
+        font-size: 4vw;
+    }
+
+    .quote {
+        font-size: 4vw;
+    }
+
+    .author {
+        font-size: 4vw;
+    }
+}
+
+
+
+
+
+

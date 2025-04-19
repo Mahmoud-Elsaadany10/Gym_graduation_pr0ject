@@ -1,0 +1,50 @@
+/* الخلفية */
+.footer {
+    background: linear-gradient(to bottom, #1f2b45, #1b1f2a);
+    color: white;
+  }
+
+  .footer-title {
+    font-weight: bold;
+    margin-bottom: 1rem;
+  }
+
+
+  .social-icons a {
+    margin-right: 10px;
+    display: inline-block;
+  }
+
+  .social-icons img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+  }
+
+  .social-icons img:hover {
+    transform: scale(1.2);
+  }
+
+  /* الخط الفاصل */
+  .footer-divider {
+    border-top: 1px solid #555;
+    margin: 1rem 0;
+  }
+
+  /* حقوق الملكية */
+  .copyright {
+    font-size: 14px;
+    margin: 0;
+  }
+
+  @media (max-width : 768px){
+
+  .footer{
+    text-align: center;
+  }
+  .social-icons{
+    margin: 10px 0;
+
+  }
+  }

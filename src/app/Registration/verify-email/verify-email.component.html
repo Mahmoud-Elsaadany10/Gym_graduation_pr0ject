@@ -1,0 +1,47 @@
+<div class="container page">
+  <div class="cont d-flex position-relative align-content-center flex-column ">
+    <button class="x"  routerLink="/layout/home"><i class="fa-solid fa-x"></i></button>
+    <div class="header d-flex justify-content-center">
+      <p>Enter the code</p>
+    </div>
+    <div class="text d-flex justify-content-center">
+      <p >Enter the code that we sent to your email <span>{{email}}</span> be careful not to share it with anyone.</p>
+    </div>
+    <form class="d-flex justify-content-center flex-column" >
+      <div class="d-flex justify-content-center mb-4">
+        <ng-otp-input
+        *ngIf="showOtpComponent"
+        [config]="otpConfig"
+        (onInputChange)="onOtpChange($event)">
+        </ng-otp-input>
+      </div>
+      <div class="isTrue justify-content-center d-flex" *ngIf="isTrue">
+        <p><span>Wrong OTP</span>,Please enterthe correct one</p>
+      </div>
+
+      <div class=" d-flex justify-content-center">
+        <button  (click)="submitOtp()" class="btn" >Verify The Email</button>
+      </div>
+    </form>
+    <div class=" d-flex justify-content-center mt-3">
+      <button  class="btn" >Cancel</button>
+    </div>
+    <div class="d-flex resent justify-content-center mt-3">
+      <p>Didn’t receive the code?</p>
+      <a (click)="resendOtp()" class="ms-2" >Resent</a>
+    </div>
+
+  </div>
+</div>
+<div class="toast-container">
+    <ngb-toast
+    *ngIf="showToast"
+    [autohide]="true"
+    [delay]="5000"
+    (hidden)="showToast = false"
+    class="toast-an"
+    >
+    {{ toastMessage }}
+    </ngb-toast>
+</div>
+

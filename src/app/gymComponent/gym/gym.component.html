@@ -1,0 +1,62 @@
+
+<app-navbar></app-navbar>
+<div class="container mt-5">
+  <div class=" justify-content-center d-flex mb-5">
+    <div class="position-relative">
+      <input type="text" class="rounded-pill input" [(ngModel)]="GymName" placeholder="Search" >
+      <button [hidden]="hide" class="x" (click)="onClickButton()"><i class="fa-solid fa-x"></i></button>
+    </div>
+
+      <button (click)="searchGym()" class="rounded-pill search"><i class="fa-solid fa-magnifying-glass me-2"></i>Search</button>
+  </div>
+
+  <div class="row gy-5 gx-2">
+    <div class="col-md-6 col-lg-4 responsive" *ngFor="let gym of gyms">
+      <div class="card" >
+        <img class="card-img-top" src="assets/gymImage.svg" alt="gym Image">
+        <div class="card-body">
+          <p class="card-title mb-2">{{gym.gymName}}</p>
+          <div class="d-flex mb-1 align-items-baseline">
+            <i class="fa-solid fa-location-dot start-i me-1"></i>
+            <p>{{gym.city}}<span style="font-size: 20px; font-weight: bolder;"> | </span>{{gym.address}}</p>
+          </div>
+
+
+          <div class="mb-1">
+            <span cl *ngFor="let star of stars; let i = index">
+            <i class="fas me-1" [ngClass]="i < gym.averageRating ? 'fa-star gold ' : 'fa-star gray'"></i>
+          </span>
+          </div>
+
+
+
+
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex">
+              <i class="fa-solid person me-1 fa-person"></i>
+              <p>{{gym.subscriptionsCount}} enrolled Trainess</p>
+            </div>
+            <div>
+              <p class="number">{{gym.monthlyPrice | currency:'EGP'}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center mt-4">
+    <ngb-pagination
+    [(page)]="page"
+    [pageSize]="pageSize"
+    [collectionSize]="totalGym"
+    (pageChange)="onPageChange($event)"
+    [maxSize]="dynamicMaxSize"
+  >
+  <ng-template  ngbPaginationPrevious class="ngt ">Prev</ng-template>
+  <ng-template ngbPaginationNext class="ngt"><i class="fa-solid fa-arrow-right"></i></ng-template>
+  </ngb-pagination>
+
+  </div>
+</div>
+

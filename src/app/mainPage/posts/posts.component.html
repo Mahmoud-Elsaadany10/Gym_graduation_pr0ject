@@ -1,0 +1,81 @@
+<app-navbar></app-navbar>
+<div class="container mt-4 w-75">
+
+  
+    <!-- ✅ زر إنشاء بوست -->
+    <div class="d-flex justify-content-end mb-3">
+      <button class="btn btn-primary" (click)="openModal()">Create a post</button>
+    </div>
+  
+    <!-- ✅ النافذة المنبثقة لإضافة بوست -->
+    <div class="modal fade show d-block" *ngIf="showModal">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Create a Post</h5>
+            <button type="button" class="close" (click)="closeModal()">
+              <span>&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <textarea class="form-control" [(ngModel)]="newPostContent" placeholder="What's on your mind?" rows="4"></textarea>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" (click)="closeModal()">Close</button>
+            <button class="btn btn-primary" (click)="addPost()">Post</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <!-- ✅ عرض البوستات -->
+    <div class="post-container">
+      <div class="card p-3 mb-3" *ngFor="let post of posts">
+        <div class="d-flex align-items-center">
+          <img [src]="post.userImage" alt="Profile" class="rounded-circle me-2" width="50" height="50">
+          <div>
+            <h6 class="mb-0">{{ post.username }}</h6>
+            <small class="text-muted">{{ post.time }}</small>
+          </div>
+        </div>
+  
+        <p class="mt-2">{{ post.content }}</p>
+  
+        <!-- ✅ أزرار اللايك والكومنت -->
+        <div class="d-flex justify-content-between mt-2">
+          <button class="btn btn-outline-primary btn-sm" (click)="likePost(post)">
+            👍 Like ({{ post.likes }})
+          </button>
+          <button class="btn btn-outline-secondary btn-sm" (click)="toggleComments(post)">
+            💬 Comment
+          </button>
+        </div>
+  
+        <!-- ✅ التعليقات -->
+        <div *ngIf="post.showComments" class="mt-2">
+          <input [(ngModel)]="post.newComment" class="form-control form-control-sm" placeholder="Write a comment...">
+          <button class="btn btn-primary btn-sm mt-1" (click)="addComment(post)">Post Comment</button>
+  
+          <div class="mt-2" *ngFor="let comment of post.comments">
+            <div class="d-flex align-items-center">
+              <img [src]="comment.userImage" alt="User" class="rounded-circle me-2" width="40" height="40">
+              <div>
+                <strong>{{ comment.username }}</strong> <small class="text-muted">{{ comment.time }}</small>
+                <p>{{ comment.text }}</p>
+              </div>
+            </div>
+  
+            <!-- ✅ الردود -->
+            <div *ngFor="let reply of comment.replies" class="ms-5">
+              <strong>{{ reply.username }}</strong>: {{ reply.text }} <small class="text-muted">{{ reply.time }}</small>
+            </div>
+  
+            <!-- ✅ خانة كتابة الرد -->
+            <input [(ngModel)]="comment.newReply" class="form-control form-control-sm" placeholder="Reply...">
+            <button class="btn btn-secondary btn-sm mt-1" (click)="addReply(comment)">Reply</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

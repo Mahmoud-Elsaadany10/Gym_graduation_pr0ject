@@ -1,0 +1,19 @@
+.toast-container {
+  position: fixed;
+  top: 90px; /* Position at the top */
+  left: 50%;
+  transform: translateX(-50%); /* Center horizontally */
+  z-index: 1050;
+}
+
+.success {
+  background-color: #28a745;
+}
+
+.error {
+  background-color: #dc3545;
+}
+
+.warning {
+  background-color: #ffc107;
+}

@@ -1,0 +1,112 @@
+/* الحاوية الرئيسية */
+.about-section {
+    margin: 10vh auto;
+    padding: 5vh 0;
+
+}
+
+/* النص */
+.text-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3vh;
+    text-align: left;
+    color: #2C3552;
+font-size: 70px;
+font-family: Inria Serif;
+font-weight: 700;
+word-wrap: break-word
+}
+
+.text-content h2 {
+    color: #2C3552;
+    font-size: 3vw;
+    font-weight: bold;
+}
+
+.text-content p {
+    color: #2C3552;
+    font-size: 18px;
+    font-family: Inria Serif;
+    font-weight: 400;
+    word-wrap: break-word
+}
+
+/* الزرار */
+.custom-btn {
+    background: transparent;
+    border: 2px solid #7C93C3;
+    border-radius: 0.5vw;
+    padding: 2vh 1vw;
+    font-size: 1.5vw;
+    font-family: Inria Serif;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.3s;
+    width: 30%;
+    color: #7C93C3;
+   word-wrap: break-word;
+   margin-top:50px ;
+}
+
+.custom-btn:hover {
+    background: #7C93C3;
+    color: white;
+}
+
+/* الصورة */
+.img-content 
+{
+    margin-top: 45px;
+}
+.img-content img {
+    width: 100%;
+    border-radius: 1vw;
+}
+
+/* استجابة للشاشات الصغيرة */
+@media (max-width: 768px) {
+    .row {
+        flex-direction: column-reverse;
+        align-items: center; /* توسيط العناصر */
+        text-align: center;
+    }
+
+    .col-5 {
+        width: 100%;
+    }
+
+    .text-content {
+        gap: 3vh;
+        text-align: center;
+        padding: 0 5vw;
+    }
+
+    .text-content h2 {
+        margin-top: 20px;
+        font-size: 6vw;
+    }
+
+    .text-content p {
+        font-size: 4vw;
+        margin-bottom: 2vh;
+    }
+
+    .custom-btn {
+        font-size: 4vw;
+        padding: 1.5vh 5vw;
+        border-radius: 2vw;
+        width: auto; /* خلي الزر يكون على قد النص */
+        margin: 0 auto;
+    }
+
+    .img-content {
+        margin-top: 3vh;
+    }
+
+    .img-content img {
+        width: 90%;
+        border-radius: 2vw;
+    }
+}

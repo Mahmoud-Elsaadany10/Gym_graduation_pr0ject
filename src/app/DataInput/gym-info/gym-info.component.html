@@ -1,0 +1,142 @@
+<div class="container page">
+  <div class="cont d-flex position-relative align-content-center flex-column">
+    <button class="x" routerLink="/layout/home"><i class="fa-solid fa-x"></i></button>
+    <div class="title">
+      <p>Sign Up</p>
+    </div>
+    <app-rout-sign-up></app-rout-sign-up>
+    <form [formGroup]="GymInfo" (ngSubmit)="sendData()">
+      <!-- Gym Name -->
+      <div class="form-group mb-3" [ngClass]="{'no-margin': gymName?.invalid && gymName?.touched}">
+        <div class="position-relative">
+          <input type="text" class="w-100 input" placeholder="Gym name" formControlName="gymName" />
+          <i class="fa-regular fa-user end-i"></i>
+        </div>
+        <small *ngIf="gymName?.invalid && gymName?.touched">
+          <span *ngIf="gymName?.errors?.['required']">Gym Name is required.</span>
+        </small>
+      </div>
+
+      <!-- Governorate and City -->
+      <div class="row g-2">
+        <div class="col-12 col-sm-6 w-50">
+          <div class="form-group mb-3" [ngClass]="{'no-margin': governorate?.invalid && governorate?.touched}">
+            <div class="position-relative">
+              <input type="text" class="w-100 input" placeholder="Governorate" formControlName="governorate" />
+              <i class="fa-solid fa-location-dot end-i"></i>
+            </div>
+            <small *ngIf="governorate?.invalid && governorate?.touched">
+              <span *ngIf="governorate?.errors?.['required']">Governorate is required.</span>
+            </small>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 w-50">
+          <div class="form-group mb-3" [ngClass]="{'no-margin': city?.invalid && city?.touched}">
+            <div class="position-relative">
+              <input type="text" class="w-100 input" placeholder="City" formControlName="city" />
+              <i class="fa-solid fa-location-dot end-i"></i>
+            </div>
+            <small *ngIf="city?.invalid && city?.touched">
+              <span *ngIf="city?.errors?.['required']">City is required.</span>
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Address and Monthly Price -->
+      <div class="row g-2">
+        <div class="col-12 col-sm-6 w-50">
+          <div class="form-group mb-3" [ngClass]="{'no-margin': address?.invalid && address?.touched}">
+            <div class="position-relative">
+              <input type="text" class="w-100 input" placeholder="Address" formControlName="address" />
+              <i class="fa-solid fa-location-dot end-i"></i>
+            </div>
+            <small *ngIf="address?.invalid && address?.touched">
+              <span *ngIf="address?.errors?.['required']">Address is required.</span>
+            </small>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 w-50">
+          <div class="form-group mb-3" [ngClass]="{'no-margin': monthlyPrice?.invalid && monthlyPrice?.touched}">
+            <div class="position-relative">
+              <input type="number" class="w-100 input" placeholder="Monthly Price" formControlName="monthlyPrice" />
+              <i class="fa-solid fa-money-bill end-i"></i>
+            </div>
+            <small *ngIf="monthlyPrice?.invalid && monthlyPrice?.touched">
+              <span *ngIf="monthlyPrice?.errors?.['required']">Monthly Price is required.</span>
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Yearly Price and Session Price -->
+      <div class="row g-2">
+        <div class="col-12 col-sm-6 w-50">
+          <div class="form-group mb-3" [ngClass]="{'no-margin': yearlyPrice?.invalid && yearlyPrice?.touched}">
+            <div class="position-relative">
+              <input type="number" class="w-100 input" placeholder="Yearly Price" formControlName="yearlyPrice" />
+              <i class="fa-solid fa-money-bill end-i"></i>
+            </div>
+            <small *ngIf="yearlyPrice?.invalid && yearlyPrice?.touched">
+              <span *ngIf="yearlyPrice?.errors?.['required']">Yearly Price is required.</span>
+            </small>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 w-50">
+          <div class="form-group mb-3" [ngClass]="{'no-margin': sessionPrice?.invalid && sessionPrice?.touched}">
+            <div class="position-relative">
+              <input type="number" class="w-100 input" placeholder="Session Price" formControlName="sessionPrice" />
+              <i class="fa-solid fa-money-bill end-i"></i>
+            </div>
+            <small *ngIf="sessionPrice?.invalid && sessionPrice?.touched">
+              <span *ngIf="sessionPrice?.errors?.['required']">Session Price is required.</span>
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fortnightly Price -->
+      <div class="row justify-content-center responsive">
+        <div class="col-md-6 col-sm-6 col-x">
+          <div class="form-group mb-3" [ngClass]="{'no-margin': fortnightlyPrice?.invalid && fortnightlyPrice?.touched}">
+            <div class="position-relative">
+              <input type="number" class="w-100 input" placeholder="Fortnightly Price" formControlName="fortnightlyPrice" />
+              <i class="fa-solid fa-money-bill end-i"></i>
+            </div>
+            <small *ngIf="fortnightlyPrice?.invalid && fortnightlyPrice?.touched">
+              <span *ngIf="fortnightlyPrice?.errors?.['required']">Fortnightly Price is required.</span>
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Phone Number -->
+      <div class="form-group mb-3" [ngClass]="{'no-margin': phoneNumber?.invalid && phoneNumber?.touched}">
+        <div class="position-relative">
+          <input type="text" class="w-100 input" placeholder="Phone Number" formControlName="phoneNumber" />
+          <i class="fa-solid fa-mobile-screen-button end-i"></i>
+        </div>
+        <small *ngIf="phoneNumber?.invalid && phoneNumber?.touched">
+          <span *ngIf="phoneNumber?.errors?.['required']">Phone Number is required.</span>
+        </small>
+      </div>
+
+      <!-- Description -->
+      <div class="form-group mb-3" [ngClass]="{'no-margin': description?.invalid && description?.touched}">
+        <textarea name="description" rows="2.5" class="w-100" formControlName="description" placeholder="Description"></textarea>
+        <small *ngIf="description?.invalid && description?.touched">
+          <span *ngIf="description?.errors?.['required']">Description is required.</span>
+        </small>
+      </div>
+
+      <!-- Next Button -->
+      <div class="d-flex next w-100 justify-content-center">
+        <button class="btn mt-1" [disabled]="GymInfo.invalid">Next</button>
+      </div>
+    </form>
+
+    <!-- Skip Button -->
+    <button class="btn skip mt-2" routerLink="/logging/traningInfo">Skip for Now</button>
+  </div>
+</div>
+

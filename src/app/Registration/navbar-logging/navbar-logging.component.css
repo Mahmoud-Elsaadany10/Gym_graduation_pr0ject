@@ -1,0 +1,14 @@
+.button{
+  background-color: transparent;
+  padding: 3px 35px;
+  border: 1px solid white;
+  border-radius: 9px;
+  color: var(--background);
+}
+.button:hover{
+  background-color: var( --secodanry-color);
+}
+
+.navbar{
+  padding: 0;
+}

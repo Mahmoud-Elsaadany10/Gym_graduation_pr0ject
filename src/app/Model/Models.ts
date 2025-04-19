@@ -1,0 +1,122 @@
+export interface loginUser{
+  email :string ;
+  password :string;
+}
+export interface gym{
+  gymID: number,
+  gymName: string
+  pictureUrl ?: string,
+  address: string,
+  city: string,
+  governorate: string,
+  monthlyPrice: number,
+  averageRating: number,
+  subscriptionsCount: number ,
+}
+export interface GymResponse {
+  pageNumber: number;
+  pageSize: number;
+  totalPages: number;
+  totalRecords: number;
+  data: gym[];
+}
+
+export interface Trainer {
+  id: string;
+  fullName: string;
+  profilePictureUrl ?: string ;
+  bio: string;
+  gender: string;
+  joinedDate: string;
+  rating: number;
+}
+
+export interface TrainersResponse {
+  pageNumber: number;
+  pageSize: number;
+  totalPages: number;
+  totalRecords: number;
+  data: Trainer[];
+}
+export interface User {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  gender: string;
+  dateOfBirth: Date | string;
+  bio: string;
+}
+export interface gymData{
+  gymName: string
+  pictureUrl ?: string,
+  address: string,
+  city: string,
+  governorate: string,
+  monthlyPrice: number,
+  averageRating: number,
+  subscriptionsCount: number ,
+  description : string
+}
+export interface ApiResponse {
+  isSuccess: boolean;
+  data: string;
+}
+interface OnlineTraining {
+  // Define the properties of an online training if known, otherwise use 'any' or an empty object
+}
+export interface coachDetails{
+  id: string;
+  fullName: string;
+  profilePictureUrl: string | null;
+  bio: string;
+  gender: "male" | "female" ;
+  joinedDate: string;
+  onlineTrainings: OnlineTraining[];
+}
+export interface coachResponse{
+  isSuccess : boolean;
+  data :coachDetails
+}
+export interface VerificationModel {
+  email: string;
+  verificationCode: string;
+}
+export interface ResetPasswordModel {
+  email: string | null;
+  newPassword: string;
+  confirmPassword: string;
+}
+export interface TokenResponse {
+  token: string;
+  refreshToken: string;
+  exipiration: Date;
+}
+
+export interface loginResponse {
+  data : TokenResponse;
+  isSuccess : boolean;
+}
+export interface TrainingProgram {
+  title: string;
+  description?: string;
+  trainingType: string;
+  price: number;
+  noOfSessionsPerWeek: number;
+  durationOfSession?: number;
+}
+export interface APiRes {
+  message: string;
+}
+
+export interface TrainingModelResponse {
+  id: number;
+  coachID: string;
+  title: string;
+  description: string;
+  trainingType: string;
+  price: number;
+  noofSessionsPerWeek: number;
+  durationOfSession: number;
+  onlineTrainingSubscriptions: any;
+}

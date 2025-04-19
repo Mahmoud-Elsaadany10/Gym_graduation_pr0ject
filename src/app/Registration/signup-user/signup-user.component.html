@@ -1,0 +1,144 @@
+<div class="container page">
+  <div class="cont d-flex position-relative align-content-center flex-column">
+    <button class="x" routerLink="/layout/home"><i class="fa-solid fa-x"></i></button>
+    <div class="title">
+      <p>Sign Up</p>
+    </div>
+
+    <app-rout-sign-up></app-rout-sign-up>
+
+    <form [formGroup]="signupForUser" (ngSubmit)="signup()" class="d-flex w-100 flex-column">
+
+      <!-- First Name -->
+      <div class="form-group mb-3" [ngClass]="{'no-margin': firstName?.invalid && firstName?.touched}">
+        <div class="position-relative">
+          <input type="text" class="w-100 input" placeholder="First Name" formControlName="firstName" />
+          <i class="fa-regular fa-user end-i"></i>
+        </div>
+        <small style="color: red;" *ngIf="firstName?.invalid && firstName?.touched">
+          <span *ngIf="firstName?.errors?.['required']">First Name is required.</span>
+          <span *ngIf="firstName?.errors?.['minlength']">Must be at least 3 characters.</span>
+        </small>
+      </div>
+
+      <!-- Last Name -->
+      <div class="form-group mb-3" [ngClass]="{'no-margin': lastName?.invalid && lastName?.touched}">
+        <div class="position-relative">
+          <input type="text" class="w-100 input" placeholder="Last Name" formControlName="lastName" />
+          <i class="fa-regular fa-user end-i"></i>
+        </div>
+        <small style="color: red;" *ngIf="lastName?.invalid && lastName?.touched">
+          <span *ngIf="lastName?.errors?.['required']">Last Name is required.</span>
+          <span *ngIf="lastName?.errors?.['minlength']">Must be at least 3 characters.</span>
+        </small>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group mb-3" [ngClass]="{'no-margin': email?.invalid && email?.touched}">
+        <div class="position-relative">
+          <input type="email" class="w-100 input" placeholder="Enter email" formControlName="email" />
+          <i class="fa-regular fa-envelope end-i"></i>
+        </div>
+        <small style="color: red;" *ngIf="email?.invalid && email?.touched">
+          <span *ngIf="email?.errors?.['required']">Email is required.</span>
+          <span *ngIf="email?.errors?.['email']">Invalid email format.</span>
+        </small>
+      </div>
+
+      <!-- Password -->
+      <div class="form-group mb-3" [ngClass]="{'no-margin': password?.invalid && password?.touched}">
+        <div class="position-relative">
+          <input type="password" class="w-100 input" placeholder="Password" formControlName="password" />
+          <i class="fa-solid fa-lock end-i"></i>
+        </div>
+        <small style="color: red;" *ngIf="password?.invalid && password?.touched">
+          <span *ngIf="password?.errors?.['required']">Password is required.</span>
+          <span *ngIf="password?.errors?.['minlength']">Password must be at least 6 characters long.</span>
+        </small>
+      </div>
+
+      <!-- Confirm Password -->
+      <div class="form-group mb-3" [ngClass]="{'no-margin': confirmPassword?.invalid && confirmPassword?.touched || signupForUser.errors?.['passwordsMismatch']}">
+        <div class="position-relative">
+          <input type="password" class="w-100 input" placeholder="Confirm Password" formControlName="confirmPassword" />
+          <i class="fa-solid fa-lock end-i"></i>
+        </div>
+        <small style="color: red;" *ngIf="confirmPassword?.invalid && confirmPassword?.touched">
+          <span *ngIf="confirmPassword?.errors?.['required']">Please confirm your password.</span>
+        </small>
+        <small style="color: red;" *ngIf="signupForUser.errors?.['passwordsMismatch']">
+          Passwords do not match.
+        </small>
+      </div>
+
+      <!-- Gender -->
+      <div class="form-group mb-3" [ngClass]="{'no-margin': gender?.invalid && gender?.touched}">
+        <div class="position-relative">
+          <select class="w-100 input" formControlName="gender">
+            <option class="w-100" value="" disabled selected>Select Gender</option>
+            <option class="w-100 option" value="male">Male</option>
+            <option class="w-100" value="female">Female</option>
+          </select>
+          <i class="fa-solid fa-mars-and-venus end-i"></i>
+        </div>
+        <small style="color: red;" *ngIf="gender?.invalid && gender?.touched">
+          Gender is required.
+        </small>
+      </div>
+
+      <!-- Date of Birth -->
+      <div class="form-group mb-3" [ngClass]="{'no-margin': dateOfBirth?.invalid && dateOfBirth?.touched}">
+        <div class="position-relative">
+          <input
+            class="w-100 input data"
+            ngbDatepicker
+            #datePicker="ngbDatepicker"
+            formControlName="dateOfBirth"
+            [placeholder]="'YYYY-MM-DD'"
+          />
+          <i class="fa-regular fa-calendar-days end-i" (click)="datePicker.toggle()"></i>
+        </div>
+
+        <small style="color: red;" *ngIf="dateOfBirth?.invalid && dateOfBirth?.touched">
+          Date of Birth is required.
+        </small>
+      </div>
+
+      <!-- <div class="d-flex justify-content-between mb-2 align-items-baseline">
+        <div class="check">
+          <input type="checkbox" class="me-1" value="lsRememberMe" id="rememberMe" name="rememberMe">
+          <label for="rememberMe">Remember me</label>
+        </div>
+        <div class="rout  ">
+          <a routerLink="/logging/otp">Forget Password?</a>
+        </div>
+      </div> -->
+
+      <!-- Continue Button -->
+      <button class="btn mt-2" [disabled]="signupForUser.invalid">Continue</button>
+
+      <!-- Sign In Link -->
+      <div class="d-flex responsive justify-content-center">
+        <p class="me-2" style="color: white;">Already have an account?</p>
+        <a class="sign-up" routerLink="/logging/login">Sign in</a>
+      </div>
+    </form>
+
+    <!-- Or continue with -->
+    <div class="line-group mb-2">
+      <span class="me-1"></span>
+      <p class="or m-0">Or continue with</p>
+      <span class="ms-1"></span>
+    </div>
+
+    <!-- Social Icons -->
+    <div class="social d-flex justify-content-evenly w-75 align-items-baseline">
+      <a role="button"><img class="icon" src="assets/Facebook.svg" alt="Facebook"></a>
+      <a role="button"><img class="icon" src="assets/Group.svg" alt="Google"></a>
+      <a role="button"><img class="icon" src="assets/foundation_social-apple.svg" alt="Apple"></a>
+    </div>
+  </div>
+</div>
+
+
+<router-outlet></router-outlet>

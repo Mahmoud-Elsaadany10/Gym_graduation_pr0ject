@@ -1,0 +1,60 @@
+<app-navbar></app-navbar>
+<div class="container mt-5">
+  <div class=" justify-content-center d-flex mb-5">
+    <div class="position-relative">
+      <input type="text" class="rounded-pill input" [(ngModel)]="coachName" placeholder="Search" >
+      <button [hidden]="hide" class="x" (click)="onClickButton()"><i class="fa-solid fa-x"></i></button>
+    </div>
+
+      <button (click)="searchCoach()" class="rounded-pill search"><i class="fa-solid fa-magnifying-glass me-2"></i>Search</button>
+  </div>
+  <div class="gy-5 gx-5 row">
+    <div class="col-md-6 col-lg-4 responsive" *ngFor="let coach of coachs">
+      <div class="position-relative ">
+        <img src="assets/coach.svg" alt="">
+        <div class="position-absolute content d-flex flex-column  ">
+          <div class="mb-4">
+            <p class="p1 text-center">{{coach.fullName}}</p>
+            <p class="p2 text-center">Personal Trainer</p>
+            <div class="d-flex justify-content-center ">
+              <span cl *ngFor="let star of stars; let i = index">
+                <i class="fas me-1" [ngClass]="i < coach.rating ? 'fa-star gold ' : 'fa-star gray'"></i>
+              </span> <span class="text-white">({{coach.rating}})</span>
+            </div>
+
+          </div>
+          <div class="socail w-75 d-flex justify-content-evenly">
+            <a ><i class="fa-brands fa-x-twitter"></i></a>
+            <a ><i class="fa-brands fa-facebook"></i></a>
+            <a ><i class="fa-brands fa-whatsapp"></i></a>
+          </div>
+          <div class="position-absolute details">
+            <button class="p-2" [routerLink]="['/layout/coachDetails',coach.id]" routerLinkActive="router-link-active" >Read More</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-center mt-4">
+    <ngb-pagination
+    [(page)]="page"
+    [pageSize]="pageSize"
+    [collectionSize]="totalCoach"
+    (pageChange)="onPageChange($event)"
+    [maxSize]="dynamicMaxSize"
+
+  >
+  <ng-template  ngbPaginationPrevious class="ngt ">Prev</ng-template>
+  <ng-template ngbPaginationNext class="ngt"><i class="fa-solid fa-arrow-right"></i></ng-template>
+  </ngb-pagination>
+
+  </div>
+  <div class="d-flex justify-content-center align-content-center" *ngIf="loading">
+    <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
+  </div>
+</div>
+
