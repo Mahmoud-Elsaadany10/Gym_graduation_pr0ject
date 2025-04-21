@@ -122,6 +122,9 @@ textarea{
   .submit-btn {
     width: 50%;
   }
+  label{
+    font-size: 10px;
+  }
 }
 @media (max-width: 576px){
   .password-btn{
@@ -134,6 +137,15 @@ textarea{
   }
   .delete-btn , .change-btn{
     padding: 7px;
-    font-size: 7px;
+    font-size: 5px;
+  }
+  .submit-btn {
+    width: 10%;
+  }
+  label{
+    font-size: 10px;
+  }
+  button{
+    font-size: 12px;
   }
 }

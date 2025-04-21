@@ -1,26 +1,5 @@
 <app-navbar></app-navbar>
-<!-- <div class="container mt-5">
-  <div class="coach rounded-3 d-flex" >
-    <div class ="coach-img">
-      <img src="assets/coach.svg"  alt="">
-    </div>
-    <div class="content">
-      <div class="buttons  d-flex justify-content-end mt-3 me-3">
-        <button type="button" class="btn follow rounded-pill px-2 text-light btn-outline-light"><i class="fa-solid fa-comments me-2"></i>Chat</button>
-        <button *ngIf="!followed" (click)="follow()" type="button" class="btn follow rounded-pill px-2 ms-3 text-light btn-outline-light "><i class="fa-solid fa-user-plus me-2"></i>follow</button>
-        <button *ngIf="followed" (click)="unfollow()" type="button" class="btn unfollow rounded-pill px-2 ms-3 "><i class="fa-solid fa-check me-1"></i><small>unfollow</small></button>
-      </div>
-      <div class="box mt-4">
-        <p class="head text-light">I believe in better</p>
-        <p class="text-light mt-4 p-dtl">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, </p>
-      </div>
-      <div class="name-dtl">
-        <p class="name text-light">{{coachDtd?.fullName}}</p>
-        <p class="job mt-2">Coach Master-Owner</p>
-      </div>
-    </div>
-  </div>
-</div> -->
+
 <div class="container mt-5">
   <div class="card main-box d-flex" >
     <img src="assets/coach.svg"  alt="">
@@ -47,26 +26,29 @@
     <br> Package For You</p>
   </div>
   <div class="select d-flex justify-content-end ">
-    <select >
-      <option   hidden  selected>Package</option>
-      <option  value="Group" >Group</option>
-      <option  value="Private">Private</option>
-    </select>
+    <div class="select d-flex justify-content-end mb-4">
+      <select (change)="onTrainingTypeChange($event)">
+        <option hidden selected>Package</option>
+        <option value="Group">Group</option>
+        <option value="Private">Private</option>
+      </select>
+    </div>
+
   </div>
   <div class="gy-5 justify-content-center gx-5 d-flex py-4 row">
-    <div class="col-md-6 d-flex justify-content-center col-lg-3 col-sm-12">
+    <div class="col-md-6 d-flex justify-content-center col-lg-3 col-sm-12 " *ngFor="let type of trainingType  ">
       <div class="card type-card " style="width: 17rem;">
         <div class="card-body p-4 typeof-train d-flex  flex-column align-items-center">
-          <div class="title pb-3">
-            <p>Yoga</p>
+          <div class="title pb-3 d-flex justify-content-center align-items-center">
+            <p>{{type.title}}</p>
           </div>
           <div class="detail-train text-center">
-            <p class="p1 pb-1">15 Sessions / Week</p>
-            <p class="p2 pb-1">$25.98 / Month</p>
-            <p class=" p3 pb-2">45 minutes</p>
+            <p class="p1  pb-1">{{type.noOfSessionsPerWeek}} Sessions / Week</p>
+            <p class="p2 pb-1">${{type.price}} / Month</p>
+            <p class=" p3 pb-2">{{type.durationOfSession}} minutes</p>
           </div>
-          <div class="main-text pb-3 ms-2">
-            <p>a Hindu spiritual and ascetic discipline, a part of which, includ ing breath control, simple meditation, and the adoption of specific bodily postures, is widely practised for health and relaxation</p>
+          <div class="main-text pb-3 pt-2 ms-2">
+            <p>{{type.description}}</p>
           </div>
           <div class="subscribe">
             <button>Subscribe</button>
@@ -74,68 +56,6 @@
         </div>
       </div>
     </div>
-    <div class="col-md-6 d-flex justify-content-center col-lg-3 col-sm-12">
-      <div class="card type-card " style="width: 17rem;">
-        <div class="card-body p-4 typeof-train d-flex  flex-column align-items-center">
-          <div class="title pb-3">
-            <p>Yoga</p>
-          </div>
-          <div class="detail-train text-center">
-            <p class="p1 pb-1">15 Sessions / Week</p>
-            <p class="p2 pb-1">$25.98 / Month</p>
-            <p class=" p3 pb-2">45 minutes</p>
-          </div>
-          <div class="main-text pb-3 ms-2">
-            <p>a Hindu spiritual and ascetic discipline, a part of which, includ ing breath control, simple meditation, and the adoption of specific bodily postures, is widely practised for health and relaxation</p>
-          </div>
-          <div class="subscribe">
-            <button>Subscribe</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6 d-flex justify-content-center col-lg-3 col-sm-12">
-      <div class="card type-card " style="width: 17rem;">
-        <div class="card-body p-4 typeof-train d-flex  flex-column align-items-center">
-          <div class="title pb-3">
-            <p>Yoga</p>
-          </div>
-          <div class="detail-train text-center">
-            <p class="p1 pb-1">15 Sessions / Week</p>
-            <p class="p2 pb-1">$25.98 / Month</p>
-            <p class=" p3 pb-2">45 minutes</p>
-          </div>
-          <div class="main-text pb-3 ms-2">
-            <p>a Hindu spiritual and ascetic discipline, a part of which, includ ing breath control, simple meditation, and the adoption of specific bodily postures, is widely practised for health and relaxation</p>
-          </div>
-          <div class="subscribe">
-            <button>Subscribe</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-6 d-flex justify-content-center col-lg-3 col-sm-12">
-      <div class="card type-card " style="width: 17rem;">
-        <div class="card-body p-4 typeof-train d-flex  flex-column align-items-center">
-          <div class="title pb-3">
-            <p>Yoga</p>
-          </div>
-          <div class="detail-train text-center">
-            <p class="p1 pb-1">15 Sessions / Week</p>
-            <p class="p2 pb-1">$25.98 / Month</p>
-            <p class=" p3 pb-2">45 minutes</p>
-          </div>
-          <div class="main-text pb-3 ms-2">
-            <p>a Hindu spiritual and ascetic discipline, a part of which, includ ing breath control, simple meditation, and the adoption of specific bodily postures, is widely practised for health and relaxation</p>
-          </div>
-          <div class="subscribe">
-            <button>Subscribe</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
   </div>
 
   <div class="middle-text text-center my-5">
@@ -160,7 +80,7 @@
     </div>
     <div class="col-md-6 justify-content-center d-flex col-lg-4 col-sm-12">
       <div class="card" style="width: 17rem;">
-        <img src="assets/background.png" class="card-img-top img-height" alt="...">
+        <img src="assets/background.jpg" class="card-img-top img-height" alt="...">
         <div class="card-body text-center">
           <div class="post pt-2">
             <p>Want to start Yoga?

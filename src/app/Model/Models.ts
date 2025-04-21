@@ -54,8 +54,8 @@ export interface gymData{
   city: string,
   governorate: string,
   monthlyPrice: number,
-  averageRating: number,
-  subscriptionsCount: number ,
+  averageRating ?: number,
+  subscriptionsCount ?: number ,
   description : string
 }
 export interface ApiResponse {
@@ -116,7 +116,61 @@ export interface TrainingModelResponse {
   description: string;
   trainingType: string;
   price: number;
-  noofSessionsPerWeek: number;
+  noOfSessionsPerWeek: number;
   durationOfSession: number;
-  onlineTrainingSubscriptions: any;
+  onlineTrainingSubscriptions ?: any;
+}
+export interface coachProfile {
+  firstName: string;
+  lastName: string;
+  gender: string;
+  dateOfBirth: string;
+  bio: string;
+}
+export interface GymInfo {
+  gymID: number;
+  gymName: string;
+  pictureUrl: string | null;
+  address: string;
+  city: string;
+  governorate: string;
+  monthlyPrice: number;
+  yearlyPrice: number;
+  fortnightlyPrice: number;
+  sessionPrice: number;
+  phoneNumber: string;
+  description: string;
+  coachID: string;
+  coachFullName: string;
+  coachProfilePictureUrl: string | null;
+  averageRating: number;
+  subscriptionsCount: number;
+}
+
+export interface OnlineTrainingForm {
+  title: string;
+  description: string;
+  trainingType: string;
+  price: number;
+  noOfSessionsPerWeek: number;
+  durationOfSession: number;
+}
+export interface shopInfo {
+  name: string;
+  imageUrl ?: string;
+  address: string;
+  city: string;
+  governorate: string;
+  phoneNumber: string;
+  description: string;
+}
+export interface TrainingSession {
+  id: number;
+  coachID: string;
+  title: string;
+  description: string;
+  trainingType: string;
+  price: number;
+  noOfSessionsPerWeek: number;
+  durationOfSession: number;
 }

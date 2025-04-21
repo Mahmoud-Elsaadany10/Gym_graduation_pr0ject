@@ -24,6 +24,9 @@
 .card{
   border-color: transparent;
 }
+.title{
+  width: 7rem !important;
+}
 .title p{
   font-size: 25px;
   font-weight: 700;
@@ -33,13 +36,13 @@
 .detail-train .p1 {
   font-size: 20px;
   font-size: 700;
-  color: var(--secodanry-color);
+  color: var(--main-color) !important ;
 
 }
-.detail-train .p2 {
+.detail-train .p2  {
   font-size: 20px;
   font-size: 700;
-  color: var(--main-color);
+  color: var(--main-color) ;
 }
 .main-text p{
   color: rgba(0, 0, 0, 0.507);
@@ -64,12 +67,15 @@
   color: black;
 }
 .type-card:hover .main-text p{
-  color: #ffffffa6
+  color: #ffffffa6 !important
 }
 .type-card:hover .title p , .detail-train .p1 {
-  color: white ;
+  color: white  ;
 }
 .type-card:hover .detail-train .p3 {
+  color: white ;
+}
+.type-card:hover .detail-train .p1 {
   color: white ;
 }
 .typeof-train:hover {
@@ -132,6 +138,13 @@ select{
   border: 1px solid #0000003b;
   border-radius: 5px !important;
   outline: none;
+}
+.subscribe{
+  display: flex;
+  justify-content: center;
+  align-items: end;
+  width: 100%;
+  height: 100%;
 }
 /* post */
 .post p{

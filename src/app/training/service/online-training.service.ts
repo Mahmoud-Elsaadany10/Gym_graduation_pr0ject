@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { APiRes, ApiResponse, coachResponse, TrainersResponse } from '../../Model/Models';
+import { APiRes, ApiResponse, coachResponse, TrainersResponse, TrainingSession } from '../../Model/Models';
 
 @Injectable({
   providedIn: 'root'
@@ -28,8 +28,13 @@ export class OnlineTrainingService {
     return this._http.post<APiRes>(`${environment.mainurl}/Follow/follow-user/${id}`,{} )
   }
   unfollowCoach(id: string): Observable<APiRes> {
-
     return this._http.delete<APiRes>(`${environment.mainurl}/Follow/unfollow-user/${id}`);
+  }
+  getGroupTrainingById(id : string):Observable<TrainingSession []>{
+    return this._http.get<TrainingSession[]>(`${environment.mainurl}/OnlineTraining/ByCoachId/Group?CoachId=${id}`)
+  }
+  getPrivateTrainingById(id : string):Observable<TrainingSession[]>{
+    return this._http.get<TrainingSession[]>(`${environment.mainurl}/OnlineTraining/ByCoachId/Private?CoachId=${id}`)
   }
 
 }
