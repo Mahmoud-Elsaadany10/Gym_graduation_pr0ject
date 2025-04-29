@@ -7,6 +7,7 @@ import { RegistrationService } from '../service/registration.service';
 import { ApiResponse } from '../../Model/Models';
 import { SharedService } from '../../shared/services/shared.service';
 import { NgbModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
+import { passwordMatchValidator, strongPasswordValidator } from '../../core/custom/passwordCheck';
 
 @Component({
   selector: 'app-signup-user',
@@ -30,26 +31,14 @@ export class SignupUserComponent {
       firstName: ['', [Validators.required, Validators.minLength(3)]],
       lastName: ['', [Validators.required, Validators.minLength(3)]],
       email: ['', [Validators.required, Validators.email]],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', [Validators.required, Validators.minLength(6) , strongPasswordValidator]],
       confirmPassword: ['', [Validators.required]],
       gender: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
-      bio: ['this is trainee']
-    }, { validator: this.passwordMatchValidator });
+    }, { validator: passwordMatchValidator });
   }
 
-  // Custom Validator: Check if password and confirmPassword match
-  passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
-    const password = group.get('password')?.value;
-    const confirmPassword = group.get('confirmPassword')?.value;
 
-    // Only validate if both fields have values
-    if (password && confirmPassword) {
-      return password === confirmPassword ? null : { passwordsMismatch: true };
-    }
-
-    return null; // Return null if either field is empty
-  }
 
 
   get firstName() {

@@ -1,5 +1,4 @@
 export const environment = {
   production: true,
-  mainurl :"http://fitnesspro.runasp.net/api"
-
+  mainurl :"https://fitnesspro.runasp.net/api"
 };

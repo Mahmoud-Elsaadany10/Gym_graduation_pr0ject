@@ -17,3 +17,7 @@
 .warning {
   background-color: #ffc107;
 }
+.light {
+  background-color:var(--color-third);
+  color: white;
+}

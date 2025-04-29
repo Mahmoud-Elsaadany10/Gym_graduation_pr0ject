@@ -6,7 +6,9 @@
     [class.bg-success]="toastService.toastType === 'success'"
     [class.bg-danger]="toastService.toastType === 'error'"
     [class.bg-warning]="toastService.toastType === 'warning'"
+    [class.light]="toastService.toastType === 'light'"
     (hide)="toastService.showToast = false"
+    class="text-center "
   >
     <strong>{{ toastService.toastMessage }}</strong>
   </ngb-toast>

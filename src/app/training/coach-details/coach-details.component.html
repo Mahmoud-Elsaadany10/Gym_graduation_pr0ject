@@ -5,7 +5,7 @@
     <img src="assets/coach.svg"  alt="">
     <div class="card-body details ">
         <div class="buttons  d-flex justify-content-end mt-3 me-3">
-          <button type="button" class="btn follow rounded-pill px-2 text-light btn-outline-light"><i class="fa-solid fa-comments me-2"></i>Chat</button>
+          <button type="button" class="btn follow rounded-pill px-2 text-light btn-outline-light" [routerLink]="['/layout/chat',coachDtd?.id]"><i class="fa-solid fa-comments me-2"></i>Chat</button>
           <button *ngIf="!followed" (click)="follow()" type="button" class="btn follow rounded-pill px-2 ms-3 text-light btn-outline-light "><i class="fa-solid fa-user-plus me-2"></i>follow</button>
           <button *ngIf="followed" (click)="unfollow()" type="button" class="btn unfollow rounded-pill px-2 ms-3 "><i class="fa-solid fa-check me-1"></i><small>unfollow</small></button>
         </div>
@@ -18,10 +18,32 @@
           <p class="job mt-2">Coach Master-Owner</p>
         </div>
 
+        <div class="d-flex mt-3 justify-content-end">
+          <div
+          class="col-md-auto bg-dark text-white d-flex align-items-center gap-2 px-3 py-1 rounded-pill"
+          style="width: 42%;">
+          <small>3.500 • Rating</small>
+          <div class="d-flex align-items-center">
+            <span *ngFor="let star of stars; let i = index">
+              <i class="fas " [ngClass]="i < (coachDtd?.rating ?? 0) ? 'fa-star gold' : 'fa-star gray'"></i>
+            </span>
+          </div>
+
+          <i class="fab fa-instagram ms-2"></i>
+          <i class="fab fa-facebook-f"></i>
+
+
+        </div>
+
+        </div>
+
+
+
     </div>
   </div>
 
-  <div class="middle-text text-center my-5">
+  <div [hidden]="!coachDtd">
+    <div class="middle-text text-center my-5">
     <p>Choose Best Suitable
     <br> Package For You</p>
   </div>
@@ -51,12 +73,16 @@
             <p>{{type.description}}</p>
           </div>
           <div class="subscribe">
-            <button>Subscribe</button>
+            <button (click)="payment(type.id)">Subscribe</button>
           </div>
         </div>
       </div>
     </div>
   </div>
+
+  </div>
+
+
 
   <div class="middle-text text-center my-5">
     <p>Last Updated
@@ -110,17 +136,15 @@
 
 </div>
 
-<div class="toast-container">
-  <ngb-toast
-  *ngIf="showToast"
-  [autohide]="true"
-  [delay]="4000"
-  (hidden)="showToast = false"
-  class="toast-an"
-  >
-  {{ toastMessage }}
-  </ngb-toast>
-</div>
+
+
+
+
+
+
+
+
+
 
 
 

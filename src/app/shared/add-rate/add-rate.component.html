@@ -1,0 +1,39 @@
+<div class="rate-container">
+    <h2>Add New Rate</h2>
+  
+    <form (ngSubmit)="submitRating()" class="rate-form">
+      <label>New Rate</label>
+      <div class="rating-input-wrapper">
+        <input
+          type="text"
+          placeholder="New Rate"
+          readonly
+          [value]="rating + ' Stars'"
+        />
+        <div class="star-icons">
+          <span
+            *ngFor="let star of stars; let i = index"
+            (click)="setRating(i + 1)"
+            (mouseover)="hoverRating(i + 1)"
+            (mouseleave)="hoverRating(0)"
+            [class.filled]="(i + 1) <= (hovered || rating)"
+          >
+            ★
+          </span>
+        </div>
+      </div>
+  
+      <label for="comment">Your Comment</label>
+      <textarea
+        id="comment"
+        [(ngModel)]="comment"
+        name="comment"
+        placeholder="Comment here"
+        rows="4"
+        required
+      ></textarea>
+  
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  

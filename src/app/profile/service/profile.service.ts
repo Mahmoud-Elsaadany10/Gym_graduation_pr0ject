@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { ApiResponse, coachProfile, coachResponse, gymData, GymInfo, TrainingModelResponse } from '../../Model/Models';
+import { ApiResponse, ChangePassword, coachProfile, coachResponse, gymData, GymInfo, Shop, ShopResponse, TrainingModelResponse } from '../../Model/Models';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +31,15 @@ export class ProfileService {
   }
   getCoachById(id : string):Observable<any>{
     return this._http.get<any>(`${environment.mainurl}/User/CoachDetails/${id}`)
+  }
+  getShopInfo(): Observable<ShopResponse> {
+    return this._http.get<ShopResponse>(`${environment.mainurl}/Shop/ShopsOfOwner`);
+  }
+  updateShopInfo(id : number , data :any):Observable<ApiResponse>{
+    return this._http.put<ApiResponse>(`${environment.mainurl}/Shop/${id}` , data)
+  }
+  changePassword(data : ChangePassword):Observable<ApiResponse>{
+    return this._http.post<ApiResponse>(`${environment.mainurl}/Account/ChangePassword` ,data)
   }
 
 }

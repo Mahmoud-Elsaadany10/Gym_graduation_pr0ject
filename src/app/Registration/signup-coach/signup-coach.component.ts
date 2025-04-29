@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RegistrationService } from '../service/registration.service';
 import { NgbModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
+import { passwordMatchValidator, strongPasswordValidator } from '../../core/custom/passwordCheck';
 
 @Component({
   selector: 'app-signup-coach',
@@ -25,25 +26,14 @@ export class SignupCoachComponent {
         firstName: ['', [Validators.required, Validators.minLength(3)]],
         lastName: ['', [Validators.required, Validators.minLength(3)]],
         email: ['', [Validators.required, Validators.email]],
-        password: ['', [Validators.required, Validators.minLength(6)]],
+        password: ['', [Validators.required, Validators.minLength(6) ,strongPasswordValidator]],
         confirmPassword: ['', [Validators.required]],
         gender: ['', Validators.required],
-        dateOfBirth: ['', Validators.required],
-        bio:['this is trainee']
-      }, { validator: this.passwordMatchValidator });
+        dateOfBirth: ['', Validators.required]
+      }, { validator: passwordMatchValidator });
     }
 
-    // Custom Validator: Check if password and confirmPassword match
-    passwordMatchValidator(group: AbstractControl): ValidationErrors | null {
-      const password = group.get('password')?.value;
-      const confirmPassword = group.get('confirmPassword')?.value;
 
-      if (password && confirmPassword) {
-        return password === confirmPassword ? null : { passwordsMismatch: true };
-      }
-
-      return null;
-    }
 
 
     get firstName() {

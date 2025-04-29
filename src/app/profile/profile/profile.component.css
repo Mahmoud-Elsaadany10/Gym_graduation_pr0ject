@@ -12,7 +12,7 @@
   height: 110px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #ddd;
+
 }
 input[type="number"] {
   -moz-appearance: textfield;
@@ -53,7 +53,7 @@ input[type="number"]::-webkit-inner-spin-button {
   display: flex;
   align-items: center;
   padding: 16px 20px ;
-  font-size: 14px ;
+  font-size: 12px;
 }
 
 

@@ -54,6 +54,8 @@
         <small style="color: red;" *ngIf="password?.invalid && password?.touched">
           <span *ngIf="password?.errors?.['required']">Password is required.</span>
           <span *ngIf="password?.errors?.['minlength']">Password must be at least 6 characters long.</span>
+          <span *ngIf="!password?.errors?.['required'] && !password?.errors?.['minlength'] && password?.errors?.['strongPassword']">Password must include uppercase,lowercase,number and special character
+          </span>
         </small>
       </div>
 

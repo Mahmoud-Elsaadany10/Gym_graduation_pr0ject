@@ -1,0 +1,278 @@
+
+<section class="hero-section">
+    <div class="action-buttons">
+      <button class="custom-btn">
+        <i class="fas fa-comment-alt"></i> Chat
+      </button>
+      <button class="custom-btn">
+        <i class="fas fa-user-plus"></i> Follow
+      </button>
+    </div>
+
+    <div class="overlay">
+      <h1 class="title">Welcome To Hummer Gym!</h1>
+    </div>
+  </section>
+
+
+  <div class="container py-4">
+    <div class="row align-items-center justify-content-between">
+      <!-- اليسار: صورة واسم ومدربين -->
+      <div class="col-md-6 d-flex align-items-center gap-3">
+        <img
+          src="/assets/coach.jpg"
+          alt="Coach"
+          class="rounded-circle"
+          width="50"
+          height="50"
+        />
+        <strong>Dane Horne</strong>
+        <span class="text-muted">||</span>
+        <a href="#" class="text-primary fw-medium text-decoration-none">
+          4,562 Enrolled Trainees
+        </a>
+      </div>
+
+      <!-- اليمين: تقييم ونجوم وأيقونات -->
+      <div
+        class="col-md-auto bg-dark text-white d-flex align-items-center gap-2 px-3 py-1 rounded-pill"
+      >
+        <small>3.500 • Rating</small>
+        <div class="d-flex align-items-center">
+          <i class="fas fa-star text-warning"></i>
+          <i class="fas fa-star text-warning"></i>
+          <i class="fas fa-star text-warning"></i>
+          <i class="fas fa-star text-secondary"></i>
+          <i class="fas fa-star text-secondary"></i>
+        </div>
+        <i class="fab fa-instagram ms-2"></i>
+        <i class="fab fa-facebook-f"></i>
+        <button class="btn btn-primary" (click)="openRateModal()">Add Rate</button>
+
+      </div>
+    </div>
+  </div>
+
+  <section class="tabs-section">
+    <div class="tabs-container">
+      <button
+        class="tab"
+        [class.active]="selectedTab === 'Description'"
+        (click)="scrollToSection('description-section', 'Description')"
+      >
+        Description
+      </button>
+
+      <button
+        class="tab"
+        [class.active]="selectedTab === 'Subscription'"
+        (click)="scrollToSection('subscription-section', 'Subscription')"
+      >
+        Subscription
+      </button>
+
+      <button
+        class="tab"
+        [class.active]="selectedTab === 'Products'"
+        (click)="scrollToSection('products-section', 'Products')"
+      >
+        Products
+      </button>
+
+      <button
+        class="tab"
+        [class.active]="selectedTab === 'Posts'"
+        (click)="scrollToSection('posts-section', 'Posts')"
+      >
+        Posts
+      </button>
+    </div>
+  </section>
+
+
+
+
+
+
+  <section id="description-section" class="fitness-section">
+    <!-- الصورة -->
+    <div class="fitness-image-wrapper">
+      <img src="/assets/Rectangle 40.svg" alt="Runner" class="fitness-image" />
+    </div>
+
+    <!-- النص والعناصر -->
+    <div class="fitness-content">
+      <h1>Welcome to our<br /><strong>Hummer Fitness Center</strong></h1>
+      <p class="description">
+        Motivate users with benefits and positive reinforcement,
+        and offer modifications and progress tracking, ffyy79p;
+       rhsahajskhuieojfijkgkmvnhytrtererredvvbnnmmkkoo
+       qwwerrtyyuiopmjmmnvfrrtyuioppghyiomlkdsareyoee.      </p>
+
+      <div class="features">
+        <div class="feature">
+          <i class="fas fa-dumbbell"></i> <strong>Personal Training</strong><br />
+          <span>Etim uiopk etim</span>
+        </div>
+        <div class="feature">
+          <i class="fas fa-heartbeat"></i> <strong>Cardio Programs</strong><br />
+          <span>Etim uiopk etim</span>
+        </div>
+        <div class="feature">
+          <i class="fas fa-apple-alt"></i> <strong>Healthy Nutrition</strong><br />
+          <span>Etim uiopk etim</span>
+        </div>
+        <div class="feature">
+          <i class="fas fa-cogs"></i> <strong>Quality Equipment</strong><br />
+          <span>Etim uiopk etim</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <section  id="subscription-section" class="packages-section">
+    <h2 class="section-title">Choose Best Suitable <br> Package For You</h2>
+
+    <div class="packages-container">
+      <div class="package-card">
+        <h3>Annual Price</h3>
+        <p class="price">$25.98 <span>/ Month</span></p>
+        <ul class="package-features">
+          <li>✅ Unlimited gym access</li>
+          <li>✅ Free consultation with the trainer</li>
+          <li>✅ Unlimited gym access</li>
+        </ul>
+        <button class="package-btn">Subscribe</button>
+      </div>
+
+      <div class="package-card">
+        <h3>Monthly</h3>
+        <p class="price">$25.98 <span>/ Month</span></p>
+        <ul class="package-features">
+          <li>✅ Unlimited gym access</li>
+          <li>✅ Free consultation with the trainer</li>
+          <li>✅ Unlimited gym access</li>
+        </ul>
+        <button class="package-btn">Get Started</button>
+      </div>
+
+      <div class="package-card">
+        <h3>Semi-Monthly Price</h3>
+        <p class="price">$25.98 <span>/ Month</span></p>
+        <ul class="package-features">
+          <li>✅ Unlimited gym access</li>
+          <li>✅ Free consultation with the trainer</li>
+          <li>✅ Unlimited gym access</li>
+        </ul>
+        <button class="package-btn">Subscribe</button>
+      </div>
+
+      <div class="package-card">
+        <h3>Session Price</h3>
+        <p class="price">$15.00 <span>/ Month</span></p>
+        <ul class="package-features">
+          <li>✅ Unlimited gym access</li>
+          <li>✅ Free consultation with the trainer</li>
+          <li>✅ Unlimited gym access</li>
+        </ul>
+        <button class="package-btn">Subscribe</button>
+      </div>
+    </div>
+
+        <h2 class="offers-title">Catch up with the offers</h2>
+
+        <div class="offers-grid">
+          <div class="offer-card">
+            <img src="assets/gym-bottle.jpg" alt="Gym Bottle" class="offer-image" />
+            <div class="offer-info">
+              <h3 class="offer-name">Gym Bottle</h3>
+              <div class="offer-stars">⭐ ⭐ ⭐ ⭐ ⭐</div>
+              <div class="offer-price">
+                <span class="old-price">$100.00</span>
+                <span class="new-price">$50.00</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- كرري الكارت أربع مرات -->
+          <div class="offer-card">
+            <img src="assets/gym-bottle.jpg" alt="Gym Bottle" class="offer-image" />
+            <div class="offer-info">
+              <h3 class="offer-name">Gym Bottle</h3>
+              <div class="offer-stars">⭐ ⭐ ⭐ ⭐ ⭐</div>
+              <div class="offer-price">
+                <span class="old-price">$100.00</span>
+                <span class="new-price">$50.00</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="offer-card">
+            <img src="assets/gym-bottle.jpg" alt="Gym Bottle" class="offer-image" />
+            <div class="offer-info">
+              <h3 class="offer-name">Gym Bottle</h3>
+              <div class="offer-stars">⭐ ⭐ ⭐ ⭐ ⭐</div>
+              <div class="offer-price">
+                <span class="old-price">$100.00</span>
+                <span class="new-price">$50.00</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="offer-card">
+            <img src="assets/gym-bottle.jpg" alt="Gym Bottle" class="offer-image" />
+            <div class="offer-info">
+              <h3 class="offer-name">Gym Bottle</h3>
+              <div class="offer-stars">⭐ ⭐ ⭐ ⭐ ⭐</div>
+              <div class="offer-price">
+                <span class="old-price">$100.00</span>
+                <span class="new-price">$50.00</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+
+  </section>
+  <section id="products-section">
+    <section class="products-section">
+        <h2 class="section-title">Our Most Amazing Products</h2>
+
+        <div class="products-grid">
+          <div class="product-card" *ngFor="let product of products">
+            <img [src]="product.image" [alt]="product.name">
+            <div class="product-info">
+              <span class="category">{{ product.category }}</span>
+              <span class="price">{{ product.price }}</span>
+              <h3 class="product-name">{{ product.name }}</h3>
+              <button class="buy-btn">Buy Now</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="view-all-btn">
+          <button>➕ View All</button>
+        </div>
+      </section>
+
+  </section>
+
+  <section id="posts-section">
+    <section id="posts-section" class="posts-section container text-center py-5">
+        <h2 class="section-title">Last Updated <br> Posts</h2>
+        <div class="row justify-content-center mt-4">
+          <div class="col-md-4 mb-3" *ngFor="let post of posts">
+            <div class="card h-100">
+              <img [src]="post.image" class="card-img-top" [alt]="post.title">
+              <div class="card-body">
+                <h5 class="card-title">{{ post.title }}</h5>
+                <p class="card-text text-muted">{{ post.date | date: 'MM/dd/yyyy' }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+  </section>

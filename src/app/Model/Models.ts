@@ -72,6 +72,7 @@ export interface coachDetails{
   bio: string;
   gender: "male" | "female" ;
   joinedDate: string;
+  rating: number ;
   onlineTrainings: OnlineTraining[];
 }
 export interface coachResponse{
@@ -126,6 +127,7 @@ export interface coachProfile {
   gender: string;
   dateOfBirth: string;
   bio: string;
+  profilePictureUrl :string | null;
 }
 export interface GymInfo {
   gymID: number;
@@ -173,4 +175,27 @@ export interface TrainingSession {
   price: number;
   noOfSessionsPerWeek: number;
   durationOfSession: number;
+}
+export interface ChangePassword {
+  oldPassword: string;
+  newPassword: string;
+  confirmPassword: string;
+}
+export interface Shop {
+  address: string;
+  city: string;
+  description: string;
+  followerNumber: number;
+  governorate: string;
+  ownerID: string;
+  ownerName: string;
+  phoneNumber: string;
+  pictureUrl: string;
+  shopId: number;
+  shopName: string;
+}
+
+export interface ShopResponse {
+  data: Shop[];
+  isSuccess: boolean;
 }

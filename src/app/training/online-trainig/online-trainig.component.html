@@ -17,7 +17,7 @@
             <p class="p1 text-center">{{coach.fullName}}</p>
             <p class="p2 text-center">Personal Trainer</p>
             <div class="d-flex justify-content-center ">
-              <span cl *ngFor="let star of stars; let i = index">
+              <span  *ngFor="let star of stars; let i = index">
                 <i class="fas me-1" [ngClass]="i < coach.rating ? 'fa-star gold ' : 'fa-star gray'"></i>
               </span> <span class="text-white">({{coach.rating}})</span>
             </div>

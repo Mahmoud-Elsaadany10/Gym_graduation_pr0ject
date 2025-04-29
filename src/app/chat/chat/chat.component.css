@@ -1,0 +1,41 @@
+.bg-light-purple {
+  background-color: #e3d9f5;
+}
+
+.bg-light-green {
+  background-color: #d1f7e2;
+}
+
+.chat-box {
+  /* height: 70vh; */
+  overflow-y: auto;
+}
+.send{
+  width: 65px;
+    background-color: transparent;
+    border: none;
+    font-size: 23px;
+    color: gray;
+}
+.chat{
+  box-shadow: 0px 0px 6px 2px #00000054;
+  border-radius: 13px;
+}
+.list-group-item{
+  border: none !important;
+}
+.input{
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: #00000026;
+  outline: none;
+  margin-bottom: 5px;
+}
+@media (max-width: 768px) {
+  .chat-box {
+    height: 50vh;
+  }
+}
+

@@ -21,6 +21,8 @@ import { OnlineTrainigComponent } from './training/online-trainig/online-trainig
 import { HomeComponent } from './mainPage/home/home.component';
 import { CoachDetailsComponent } from './training/coach-details/coach-details.component';
 import { ProfileComponent } from './profile/profile/profile.component';
+import { GymDetailsComponent } from './gymComponent/gym-details/gym-details.component';
+import { ChatComponent } from './chat/chat/chat.component';
 // import { ProfileComponent } from './mainPage/profile/profile.component';
 
 export const routes: Routes = [
@@ -42,10 +44,12 @@ export const routes: Routes = [
   ,{path:"layout",component:LayoutComponent ,children:[
     {path:"home",component:HomeComponent} ,
     {path :"gym" ,component:GymComponent} ,
+    {path :"GymDetails" , component : GymDetailsComponent},
     {path : "onlineTraning" ,component:OnlineTrainigComponent},
     {path : "coachDetails/:id" ,component :CoachDetailsComponent},
     {path : "profile" , component : ProfileComponent} ,
-    // {path :"pro" , component :ProfileComponent}
+    {path : "chat/:id" , component : ChatComponent}
+
   ]}
 
   ,{ path: "", redirectTo: "layout/home", pathMatch: "full" },

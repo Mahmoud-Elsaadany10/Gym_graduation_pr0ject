@@ -12,7 +12,7 @@ export class HandleErrorInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
         let errorMessage = 'An unexpected error occurred';
-        let errorType: 'success' | 'error' | 'warning' = 'error';
+        let errorType: 'success' | 'error' | 'warning' | "light" = 'error';
 
         switch (error.status) {
           case 401:

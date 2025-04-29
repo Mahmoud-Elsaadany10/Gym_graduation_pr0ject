@@ -4,6 +4,7 @@ import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validatio
 import { Router, RouterModule } from '@angular/router';
 import { RegistrationService } from '../service/registration.service';
 import { jwtDecode } from 'jwt-decode';
+import { passwordMatchValidator, strongPasswordValidator } from '../../core/custom/passwordCheck';
 
 @Component({
   selector: 'app-reset-password',
@@ -18,20 +19,11 @@ export class ResetPasswordComponent {
     private _ResetPassword :RegistrationService
   ) {
     this.changePasswordForm = this.fbulider.group({
-      newPassword: ['', [Validators.required, Validators.minLength(6)]],
+      newPassword: ['', [Validators.required, Validators.minLength(6) ,strongPasswordValidator]],
       confirmPassword: ['', [Validators.required]]
-    },{validator:this.passwordMatch});
+    },{validator: passwordMatchValidator});
   }
-  passwordMatch(group :AbstractControl):ValidationErrors | null{
-    const newPassword = group.get('newPassword')?.value;
-    const confirmPassword = group.get('confirmPassword')?.value;
-    if(newPassword && confirmPassword){
-      return newPassword === confirmPassword ? null :{passwordsMismatch:true};
-    }else{
-      return null;
-    }
 
-  }
 
   get newPassword() {
     return this.changePasswordForm.get("newPassword");

@@ -36,5 +36,8 @@ export class OnlineTrainingService {
   getPrivateTrainingById(id : string):Observable<TrainingSession[]>{
     return this._http.get<TrainingSession[]>(`${environment.mainurl}/OnlineTraining/ByCoachId/Private?CoachId=${id}`)
   }
+  payment(id : any):Observable<any>{
+    return this._http.post<any>(`${environment.mainurl}/Payments/create-checkout-session`,id)
+  }
 
 }
