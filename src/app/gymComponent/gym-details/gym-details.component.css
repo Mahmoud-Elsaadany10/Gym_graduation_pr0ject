@@ -1,7 +1,7 @@
 .hero-section {
-    background-image: url("/assets/Rectangle\ 34.svg");
-    background-size: contain;       /* دي بتخلي الصورة كلها تبان */
-  background-repeat: no-repeat; 
+  background-image: url("./../../../assets/Rectangle\ 34.jpg");
+    background-size: contain;
+  background-repeat: no-repeat;
     height: 100vh;
     position: relative;
     display: flex;
@@ -9,13 +9,13 @@
     justify-content: center;
     text-align: center;
     color: white;
-  
+
     .overlay {
-     
+
       padding: 2rem;
       border-radius: 12px;
     }
-  
+
     .title {
       font-size: 3rem;
       font-weight: bold;
@@ -29,7 +29,7 @@
         gap: 1rem;
         z-index: 10;
       }
-      
+
       .custom-btn {
         display: flex;
         align-items: center;
@@ -43,11 +43,41 @@
         cursor: pointer;
         transition: background-color 0.3s, color 0.3s;
       }
-      
+
       .custom-btn:hover {
         background-color: white;
         color: black;
       }
+  }
+  .rating-badge {
+    background-color: #1e1e1e;
+    color: #d4d4d4;
+  }
+
+  .rating-badge .star {
+    color: #ccc;
+    font-size: 1rem;
+  }
+
+  .rating-badge .star.filled {
+    color: #f5c518;
+  }
+
+  .rating-badge .action-btn {
+    background-color: #333;
+    border: none;
+    border-radius: 50%;
+    width: 26px;
+    height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .rating-badge .action-btn img {
+    width: 16px;
+    height: 16px;
   }
 
   .tabs-section {
@@ -57,14 +87,14 @@
     max-width: 80%;
     margin: 0 auto 2rem;
   }
-  
+
   .tabs-container {
     display: flex;
     justify-content: space-around;
-   
+
     flex-wrap: wrap;
   }
-  
+
   .tab {
     padding: 10px 20px;
     background-color: white;
@@ -76,17 +106,17 @@
     transition: all 0.3s ease;
     font-size: 1rem;
   }
-  
+
   .tab:hover {
     background-color: #e5e7f2;
   }
-  
+
   .tab.active {
     background-color: #2d2e4a;
     color: white;
   }
-  
-  
+
+
 
   .fitness-section {
     display: grid;
@@ -96,7 +126,7 @@
     height: 100vh;
     align-items: center;
   }
-  
+
   .fitness-image-wrapper {
     height: 100%;
     display: flex;
@@ -104,33 +134,33 @@
     justify-content: center;
     padding: 1rem;
   }
-  
+
   .fitness-image {
     max-height: 80%;
     width: 100%;
     object-fit: contain; /* عشان ما تتقصش */
     border-radius: 10px;
   }
-  
+
   .fitness-content {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 80%;
   }
-  
+
   .fitness-content h1 {
     font-size: 4rem; /* كان 2.5rem */
     line-height: 1.4;
     color: #2b2b52;
   }
-  
+
   .fitness-content .description {
     font-size: 1.1rem; /* كان 0.9rem */
     color: #444;
     max-width: 550px;
   }
-  
+
   .features {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* اتنين جنب بعض */
@@ -141,52 +171,52 @@
     font-size: 1.5rem; /* كان 1.2rem */
     margin-bottom: 0.4rem;
   }
-  
+
   @media (max-width: 768px) {
     .fitness-section {
       grid-template-columns: 1fr;
       height: auto;
     }
-  
+
     .fitness-image {
       height: auto;
       max-height: 400px;
     }
-  
+
     .fitness-content {
       height: auto;
       margin-top: 1.5rem;
     }
-  
+
     .features {
       grid-template-columns: 1fr;
     }
   }
 
-  
- 
+
+
     .packages-section {
         margin-top: 15rem; /* مسافة من فوق */
         text-align: center;
         padding: 4rem 2rem;
-       
+
       }
-   
-  
-  
+
+
+
   .section-title {
     font-size: 2.5rem;
     color: #2d2e4a;
     margin-bottom: 3rem;
   }
-  
+
   .packages-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 2rem;
     justify-items: center;
   }
-  
+
   .package-card {
     background-color: #f5f7fb; /* اللون الافتراضي */
     border-radius: 12px;
@@ -195,42 +225,42 @@
     padding: 2rem;
     text-align: center;
   }
-  
+
   .package-card:hover {
     background: var(--secondary, #7C93C3); /* لون الهوفر */
     transform: translateY(-20px); /* يطلع لفوق */
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* ظل أقوى مع الحركة */
   }
-  
+
 
   .package-card h3 {
     font-size: 1.5rem;
     margin-bottom: 1rem;
   }
-  
+
   .price {
     font-size: 1.8rem;
     font-weight: bold;
     margin-bottom: 1.5rem;
   }
-  
+
   .price span {
     font-size: 1rem;
     font-weight: normal;
   }
-  
+
   .package-features {
     list-style: none;
     padding: 0;
     margin: 1.5rem 0;
     text-align: left;
   }
-  
+
   .package-features li {
     margin-bottom: 0.8rem;
     font-size: 1rem;
   }
-  
+
   .package-btn {
     background-color: #2d2e4a;
     color: white;
@@ -241,16 +271,16 @@
     font-size: 1rem;
     transition: background-color 0.3s;
   }
-  
+
   .package-btn:hover {
     background-color: #1a1a35;
   }
-  
+
   .featured-btn {
     background-color: white;
     color: #2d2e4a;
   }
-  
+
   .featured-btn:hover {
     background-color: #e5e7f2;
   }
@@ -259,7 +289,7 @@
     text-align: center;
     padding: 50px 20px;
   }
-  
+
   .offers-title {
     color: #2d2e4a;
     margin-bottom: 4rem;
@@ -271,25 +301,25 @@
     letter-spacing: 0%;
     text-align: center;
   }
-  
+
   .offers-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* كارتين في كل صف */
     gap: 30px;
     justify-items: center;
   }
-  
+
   @media (max-width: 768px) {
     .offers-grid {
       grid-template-columns: 1fr; /* على الشاشات الصغيرة كارت واحد */
     }
   }
-  
-  
+
+
   .offer-card {
     display: flex;
     align-items: center;
-   
+
     border: 1px solid #e0e0e0;
     border-radius: 12px;
     overflow: hidden;
@@ -298,13 +328,13 @@
     max-width: 400px;
     padding: 10px;
   }
-  
+
   .offer-card:hover {
     background: var(--secondary, #7C93C3);
     transform: translateY(-8px);
     cursor: pointer;
   }
-  
+
   .offer-image {
     width: 80px;
     height: 80px;
@@ -312,34 +342,34 @@
     border-radius: 8px;
     margin-right: 15px;
   }
-  
+
   .offer-info {
     text-align: left;
   }
-  
+
   .offer-name {
     font-size: 20px;
     color: #2d2e4a;
     margin: 0;
   }
-  
+
   .offer-stars {
     font-size: 16px;
     margin: 5px 0;
     color: #ffc107; /* لون النجوم ذهبي */
   }
-  
+
   .offer-price {
     display: flex;
     align-items: center;
     gap: 8px;
   }
-  
+
   .old-price {
     text-decoration: line-through;
     color: #e74c3c;
   }
-  
+
   .new-price {
     font-weight: bold;
     color: #2d2e4a;
@@ -348,7 +378,7 @@
     padding: 50px 20px;
     text-align: center;
   }
-  
+
   .section-title {
     font-family: 'Inria Serif', serif;
     font-weight: 700;
@@ -357,14 +387,14 @@
     letter-spacing: 0%;
     margin-bottom: 40px;
   }
-  
+
   .products-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
     justify-items: center;
   }
-  
+
   .product-card {
     background-color: #2d2d2d; /* لون غامق للكارت */
     color: #fff;
@@ -375,39 +405,39 @@
     align-items: center;
     transition: transform 0.3s ease;
   }
-  
+
   .product-card:hover {
     transform: translateY(-10px);
   }
-  
+
   .product-card img {
     width: 100%;
     height: 200px;
     object-fit: cover;
   }
-  
+
   .product-info {
     padding: 15px;
   }
-  
+
   .category {
     font-size: 14px;
     color: #ccc;
     display: block;
     margin-bottom: 5px;
   }
-  
+
   .price {
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 10px;
   }
-  
+
   .product-name {
     font-size: 16px;
     margin-bottom: 15px;
   }
-  
+
   .buy-btn {
     background-color: #7C93C3; /* نفس اللون اللي طلبتيه */
     color: #fff;
@@ -417,15 +447,15 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
   }
-  
+
   .buy-btn:hover {
     background-color: #5d75a3;
   }
-  
+
   .view-all-btn {
     margin-top: 30px;
   }
-  
+
   .view-all-btn button {
     background: linear-gradient(90deg, #7C93C3 0%, #f5f7fb 100%);
     color: #2d2d2d;
@@ -437,7 +467,7 @@
     font-weight: 600;
     transition: background 0.3s ease;
   }
-  
+
   .view-all-btn button:hover {
     background: linear-gradient(90deg, #5d75a3 0%, #f5f7fb 100%);
   }
@@ -449,7 +479,7 @@
     letter-spacing: 0;
     text-align: center;
   }
-  
+
   .posts-section .card {
     border: none;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -457,13 +487,68 @@
     color: var(--Color3, #2C3552);
 
   }
-  
+
   .posts-section .card:hover {
     transform: translateY(-5px);
   }
-  
+
   .posts-section .card-title {
     font-weight: bold;
     font-size: 1.1rem;
   }
-  
+  .rating-badge {
+    background-color: #222;
+    color: #ccc;
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-family: Arial, sans-serif;
+  }
+
+  .rating-text {
+    margin-right: 15px;
+    font-size: 16px;
+  }
+
+  .stars {
+    display: flex;
+    margin-right: 15px;
+  }
+
+  .star {
+    font-size: 20px;
+    color: #555;
+    margin: 0 2px;
+  }
+
+  .star.filled {
+    color: gold;
+  }
+
+  .actions {
+    display: flex;
+  }
+
+  .action-btn {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 50%;
+    margin-left: 8px;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .add-btn {
+    background-color: #f44336; /* أحمر */
+    color: white;
+  }
+
+  .edit-btn {
+    background-color: #3b5998; /* أزرق */
+    color: white;
+  }

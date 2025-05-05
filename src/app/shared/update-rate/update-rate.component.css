@@ -1,0 +1,138 @@
+/* Main container for the rate modal */
+.rate-container {
+  padding: 30px 90px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+  text-align: center;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+}
+.form-control:focus{
+  border: none !important;
+}
+/* Form styling */
+.rate-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Rating input wrapper */
+.rating-input-wrapper {
+  display: flex;
+
+  align-items: center;
+  gap: 8px;
+}
+
+input[type='text'] {
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 1rem;
+  width: 100%;
+  text-align: center;
+  color: #333;
+  cursor: not-allowed;
+}
+
+/* Star icons styling */
+.star-icons {
+  display: flex;
+  gap: 8px;
+}
+
+.star-icons span {
+  font-size: 2rem;
+  color: #ddd;
+  cursor: pointer;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.star-icons span.filled {
+  color: #f9d71c;
+  transform: scale(1.2);
+}
+
+.star-icons span:hover {
+  color: #f9d71c;
+  transform: scale(1.2);
+}
+
+/* Comment Section */
+textarea {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  font-size: 1rem;
+  color: #333;
+  resize: vertical;
+}
+
+textarea:focus {
+  outline: none;
+}
+
+/* Button styling */
+button[type="submit"] {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover {
+  background-color: #0056b3;
+}
+
+button[type="button"] {
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+button[type="button"]:hover {
+  background-color: #c82333;
+}
+.edit{
+  background-color: #4d5fa5 !important;
+}
+.edit:hover {
+  background-color: #3b4b88 !important;
+}
+
+@media (max-width: 576px) {
+  .star-icons span {
+    font-size: 1.5rem;
+  }
+
+  input[type='text'] {
+    font-size: 0.9rem;
+  }
+
+  textarea {
+    font-size: 0.9rem;
+  }
+  .rate-container {
+    padding: 30px;
+  }
+
+  button[type="submit"], button[type="button"] {
+    font-size: 0.9rem;
+    padding: 8px 16px;
+  }
+}

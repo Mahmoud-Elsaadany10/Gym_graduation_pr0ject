@@ -44,7 +44,7 @@ export const routes: Routes = [
   ,{path:"layout",component:LayoutComponent ,children:[
     {path:"home",component:HomeComponent} ,
     {path :"gym" ,component:GymComponent} ,
-    {path :"GymDetails" , component : GymDetailsComponent},
+    {path :"GymDetails/:id" , component : GymDetailsComponent},
     {path : "onlineTraning" ,component:OnlineTrainigComponent},
     {path : "coachDetails/:id" ,component :CoachDetailsComponent},
     {path : "profile" , component : ProfileComponent} ,

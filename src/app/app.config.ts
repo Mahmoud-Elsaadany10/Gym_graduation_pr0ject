@@ -6,6 +6,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { HandleErrorInterceptor } from './core/intercptor/handel-error.interceptor';
 import { authInterceptor } from './core/intercptor/auth.interceptor';
+import { SpinnerInterceptor } from './core/intercptor/spinner.interceptor';
 
 
 export const appConfig: ApplicationConfig = {
@@ -14,5 +15,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideHttpClient(withInterceptorsFromDi()),
     { provide: HTTP_INTERCEPTORS, useClass: HandleErrorInterceptor , multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor , multi: true },
+
     { provide: HTTP_INTERCEPTORS, useClass: authInterceptor , multi: true }, provideAnimationsAsync()]
 };

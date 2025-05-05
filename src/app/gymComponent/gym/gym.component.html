@@ -40,6 +40,13 @@
               <p class="number">{{gym.monthlyPrice | currency:'EGP'}}</p>
             </div>
           </div>
+          <div class="d-flex justify-content-center mt-3">
+            <button
+              class="btn btn-outline-primary px-4 py-2 rounded-pill shadow-sm fw-semibold"
+              [routerLink]="['/layout/GymDetails',gym.gymID]">
+              Show More
+            </button>
+          </div>
         </div>
       </div>
     </div>

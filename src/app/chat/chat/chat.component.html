@@ -1,78 +1,62 @@
-
 <app-navbar></app-navbar>
 
 <div class="container py-5">
   <div class="row g-3 gap-md-5">
 
-
-    <div class="col-12 col-md-4 col-lg-3 ">
+    <!-- Sidebar -->
+    <div class="col-12 col-md-4 col-lg-3">
       <h6 class="text-muted mb-3">Direct Message</h6>
       <div class="list-group">
-        <a href="#" class="list-group-item list-group-item-action active">
-          <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="User"> Ahmed Ali
-        </a>
-        <a href="#" class="list-group-item list-group-item-action">
-          <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="User"> Dane Horne
-        </a>
-        <a href="#" class="list-group-item list-group-item-action">
-          <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="User"> Dane Horne
-        </a>
-        <a href="#" class="list-group-item list-group-item-action">
-          <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="User"> Dane Horne
-        </a>
+        <!-- Links to switch between chats -->
+        <a class="list-group-item list-group-item-action" routerLinkActive="active">Ahmed Ali</a>
+        <a class="list-group-item list-group-item-action" routerLinkActive="active">Dane Horne</a>
       </div>
     </div>
 
     <!-- Chat Box -->
     <div class="col-12 col-md-7 col-lg-8 chat d-flex flex-column">
-      <div class=" rounded  p-3 mb-3 chat-box flex-grow-1">
-        <div class="text-center mb-3 text-muted small">Wednesday, July 20th</div>
+      <div #chatBox class="rounded p-3 mb-3 chat-box flex-grow-1 overflow-auto" style="height: 400px;">
 
         <!-- Messages -->
-        <div class="d-flex flex-column gap-3">
-          <!-- Sender Message -->
-          <div class="d-flex align-items-start">
-            <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="Sender">
+        <div *ngFor="let msg of messages" class="mb-3">
+          <!-- Incoming message -->
+          <div *ngIf="msg.senderId !== senderId" class="d-flex align-items-start">
+            <img src="https://via.placeholder.com/40" class="rounded-circle me-2" />
             <div>
-              <div class="p-2 bg-light-purple rounded-3">
-                Hey, are you here?
-              </div>
-              <small class="text-muted">10:00 AM</small>
+              <div class="p-2 bg-light-purple rounded-3">{{ msg.content }}</div>
+              <small class="text-muted">{{ msg.timeStamp | date:'shortTime' }}</small>
             </div>
           </div>
 
-          <!-- Receiver Message -->
-          <div class="d-flex justify-content-end">
+          <!-- Outgoing message -->
+          <div *ngIf="msg.senderId === senderId" class="d-flex justify-content-end">
             <div class="text-end">
-              <div class="p-2 bg-light-green rounded-3">
-                Hey, are you here?
-              </div>
-              <small class="text-muted">10:01 AM</small>
-            </div>
-          </div>
-
-          <!-- Sender Message -->
-          <div class="d-flex align-items-start">
-            <img src="https://via.placeholder.com/40" class="rounded-circle me-2" alt="Sender">
-            <div>
-              <div class="p-2 bg-light-purple rounded-3">
-                Hey, are you here?
-              </div>
-              <small class="text-muted">10:02 AM</small>
+              <div class="p-2 bg-light-green rounded-3">{{ msg.content }}</div>
+              <small class="text-muted">{{ msg.timeStamp | date:'shortTime' }}</small>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Message Input -->
+      <!-- Input -->
       <div class="input-group pb-3 d-flex justify-content-evenly">
-        <button class="send" >
+        <button class="send" [disabled]="!isConnected || !newMessage.trim()" (click)="send()">
           <i class="fa-solid fa-paper-plane"></i>
         </button>
-        <input type="text" class="input w-75" placeholder="Write your Message here">
+        <input type="text"
+               class="input w-75"
+               [(ngModel)]="newMessage"
+               [disabled]="!isConnected"
+               placeholder="Write your message here"
 
+               (keydown.enter)="send()">
+      </div>
+
+      <!-- Connection status -->
+      <div *ngIf="!isConnected && !isLoading" class="text-center text-danger small mb-2">
+        <i class="fa-solid fa-exclamation-circle me-1"></i>
+        Disconnected from chat server. Trying to reconnect...
       </div>
     </div>
-
   </div>
 </div>

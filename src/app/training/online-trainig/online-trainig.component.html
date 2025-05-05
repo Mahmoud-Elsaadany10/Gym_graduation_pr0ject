@@ -17,9 +17,9 @@
             <p class="p1 text-center">{{coach.fullName}}</p>
             <p class="p2 text-center">Personal Trainer</p>
             <div class="d-flex justify-content-center ">
-              <span  *ngFor="let star of stars; let i = index">
+              <span cl *ngFor="let star of stars; let i = index">
                 <i class="fas me-1" [ngClass]="i < coach.rating ? 'fa-star gold ' : 'fa-star gray'"></i>
-              </span> <span class="text-white">({{coach.rating}})</span>
+              </span>
             </div>
 
           </div>
@@ -29,7 +29,7 @@
             <a ><i class="fa-brands fa-whatsapp"></i></a>
           </div>
           <div class="position-absolute details">
-            <button class="p-2" [routerLink]="['/layout/coachDetails',coach.id]" routerLinkActive="router-link-active" >Read More</button>
+            <button class="p-2"  (click)="gotToDetails(coach.id)" routerLinkActive="router-link-active" >Read More</button>
           </div>
         </div>
 
@@ -51,10 +51,6 @@
   </ngb-pagination>
 
   </div>
-  <div class="d-flex justify-content-center align-content-center" *ngIf="loading">
-    <div class="spinner-border" role="status">
-    <span class="sr-only">Loading...</span>
-  </div>
-  </div>
+
 </div>
 

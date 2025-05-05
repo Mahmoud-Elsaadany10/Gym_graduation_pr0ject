@@ -1,39 +1,36 @@
 .rate-container {
     width: 100%;
-    max-width: 500px;
+    padding: 30px 90px;
     margin: 0 auto;
     background: #fff;
-    padding: 2rem;
     border-radius: 1rem;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
   }
-  
+
   .rate-form {
     width: 100%;
   }
-  
+
   .rating-input-wrapper {
     position: relative;
     width: 100%;
-    margin-top: 0.5rem;
   }
-  
+
   .rating-input-wrapper input {
     width: 100%;
     height: 2.5rem;
     padding: 0 6rem 0 0.75rem;
-    border: 1px solid #ddd;
+      border: none;
+    outline: none;
     border-radius: 0.5rem;
     font-size: 1rem;
     color: #555;
     background-color: #fff;
+
   }
-  
-  .rating-input-wrapper input:focus {
-    outline: none;
-    border-color: #bbb;
-  }
-  
+
+
+
   .star-icons {
     position: absolute;
     right: 0.75rem;
@@ -44,33 +41,34 @@
     cursor: pointer;
     color: lightgray;
   }
-  
+
   .star-icons span {
     font-size: 1.2rem;
     transition: color 0.3s;
   }
-  
+
   .star-icons span.filled {
     color: gold;
   }
-  
+
   textarea {
     width: 100%;
     margin-top: 1rem;
     padding: 0.75rem;
-    border: 1px solid #ddd;
+    border: none;
+    outline: none;
     border-radius: 0.5rem;
     resize: none;
     color: #555;
     font-size: 1rem;
     background-color: #fff;
   }
-  
+
   textarea:focus {
     outline: none;
     border-color: #bbb;
   }
-  
+
   button[type="submit"] {
     margin-top: 1.5rem;
     padding: 0.75rem;
@@ -79,12 +77,24 @@
     border: none;
     border-radius: 0.5rem;
     cursor: pointer;
-    width: 100%;
+    width: 60%;
     font-size: 1rem;
     transition: background-color 0.3s ease;
   }
-  
+
   button[type="submit"]:hover {
     background-color: #3b4b88;
   }
-  
+  h2{
+    text-align: center;
+    margin-bottom: 21px;
+  }
+
+  @media (max-width: 576px) {
+
+    .rate-container {
+      padding: 30px;
+    }
+
+
+  }

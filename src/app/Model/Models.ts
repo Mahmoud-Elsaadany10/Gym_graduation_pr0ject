@@ -199,3 +199,9 @@ export interface ShopResponse {
   data: Shop[];
   isSuccess: boolean;
 }
+export interface GymRating {
+  gymRatingID: number;
+  ratingValue: number;
+  review: string;
+  traineeID: string;
+}

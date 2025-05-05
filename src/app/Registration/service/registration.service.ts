@@ -73,9 +73,9 @@ export class RegistrationService {
         const decodedToken: any = jwtDecode(token);
         const role = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
 
-        console.log('Decoded Token:', decodedToken);
+        // console.log('Decoded Token:', decodedToken);
         this.userData.next(decodedToken);
-        console.log('Decoded User Data:', decodedToken);
+        // console.log('Decoded User Data:', decodedToken);
       } catch (error) {
         console.error('Invalid token:', error);
         this.logout();

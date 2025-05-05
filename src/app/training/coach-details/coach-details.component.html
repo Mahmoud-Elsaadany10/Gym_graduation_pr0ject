@@ -1,53 +1,56 @@
 <app-navbar></app-navbar>
 
 <div class="container mt-5">
-  <div class="card main-box d-flex" >
-    <img src="assets/coach.png"  alt="">
-    <div class="card-body details ">
-        <div class="buttons  d-flex justify-content-end mt-3 me-3">
-          <button type="button" class="btn follow rounded-pill px-2 text-light btn-outline-light" [routerLink]="['/layout/chat',coachDtd?.id]"><i class="fa-solid fa-comments me-2"></i>Chat</button>
-          <button *ngIf="!followed" (click)="follow()" type="button" class="btn follow rounded-pill px-2 ms-3 text-light btn-outline-light "><i class="fa-solid fa-user-plus me-2"></i>follow</button>
-          <button *ngIf="followed" (click)="unfollow()" type="button" class="btn unfollow rounded-pill px-2 ms-3 "><i class="fa-solid fa-check me-1"></i><small>unfollow</small></button>
-        </div>
-        <div class="box mt-4">
-          <p class="head text-light">I believe in better</p>
-          <p class="text-light mt-4 p-dtl">It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, </p>
-        </div>
-        <div class="name-dtl">
-          <p class="name text-light">{{coachDtd?.fullName}}</p>
-          <p class="job mt-2">Coach Master-Owner</p>
-        </div>
+  <div class="card main-box d-flex">
+    <img src="assets/coach.png" alt="">
+    <div class="card-body details">
+      <div class="buttons d-flex justify-content-end mt-3 me-3">
+        <button type="button" class="btn follow rounded-pill px-2 text-light btn-outline-light" [routerLink]="['/layout/chat', coachDtd?.id]">
+          <i class="fa-solid fa-comments me-2"></i>Chat
+        </button>
+        <button *ngIf="!followed" (click)="follow()" type="button" class="btn follow rounded-pill px-2 ms-3 text-light btn-outline-light">
+          <i class="fa-solid fa-user-plus me-2"></i>follow
+        </button>
+        <button *ngIf="followed" (click)="unfollow()" type="button" class="btn unfollow rounded-pill px-2 ms-3">
+          <i class="fa-solid fa-check me-1"></i><small>unfollow</small>
+        </button>
+      </div>
 
-        <div class="d-flex mt-3 justify-content-end">
-          <div
-          class="col-md-auto bg-dark text-white d-flex align-items-center gap-2 px-3 py-1 rounded-pill"
-          style="width: 42%;">
-          <small>3.500 • Rating</small>
-          <div class="d-flex align-items-center">
-            <span *ngFor="let star of stars; let i = index">
-              <i class="fas " [ngClass]="i < (coachDtd?.rating ?? 0) ? 'fa-star gold' : 'fa-star gray'"></i>
-            </span>
+      <div class="box mt-4">
+        <p class="head text-light">I believe in better</p>
+        <p class="text-light mt-4 p-dtl">
+          It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.
+          The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters,
+        </p>
+      </div>
+
+      <div class="name-dtl">
+        <p class="name text-light">{{ coachDtd?.fullName }}</p>
+        <p class="job mt-2">Coach Master-Owner</p>
+      </div>
+
+      <div class="d-flex mt-3 justify-content-end">
+        <div class="rating-badge d-flex align-items-center gap-2 px-3 py-2 rounded-pill">
+          <span class="rating-text">{{ coachDtd?.rating }} Rating</span>
+          <div class="stars d-flex">
+            <ng-container *ngFor="let star of stars; let i = index">
+              <i class="star" [class.filled]="i < filledStars">&#9733;</i>
+            </ng-container>
           </div>
-
-          <i class="fab fa-instagram ms-2"></i>
-          <i class="fab fa-facebook-f"></i>
-
-
+          <div class="actions d-flex gap-1">
+            <button class="action-btn add-btn bg-danger" (click)="openRateModal()">+</button>
+            <button class="action-btn edit-btn bg-primary" (click)="openUpdateModal()" >&#9998;</button>
+          </div>
         </div>
-
-        </div>
-
-
-
+      </div>
     </div>
   </div>
 
   <div [hidden]="!coachDtd">
     <div class="middle-text text-center my-5">
-    <p>Choose Best Suitable
-    <br> Package For You</p>
-  </div>
-  <div class="select d-flex justify-content-end ">
+      <p>Choose Best Suitable<br> Package For You</p>
+    </div>
+
     <div class="select d-flex justify-content-end mb-4">
       <select (change)="onTrainingTypeChange($event)">
         <option hidden selected>Package</option>
@@ -56,51 +59,51 @@
       </select>
     </div>
 
-  </div>
-  <div class="gy-5 justify-content-center gx-5 d-flex py-4 row">
-    <div class="col-md-6 d-flex justify-content-center col-lg-3 col-sm-12 " *ngFor="let type of trainingType  ">
-      <div class="card type-card " style="width: 17rem;">
-        <div class="card-body p-4 typeof-train d-flex  flex-column align-items-center">
-          <div class="title pb-3 d-flex justify-content-center align-items-center">
-            <p>{{type.title}}</p>
-          </div>
-          <div class="detail-train text-center">
-            <p class="p1  pb-1">{{type.noOfSessionsPerWeek}} Sessions / Week</p>
-            <p class="p2 pb-1">${{type.price}} / Month</p>
-            <p class=" p3 pb-2">{{type.durationOfSession}} minutes</p>
-          </div>
-          <div class="main-text pb-3 pt-2 ms-2">
-            <p>{{type.description}}</p>
-          </div>
-          <div class="subscribe">
-            <button (click)="payment(type.id)">Subscribe</button>
+    <div class="gy-5 justify-content-center gx-5 d-flex py-4 row">
+      <ng-container *ngIf="trainingType && trainingType.length > 0; else noTraining">
+        <div class="col-md-6 d-flex justify-content-center col-lg-3 col-sm-12" *ngFor="let type of trainingType">
+          <div class="card type-card" style="width: 17rem;">
+            <div class="card-body p-4 typeof-train d-flex flex-column align-items-center">
+              <div class="title pb-3 d-flex justify-content-center align-items-center">
+                <p>{{ type.title }}</p>
+              </div>
+              <div class="detail-train text-center">
+                <p class="p1 pb-1">{{ type.noOfSessionsPerWeek }} Sessions / Week</p>
+                <p class="p2 pb-1">pound{{ type.price }} / Month</p>
+                <p class="p3 pb-2">{{ type.durationOfSession }} minutes</p>
+              </div>
+              <div class="main-text pb-3 pt-2 ms-2">
+                <p>{{ type.description }}</p>
+              </div>
+              <div class="subscribe">
+                <button (click)="payment(type.id)">Subscribe</button>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
+      </ng-container>
+
+      <ng-template #noTraining>
+        <div class="text-center bg-black text-light w-100 py-4">
+          <p>No training sessions available at the moment.</p>
+        </div>
+      </ng-template>
     </div>
   </div>
 
-  </div>
-
-
-
   <div class="middle-text text-center my-5">
-    <p>Last Updated
-    <br>Posts</p>
+    <p>Last Updated<br>Posts</p>
   </div>
 
   <div class="gy-5 gx-5 justify-content-center py-4 row">
     <div class="col-md-6 justify-content-center d-flex col-lg-4 col-sm-12">
       <div class="card" style="width: 17rem;">
-        <img src="assets/coach.svg" class="card-img-top img-height" alt="...">
+        <img src="assets/background.jpg" class="card-img-top img-height" alt="...">
         <div class="card-body text-center">
           <div class="post pt-2">
-            <p>Want to start Yoga?
-              Here’s How</p>
+            <p>Want to start Yoga? Here’s How</p>
           </div>
-          <div class="post-date pt-2">
-            4/17/2025
-          </div>
+          <div class="post-date pt-2">4/17/2025</div>
         </div>
       </div>
     </div>
@@ -109,42 +112,22 @@
         <img src="assets/background.jpg" class="card-img-top img-height" alt="...">
         <div class="card-body text-center">
           <div class="post pt-2">
-            <p>Want to start Yoga?
-              Here’s How</p>
+            <p>Want to start Yoga? Here’s How</p>
           </div>
-          <div class="post-date pt-2">
-            4/17/2025
-          </div>
+          <div class="post-date pt-2">4/17/2025</div>
         </div>
       </div>
     </div>
     <div class="col-md-6 justify-content-center d-flex col-lg-4 col-sm-12">
       <div class="card" style="width: 17rem;">
-        <img src="assets/coach.svg" class="card-img-top img-height" alt="...">
+        <img src="assets/background.jpg" class="card-img-top img-height" alt="...">
         <div class="card-body text-center">
           <div class="post pt-2">
-            <p>Want to start Yoga?
-              Here’s How</p>
+            <p>Want to start Yoga? Here’s How</p>
           </div>
-          <div class="post-date pt-2">
-            4/17/2025
-          </div>
+          <div class="post-date pt-2">4/17/2025</div>
         </div>
       </div>
     </div>
   </div>
-
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -1,9 +1,9 @@
 <div class="rate-container">
     <h2>Add New Rate</h2>
-  
+
     <form (ngSubmit)="submitRating()" class="rate-form">
-      <label>New Rate</label>
-      <div class="rating-input-wrapper">
+      <label class="mb-3">New Rate</label>
+      <div class="rating-input-wrapper shadow-sm px-3">
         <input
           type="text"
           placeholder="New Rate"
@@ -22,18 +22,23 @@
           </span>
         </div>
       </div>
-  
-      <label for="comment">Your Comment</label>
+
+      <label for="comment" class="mt-3" >Your Comment</label>
       <textarea
         id="comment"
+        class="shadow-sm px-3"
         [(ngModel)]="comment"
         name="comment"
         placeholder="Comment here"
         rows="4"
         required
       ></textarea>
-  
-      <button type="submit">Submit</button>
+
+      <div class="d-flex justify-content-center">
+        <button type="submit">Submit</button>
+      </div>
+
+
     </form>
-  </div>
-  
+
+      </div>

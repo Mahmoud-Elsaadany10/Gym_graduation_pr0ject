@@ -1,0 +1,73 @@
+<div class="rate-container">
+  <h2>Update Your Rating</h2>
+
+  <form (ngSubmit)="submitRating()" class="rate-form">
+    <div>
+       <label for="updateRate" class="mb-3">Rate</label>
+    <div class="rating-input-wrapper d-flex justify-content-between shadow-sm px-3" id="updateRate">
+
+      <label for="rating">{{rating}} Stars</label>
+
+      <div class="star-icons" id ="rating">
+        <span
+          *ngFor="let star of stars; let i = index"
+          [class.filled]="(i + 1) <= (hovered || rating)"
+          [class.disabled]="!isEditable"
+          (click)="setRating(i + 1)"
+          (mouseover)="hoverRating(i + 1)"
+          (mouseleave)="hoverRating(0)"
+        >
+          ★
+        </span>
+      </div>
+    </div>
+    </div>
+
+
+    <!-- Comment Section -->
+    <div class="form-group">
+      <label for="comment" class="mb-3">Your Comment</label>
+      <textarea
+
+        id="comment"
+        [(ngModel)]="comment"
+        name="comment"
+        placeholder="Edit your comment here"
+        rows="4"
+        [readonly]="!isEditable"
+        class="form-control shadow-sm px-3"
+      ></textarea>
+    </div>
+
+    <!-- Buttons -->
+    <div class="d-flex justify-content-around mt-4">
+      <button
+        type="button"
+        class="btn btn-outline-danger"
+        *ngIf="isEditable"
+        (click)="deleteRating()"
+      >
+        Delete
+      </button>
+
+      <button
+        type="submit"
+        class="btn btn-primary"
+        *ngIf="isEditable"
+      >
+        Submit
+      </button>
+
+    </div>
+    <div class="d-flex justify-content-center ">
+      <button
+      type="button"
+      class="btn w-75 edit"
+      *ngIf="!isEditable"
+      (click)="editRating()"
+    >
+      Edit
+    </button>
+    </div>
+  </form>
+</div>

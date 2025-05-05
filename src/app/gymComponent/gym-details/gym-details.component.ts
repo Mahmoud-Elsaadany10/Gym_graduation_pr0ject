@@ -1,36 +1,126 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
-
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule, NgFor } from '@angular/common';
+import { NavbarComponent } from '../../mainPage/navbar/navbar.component';
 import { AddRateComponent } from '../../shared/add-rate/add-rate.component';
+import { GymService } from '../service/gym.service';
+import { UpdateRateComponent } from '../../shared/update-rate/update-rate.component';
+import { SharedService } from '../../shared/services/shared.service';
+
 
 
 @Component({
   standalone: true,
   selector: 'app-gym-details',
-  imports: [ NgFor, CommonModule],
+  imports: [NavbarComponent, NgFor, CommonModule,MatDialogModule
+  ],
   templateUrl: './gym-details.component.html',
   styleUrl: './gym-details.component.css'
 })
 export class GymDetailsComponent implements OnInit {
-  gymId: number | null = null;
 
-  selectedTab: string = 'Description'; // مبدئيا Description هو اللي active
-  constructor(private route: ActivatedRoute,private dialog: MatDialog) {
+  gymName: string = '...';
+  coachName: string = 'user';
+  Desctibtion:string='...';
+  coachImage: string='assets/defaultUserPic.jpeg';
+  fortnightlyPrice:number=0;
+  monthlyPrice:number=0;
+  yearlyPrice:number=0;
+  sessionPrice:number=0;
+  gymId : number = 0
+
+  averageRating: number = 0;
+  filledStars: number = 0;
+  stars = Array(5).fill(0);
+  selectedTab: string = 'Description';
+  isRated: boolean = false;
+
+  constructor(private route: ActivatedRoute,
+    private dialog: MatDialog ,
+  private _gymService: GymService ,
+  private _loadRate : SharedService) {
+
   }
   openRateModal() {
-    this.dialog.open(AddRateComponent, {
+    const gymID = Number(this.route.snapshot.paramMap.get('id'));
+    console.log('Current Gym ID:', gymID);
+    const dialogRef = this.dialog.open(AddRateComponent, {
       width: '600px',
-
+      data: {
+        type: 'gym',
+        gymID: gymID
+      }
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      if(result ="sendRate"){
+        this.ngOnInit();
+      }
     });
   }
-  ngOnInit(): void {
-    const gymId = this.route.snapshot.paramMap.get('id');
-    console.log('Gym ID from URL:', gymId);
 
-    // تستخدمي gymId تنادي الـ API بتاع تفاصيل الجيم
+  loadRate() {
+    this._loadRate.getRatingById(this.gymId).subscribe({
+      next: (res) => {
+        this.averageRating = res.ratingValue;
+      }
+    });
   }
+
+  isRatedGym() {
+    this._gymService.chechIfRated(this.gymId).subscribe({
+      next: (res) => {
+        this.isRated = res;
+      }
+    });
+  }
+
+
+  openUpdateModal(){
+    this.dialog.open(UpdateRateComponent, {
+      width: '600px',
+      data: {
+        type: 'gym',
+        coachId: this.gymId
+      }
+    });
+
+  }
+
+
+
+  ngOnInit(): void {
+
+    this.gymId =Number(this.route.snapshot.paramMap.get('id'))
+    if (this.gymId) {
+      this._gymService.getGymById(this.gymId).subscribe({
+        next: (data) => {
+          // console.log('Gym data:', data);
+          this.gymName = data.gymName;
+          this.coachName = data.coachFullName;
+          this.averageRating = data.averageRating;
+          this.filledStars = Math.round(this.averageRating);
+          this.Desctibtion=data.description;
+          this.fortnightlyPrice=data.fortnightlyPrice;
+          this.monthlyPrice=data.monthlyPrice;
+          this.sessionPrice=data.sessionPrice;
+          this.yearlyPrice=data.yearlyPrice
+          if (data.coachProfilePictureUrl) {
+            this.coachImage = data.coachProfilePictureUrl;
+          }
+        },
+        error: (err) => {
+          console.error(err);
+        }
+      });
+    }
+
+    this.loadRate();
+    this.isRatedGym();
+  }
+
+
+
 
 
   scrollToSection(sectionId: string, tabName: string) {
@@ -66,25 +156,9 @@ export class GymDetailsComponent implements OnInit {
       price: '$50.00',
       name: 'Ultra Grip Gym Shoes'
     }
-    // ممكن تزودي منتجات زي ما تحبي
+
   ];
 
-  posts = [
-    {
-      title: "Want to start Yoga? Here’s How",
-      image: "assets/posts/yoga.png",
-      date: new Date("2024-12-05")
-    },
-    {
-      title: "A Guide to Boxing – The most exiting sport!",
-      image: "assets/posts/boxing.png",
-      date: new Date("2024-12-05")
-    },
-    {
-      title: "Quick workout recovery tips",
-      image: "assets/posts/workout.png",
-      date: new Date("2024-12-05")
-    }
-  ];
+
 
 }

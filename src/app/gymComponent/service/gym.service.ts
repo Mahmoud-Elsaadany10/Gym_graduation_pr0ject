@@ -18,4 +18,11 @@ export class GymService {
   searchGym(gymName :string):Observable<GymResponse>{
     return this._http.get<GymResponse>(`${environment.mainurl}/Gym?GymName=${gymName}`)
   }
+  getGymById(id: number): Observable<any> {
+    return this._http.get<GymResponse>(`${environment.mainurl}/Gym/${id}`)
+  }
+
+  chechIfRated(id: number): Observable<any> {
+    return this._http.get<any>(`${environment.mainurl}/GymRating/hasRated/${id}`);
+  }
 }

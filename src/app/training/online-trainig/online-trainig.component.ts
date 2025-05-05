@@ -6,7 +6,7 @@ import { NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { Trainer } from '../../Model/Models';
 import { Subscription } from 'rxjs';
 import { NavbarComponent } from "../../mainPage/navbar/navbar.component";
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 
 @Component({
@@ -24,11 +24,11 @@ export class OnlineTrainigComponent implements OnInit , OnDestroy{
   totalCoach :number = 0
   coachName :string = ""
   hide :boolean = false
-  loading :boolean = false
   coachSubscription :Subscription | null = null
   searchSubscription :Subscription | null = null
+  filledStars: number = 0;
 
-  constructor(private _onlineTrainingService : OnlineTrainingService) {}
+  constructor(private _onlineTrainingService : OnlineTrainingService ,private router: Router) {}
   ngOnDestroy(): void {
     this.coachSubscription?.unsubscribe()
     this.searchSubscription?.unsubscribe()
@@ -37,7 +37,9 @@ export class OnlineTrainigComponent implements OnInit , OnDestroy{
   ngOnInit(): void {
     this.getCoachByPage()
     this.hide = true
-    this.loading = true
+  }
+  gotToDetails(id :string){
+  this.router.navigate(['/layout/coachDetails',id])
 
   }
 
@@ -47,12 +49,12 @@ export class OnlineTrainigComponent implements OnInit , OnDestroy{
         if(response){
           this.coachs = response.data
           this.totalCoach = response.totalRecords
-          this.loading = false
 
+          console.log(this.coachs)
         }
       },
       error : (err) => {console.error('Error fetching coaches:', err)
-        this.loading = false
+
       }
 
     });

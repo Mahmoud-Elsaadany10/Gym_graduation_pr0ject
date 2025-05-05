@@ -7,11 +7,12 @@ import { Subscription } from 'rxjs';
 import { gym } from '../../Model/Models';
 import { NavbarComponent } from "../../mainPage/navbar/navbar.component";
 import { FooterComponent } from "../../shared/footer/footer.component";
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-gym',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgbPaginationModule, NavbarComponent],
+  imports: [CommonModule, FormsModule, NgbPaginationModule, NavbarComponent ,RouterModule],
   templateUrl: './gym.component.html',
   styleUrls: ['./gym.component.css']
 })
@@ -29,7 +30,9 @@ export class GymComponent implements OnInit , OnDestroy {
   searchSubscription :Subscription | null = null
 
 
-  constructor(private gymData: GymService) {}
+  constructor(private gymData: GymService ,
+    private router : Router
+  ) {}
 
   ngOnDestroy() {
     this.gymSubscription?.unsubscribe()
@@ -53,6 +56,8 @@ export class GymComponent implements OnInit , OnDestroy {
       error: (err) => console.error('Error fetching gyms:', err)
     });
   }
+
+
 
   onPageChange(newPage: number) {
     this.page = newPage;
