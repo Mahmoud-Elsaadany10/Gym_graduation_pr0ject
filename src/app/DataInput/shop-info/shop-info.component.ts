@@ -19,7 +19,7 @@ export class ShopInfoComponent {
     private router: Router
   ) {
     this.shopInfoForm = this.fbuilder.group({
-      name: ['', [Validators.required]],
+      shopName: ['', [Validators.required]],
       governorate: ['', [Validators.required]],
       city: ['', [Validators.required]],
       address: ['', [Validators.required]],
@@ -30,8 +30,8 @@ export class ShopInfoComponent {
 
   }
 
-  get name() {
-    return this.shopInfoForm.get('name');
+  get shopName() {
+    return this.shopInfoForm.get('shopName');
   }
 
   get governorate() {

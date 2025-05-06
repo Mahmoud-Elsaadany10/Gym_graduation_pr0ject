@@ -16,12 +16,12 @@
 
       <!-- Shop Name -->
       <div class="form-group mb-3"
-          [ngStyle]="(name?.invalid && name?.touched) ? {'margin-bottom': '0'} : {}">
+          [ngStyle]="(shopName?.invalid && shopName?.touched) ? {'margin-bottom': '0'} : {}">
         <div class="position-relative">
-          <input type="text" class="w-100 input" placeholder="Shop Name" formControlName="name" />
+          <input type="text" class="w-100 input" placeholder="Shop Name" formControlName="shopName" />
         </div>
-        <small *ngIf="name?.invalid && name?.touched">
-          <span *ngIf="name?.errors?.['required']">Gym Name is required.</span>
+        <small *ngIf="shopName?.invalid && shopName?.touched">
+          <span *ngIf="shopName?.errors?.['required']">Gym Name is required.</span>
         </small>
       </div>
 

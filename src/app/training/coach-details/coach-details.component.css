@@ -211,6 +211,7 @@ select{
   }
   .buttons{
     justify-content: center !important;
+    margin:0 !important;
   }
   .coach-img img{
     border-radius: .5rem;
@@ -220,6 +221,10 @@ select{
   }
   .gx-5 {
     --bs-gutter-x: 0rem !important;
+    }
+    .rate{
+      justify-content: center !important;
+      margin-right:0 !important;
     }
 
 }
@@ -232,6 +237,7 @@ select{
     object-fit: cover;
     height: 30rem;
   }
+
 }
 
 

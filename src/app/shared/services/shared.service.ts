@@ -97,4 +97,8 @@ export class SharedService {
     return this._http.delete<any>(`${environment.mainurl}/CoachRating/${id}`);
   }
 
+  checkIfRateTraine(id: string): Observable<any> {
+    return this._http.get<any>(`${environment.mainurl}/CoachRating/hasRated/${id}`);
+  }
+
 }

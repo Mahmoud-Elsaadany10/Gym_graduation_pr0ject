@@ -29,7 +29,7 @@
         <p class="job mt-2">Coach Master-Owner</p>
       </div>
 
-      <div class="d-flex mt-3 justify-content-end">
+      <div class="d-flex rate mt-3 justify-content-end me-3">
         <div class="rating-badge d-flex align-items-center gap-2 px-3 py-2 rounded-pill">
           <span class="rating-text">{{ coachDtd?.rating }} Rating</span>
           <div class="stars d-flex">
@@ -38,8 +38,8 @@
             </ng-container>
           </div>
           <div class="actions d-flex gap-1">
-            <button class="action-btn add-btn bg-danger" (click)="openRateModal()">+</button>
-            <button class="action-btn edit-btn bg-primary" (click)="openUpdateModal()" >&#9998;</button>
+            <button class="action-btn add-btn bg-danger" [hidden]="ifRate" (click)="openRateModal()">+</button>
+            <button class="action-btn edit-btn bg-primary" [hidden]="!ifRate" (click)="openUpdateModal()" >&#9998;</button>
           </div>
         </div>
       </div>

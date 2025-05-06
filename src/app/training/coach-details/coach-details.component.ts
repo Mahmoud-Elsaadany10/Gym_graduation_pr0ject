@@ -36,7 +36,7 @@ export class CoachDetailsComponent implements OnInit {
   filledStars: number = 0;
 
   rating = 0
-
+  ifRate :boolean = false
 
   stars = Array(5).fill(0);
   noTrainingMessage: string=""
@@ -45,25 +45,34 @@ export class CoachDetailsComponent implements OnInit {
     private _getDetails: OnlineTrainingService,
     private activeRoute: ActivatedRoute,
     private _Check: RegistrationService,
-    private _loadRate: SharedService ,
+    private _Rate: SharedService ,
     private _toast: SharedService ,
-    private dialog: MatDialog
+    private dialog: MatDialog ,
+
   ) {}
 
   ngOnInit(): void {
     this.getCoachById();
     this.getGroupTrainingById();
+    this.checkRate()
 
   }
 
   loadRate() {
-    this._loadRate.getTrainingRatingById(this.id).subscribe({
+    this._Rate.getTrainingRatingById(this.id).subscribe({
       next: (res) => {
         this.rating = res.ratingValue;
       }
     });
   }
 
+  checkRate(){
+    this._Rate.checkIfRateTraine(this.id).subscribe({
+      next : (res)=>{
+        this.ifRate = res
+      }
+    })
+  }
 
 
 
@@ -76,8 +85,6 @@ export class CoachDetailsComponent implements OnInit {
       next: (coachDetail) => {
         this.coachDtd = coachDetail.data;
         this.filledStars = Math.round(this.coachDtd.rating);
-
-        // console.log(this.coachDtd);
       },
       error: (err) => {
         console.error('Error fetching coach details:', err);
@@ -99,6 +106,7 @@ export class CoachDetailsComponent implements OnInit {
       if(result ="sended"){
         this.loadRate();
         this.getCoachById();
+        this.checkRate()
       }
     });
   }
@@ -115,6 +123,7 @@ export class CoachDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'updated' || result === 'deleted') {
         this.loadRate();
+        this.checkRate()
         this.getCoachById();
       }
     });

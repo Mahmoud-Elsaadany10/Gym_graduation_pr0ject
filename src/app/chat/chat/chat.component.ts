@@ -49,7 +49,6 @@ export class ChatComponent implements OnInit, OnDestroy {
       return;
     }
 
-    // Decode token to get user ID
     const decodedToken: any = jwtDecode(token);
     this.senderId = decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
 
@@ -100,32 +99,34 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   // Send message
-  send(): void {
-    if (!this.newMessage.trim() || !this.isConnected) return;
+send(): void {
+  if (!this.newMessage.trim() || !this.isConnected) return;
 
-    const message: Message = {
-      senderId: this.senderId,
-      receiverId: this.receiverId,
-      content: this.newMessage,
-      imageUrl: null,
-      timeStamp: new Date().toISOString()
-    };
+  const message: Message = {
+    senderId: this.senderId,
+    receiverId: this.receiverId,
+    content: this.newMessage,
+    imageUrl: null,
+    timeStamp: new Date().toISOString()
+  };
 
-    this.messages.push(message);
-    const tempMessage = this.newMessage;
-    this.newMessage = '';
-    this.scrollToBottom();
+  // Clear the input immediately but don't add to messages yet
+  const tempMessage = this.newMessage;
+  this.newMessage = '';
 
-    const sendSub = this.chatService.sendMessage(message).subscribe({
-      error: (err) => {
-        console.error('Failed to send message:', err);
-        this.sharedService.show('Failed to send message', 'error');
-        this.messages = this.messages.filter(m => m !== message);
-        this.newMessage = tempMessage;
-      }
-    });
-    this.subscriptions.push(sendSub);
-  }
+  const sendSub = this.chatService.sendMessage(message).subscribe({
+    next: () => {
+      // The message will be added through the message$ subscription
+      this.scrollToBottom();
+    },
+    error: (err) => {
+      console.error('Failed to send message:', err);
+      this.sharedService.show('Failed to send message', 'error');
+      this.newMessage = tempMessage;
+    }
+  });
+  this.subscriptions.push(sendSub);
+}
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
