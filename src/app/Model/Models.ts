@@ -1,3 +1,5 @@
+import { Message } from "../chat/chat/chat.component";
+
 export interface loginUser{
   email :string ;
   password :string;
@@ -204,4 +206,14 @@ export interface GymRating {
   ratingValue: number;
   review: string;
   traineeID: string;
+}
+export interface ChatResponse {
+  isSuccess: boolean;
+  data: {
+    pageNumber: number;
+    pageSize: number;
+    totalPages: number;
+    totalRecords: number;
+    data: Message[];
+  };
 }

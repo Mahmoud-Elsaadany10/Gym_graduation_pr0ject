@@ -7,13 +7,14 @@ import { AddRateComponent } from '../../shared/add-rate/add-rate.component';
 import { GymService } from '../service/gym.service';
 import { UpdateRateComponent } from '../../shared/update-rate/update-rate.component';
 import { SharedService } from '../../shared/services/shared.service';
+import { RegistrationService } from '../../Registration/service/registration.service';
 
 
 
 @Component({
   standalone: true,
   selector: 'app-gym-details',
-  imports: [NavbarComponent, NgFor, CommonModule,MatDialogModule
+  imports: [NavbarComponent, CommonModule,MatDialogModule
   ],
   templateUrl: './gym-details.component.html',
   styleUrl: './gym-details.component.css'
@@ -23,7 +24,7 @@ export class GymDetailsComponent implements OnInit {
   gymName: string = '...';
   coachName: string = 'user';
   Desctibtion:string='...';
-  coachImage: string='assets/defaultUserPic.jpeg';
+  coachImage: string='';
   fortnightlyPrice:number=0;
   monthlyPrice:number=0;
   yearlyPrice:number=0;
@@ -39,10 +40,15 @@ export class GymDetailsComponent implements OnInit {
   constructor(private route: ActivatedRoute,
     private dialog: MatDialog ,
   private _gymService: GymService ,
-  private _loadRate : SharedService) {
+  private _loadRate : SharedService ,
+private _Check: RegistrationService,
+) {
 
   }
   openRateModal() {
+    if (this._Check.userData.getValue() === null) {
+        this._loadRate.show("Please Login First", "light");
+    }else{
     const gymID = Number(this.route.snapshot.paramMap.get('id'));
     console.log('Current Gym ID:', gymID);
     const dialogRef = this.dialog.open(AddRateComponent, {
@@ -57,6 +63,9 @@ export class GymDetailsComponent implements OnInit {
         this.ngOnInit();
       }
     });
+    }
+
+
   }
 
   loadRate() {
@@ -74,18 +83,41 @@ export class GymDetailsComponent implements OnInit {
       }
     });
   }
-
-
-  openUpdateModal(){
-    this.dialog.open(UpdateRateComponent, {
+  openUpdateModal() {
+    if (this._Check.userData.getValue() === null) {
+      this._loadRate.show("Please Login First", "light");
+  }else{
+        const dialogRef = this.dialog.open(UpdateRateComponent, {
       width: '600px',
       data: {
         type: 'gym',
-        coachId: this.gymId
+        gymID: this.route.snapshot.paramMap.get('id')
       }
     });
 
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'update' || result === 'delete') {
+        this.ngOnInit();
+      }
+    });
   }
+
+  }
+
+//   openUpdateModal(){
+//     if (this._Check.userData.getValue() === null) {
+//       this._loadRate.show("Please Login First", "light");
+//   }else{
+//     this.dialog.open(UpdateRateComponent, {
+//       width: '600px',
+//       data: {
+//         type: 'gym',
+//         coachId: this.gymId
+//       }
+//     });
+
+//   }
+// }
 
 
 

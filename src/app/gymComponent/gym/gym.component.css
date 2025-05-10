@@ -42,7 +42,36 @@ button{
   background-color: var(  --color-third);
   border-color: transparent;
   color: white;
+
 }
+.end-i{
+  right: 17px;
+  top: 47%;
+  z-index: 66;
+  transform: translate(0, -50%);
+  position: absolute;
+}
+.select-filter {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  padding: 12px 16px;
+  font-size: 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  background-color: white;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  background-color: #7C93C3;
+}
+
+.select-filter:focus {
+    outline: none;
+    border-color: #3f51b5;
+}
+
 @media (max-width : 768px){
   .card{
     width: 18rem !important;}
@@ -56,6 +85,11 @@ button{
   .search{
     padding: 0px 3px !important;
 
+  }
+}@media (max-width : 576px){
+  .select-filter{
+    font-size: 12px;
+    padding: 0px;
   }
 }
 .x{

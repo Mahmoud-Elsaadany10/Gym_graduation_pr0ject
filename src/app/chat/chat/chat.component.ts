@@ -9,17 +9,20 @@ import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../../mainPage/navbar/navbar.component";
 
 export interface Message {
+  id?: number;
   senderId: string;
   receiverId: string;
   content: string;
   imageUrl: string | null;
   timeStamp: string;
+  isSeen?: boolean;
+  seenAt?: string | null;
 }
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.css'] ,
+  styleUrls: ['./chat.component.css'],
   imports: [FormsModule, CommonModule, NavbarComponent]
 })
 export class ChatComponent implements OnInit, OnDestroy {
@@ -29,6 +32,7 @@ export class ChatComponent implements OnInit, OnDestroy {
   receiverId = '';
   isConnected = false;
   isLoading = false;
+
 
   @ViewChild('chatBox') chatBox!: ElementRef;
 
@@ -70,7 +74,7 @@ export class ChatComponent implements OnInit, OnDestroy {
       const newReceiverId = params.get('id');
       if (newReceiverId && newReceiverId !== this.receiverId) {
         this.receiverId = newReceiverId;
-        this.messages = [];
+        this.loadChatHistory();
       }
     });
     this.subscriptions.push(routeSub);
@@ -89,6 +93,41 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.subscriptions.push(messageSub);
   }
 
+  // Load chat history
+  private loadChatHistory(): void {
+    this.isLoading = true;
+    this.messages = []; // Clear existing messages
+    const coachId = this.activeRoute.snapshot.paramMap.get('id')!;
+
+    const historySub = this.chatService.getAllMessage(coachId).subscribe({
+      next: (response) => {
+        if (response.isSuccess && response.data) {
+          // Filter messages for the current conversation
+          this.messages = response.data.data.filter((msg: { senderId: string; receiverId: string; }) =>
+            (msg.senderId === this.senderId && msg.receiverId === this.receiverId) ||
+            (msg.senderId === this.receiverId && msg.receiverId === this.senderId)
+          );
+          this.sortMessagesByTimestamp();
+          this.scrollToBottom();
+        }
+        this.isLoading = false;
+      },
+      error: (err) => {
+        console.error('Failed to load chat history:', err);
+        this.sharedService.show('Failed to load chat history', 'error');
+        this.isLoading = false;
+      }
+    });
+    this.subscriptions.push(historySub);
+  }
+
+  // Sort messages by timestamp
+  private sortMessagesByTimestamp(): void {
+    this.messages.sort((a, b) =>
+      new Date(a.timeStamp).getTime() - new Date(b.timeStamp).getTime()
+    );
+  }
+
   // Scroll to the bottom of the chat box
   private scrollToBottom(): void {
     setTimeout(() => {
@@ -99,34 +138,34 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   // Send message
-send(): void {
-  if (!this.newMessage.trim() || !this.isConnected) return;
+  send(): void {
+    if (!this.newMessage.trim() || !this.isConnected) return;
 
-  const message: Message = {
-    senderId: this.senderId,
-    receiverId: this.receiverId,
-    content: this.newMessage,
-    imageUrl: null,
-    timeStamp: new Date().toISOString()
-  };
+    const message: Message = {
+      senderId: this.senderId,
+      receiverId: this.receiverId,
+      content: this.newMessage,
+      imageUrl: null,
+      timeStamp: new Date().toISOString()
+    };
 
-  // Clear the input immediately but don't add to messages yet
-  const tempMessage = this.newMessage;
-  this.newMessage = '';
+    // Clear the input immediately but don't add to messages yet
+    const tempMessage = this.newMessage;
+    this.newMessage = '';
 
-  const sendSub = this.chatService.sendMessage(message).subscribe({
-    next: () => {
-      // The message will be added through the message$ subscription
-      this.scrollToBottom();
-    },
-    error: (err) => {
-      console.error('Failed to send message:', err);
-      this.sharedService.show('Failed to send message', 'error');
-      this.newMessage = tempMessage;
-    }
-  });
-  this.subscriptions.push(sendSub);
-}
+    const sendSub = this.chatService.sendMessage(message).subscribe({
+      next: () => {
+        // The message will be added through the message$ subscription
+        this.scrollToBottom();
+      },
+      error: (err) => {
+        console.error('Failed to send message:', err);
+        this.sharedService.show('Failed to send message', 'error');
+        this.newMessage = tempMessage;
+      }
+    });
+    this.subscriptions.push(sendSub);
+  }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());

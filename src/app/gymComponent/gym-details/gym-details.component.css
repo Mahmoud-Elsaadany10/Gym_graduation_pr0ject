@@ -1,6 +1,6 @@
 .hero-section {
   background-image: url("./../../../assets/Rectangle\ 34.jpg");
-    background-size: contain;
+    background-size: cover;
   background-repeat: no-repeat;
     height: 100vh;
     position: relative;
@@ -396,7 +396,7 @@
   }
 
   .product-card {
-    background-color: #2d2d2d; /* لون غامق للكارت */
+    background-color: #2d2d2d;
     color: #fff;
     border-radius: 12px;
     width: 100%;
@@ -506,25 +506,9 @@
     font-family: Arial, sans-serif;
   }
 
-  .rating-text {
-    margin-right: 15px;
-    font-size: 16px;
-  }
 
-  .stars {
-    display: flex;
-    margin-right: 15px;
-  }
 
-  .star {
-    font-size: 20px;
-    color: #555;
-    margin: 0 2px;
-  }
 
-  .star.filled {
-    color: gold;
-  }
 
   .actions {
     display: flex;
@@ -551,4 +535,116 @@
   .edit-btn {
     background-color: #3b5998; /* أزرق */
     color: white;
+  }
+  @media (max-width: 768px) {
+    .hero-section {
+      background-size: cover;
+      background-position: center;
+      text-align: center;
+      padding: 2rem 1rem;
+    }
+
+    .title {
+      font-size: 2rem;
+    }
+
+    .action-buttons {
+      top: 1rem;
+      right: 1rem;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .fitness-section {
+      grid-template-columns: 1fr;
+      padding: 2rem 1rem;
+      height: auto;
+    }
+
+    .fitness-image {
+      width: 100%;
+      max-height: 300px;
+      object-fit: contain;
+    }
+
+    .fitness-content {
+      margin-top: 1rem;
+      height: auto;
+    }
+
+    .fitness-content h1 {
+      font-size: 2.5rem;
+    }
+
+    .features {
+      grid-template-columns: 1fr;
+    }
+
+    .tabs-container {
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .tab {
+      width: 100%;
+      font-size: 0.95rem;
+    }
+
+    .packages-section {
+      margin-top: 5rem;
+      padding: 2rem 1rem;
+    }
+
+    .offers-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .product-card img {
+      height: 150px;
+    }
+
+    .product-info {
+      padding: 10px;
+    }
+
+    .buy-btn {
+      width: 100%;
+    }
+
+    .view-all-btn {
+      text-align: center;
+    }
+
+    .view-all-btn button {
+      width: 100%;
+    }
+
+    .container .row {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .col-md-6 {
+      width: 100% !important;
+      justify-content: center !important;
+      margin-bottom: 1rem;
+    }
+
+    .rating-badge {
+      gap: 0.5rem;
+    }
+
+    .actions {
+      justify-content: center;
+    }
+
+    .offer-card {
+      flex-direction: column;
+      text-align: center;
+      align-items: center;
+    }
+
+    .offer-image {
+      margin: 0 0 10px 0;
+    }
   }

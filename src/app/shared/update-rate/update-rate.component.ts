@@ -64,10 +64,11 @@ export class UpdateRateComponent implements OnInit {
     };
 
     if (this.data.type === 'gym') {
+
       this._Rate.UpdateRating(payload, this.ratingId as number).subscribe({
         next: (res) => {
           console.log('Gym rating updated:', res);
-          this.dialogRef.close(true);
+          this.dialogRef.close("update");
         },
         error: (err) => console.error('Error updating gym rating:', err)
       });
@@ -75,7 +76,7 @@ export class UpdateRateComponent implements OnInit {
       this._Rate.updateTrainingRating(payload, this.ratingId as string).subscribe({
         next: (res) => {
           console.log('Training rating updated:', res);
-          this.dialogRef.close('deleted');
+          this.dialogRef.close('updated');
         },
         error: (err) => console.error('Error updating training rating:', err)
       });
@@ -85,7 +86,7 @@ export class UpdateRateComponent implements OnInit {
   deleteRating() {
     if (this.data.type === 'gym') {
       this._Rate.deleteRating(this.ratingId as number).subscribe({
-        next: () => this.dialogRef.close(true),
+        next: () => this.dialogRef.close("delete"),
         error: (err) => console.error('Error deleting gym rating:', err)
       });
     } else if (this.data.type === 'training') {

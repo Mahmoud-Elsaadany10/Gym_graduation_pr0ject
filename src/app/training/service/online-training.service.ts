@@ -30,6 +30,12 @@ export class OnlineTrainingService {
   unfollowCoach(id: string): Observable<APiRes> {
     return this._http.delete<APiRes>(`${environment.mainurl}/Follow/unfollow-user/${id}`);
   }
+  sortOnlineTraining(Option : string):Observable<TrainersResponse>{
+    return this._http.get<TrainersResponse>(`${environment.mainurl}/User/GetAllCoaches?SortBy=${Option}`)
+  }
+  sortByRating(minRating : number , maxRating: number): Observable<TrainersResponse> {
+    return this._http.get<TrainersResponse>(`${environment.mainurl}/User/GetAllCoaches?MinRating=${minRating}&MaxRating=${maxRating}`);
+  }
   getGroupTrainingById(id: string): Observable<TrainingSession[]> {
     return this._http.get<TrainingSession[]>(
       `${environment.mainurl}/OnlineTraining/ByCoachId/Group?CoachId=${id}`,

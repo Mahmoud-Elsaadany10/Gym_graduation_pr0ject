@@ -3,6 +3,9 @@ import * as signalR from '@microsoft/signalr';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Message } from '../chat/chat.component';
 import { SharedService } from '../../shared/services/shared.service';
+import { ChatResponse } from '../../Model/Models';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +17,9 @@ export class ChatService {
   // Public observables
   message$ = this.messageSource.asObservable();
 
-  constructor(private sharedService: SharedService) {}
+  constructor(private sharedService: SharedService ,
+    private _http : HttpClient
+  ) {}
 
   // Start connection to SignalR Hub
   startConnection(token: string): Observable<boolean> {
@@ -77,4 +82,9 @@ export class ChatService {
         });
     }
   }
+
+  getAllMessage(UserId : string):Observable<ChatResponse>{
+    return this._http.get<ChatResponse>(`${environment.mainurl}/Chat/history/${UserId}?pageNumber=1&pageSize=20`)
+  }
 }
+

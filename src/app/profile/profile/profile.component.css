@@ -140,12 +140,22 @@ textarea{
     font-size: 5px;
   }
   .submit-btn {
-    width: 10%;
+    width: 30%;
   }
   label{
     font-size: 10px;
   }
   button{
     font-size: 12px;
+  }
+  input{
+    font-size: 12px;
+  }
+  textarea{
+    font-size: 12px;
+  }
+  .head p{
+    font-size: 19px;
+
   }
 }

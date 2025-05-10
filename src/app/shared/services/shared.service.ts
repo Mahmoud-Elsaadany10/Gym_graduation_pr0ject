@@ -71,10 +71,6 @@ export class SharedService {
       { headers: { 'X-Skip-Error': 'true' } });
   }
 
-
-
-  // training rating
-
   sendTrainingRating(payload: {
     coachId: string;
     ratingValue: number;
@@ -98,7 +94,8 @@ export class SharedService {
   }
 
   checkIfRateTraine(id: string): Observable<any> {
-    return this._http.get<any>(`${environment.mainurl}/CoachRating/hasRated/${id}`);
+    return this._http.get<any>(`${environment.mainurl}/CoachRating/hasRated/${id}`,
+      { headers: { 'X-Skip-Error': 'true' } });
   }
 
 }

@@ -10,6 +10,36 @@
       <button (click)="searchGym()" class="rounded-pill search"><i class="fa-solid fa-magnifying-glass me-2"></i>Search</button>
   </div>
 
+  <div class="d-flex justify-content-around mt-4 mb-5 ">
+    <div class="position-relative">
+      <select [(ngModel)]="selectedCity" class="select-filter" (change)="onCityChange()">
+        <option value="" hidden selected>City</option>
+        <option value="" [value]="''">All Cities</option>
+        <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+      </select>
+      <i class="fa-solid fa-caret-down end-i"></i>
+    </div>
+    <div class="position-relative">
+      <select class="select-filter" (change)="onSortChange($event)">
+        <option value="" hidden selected>Sort</option>
+        <option value="none">All Gyms</option>
+        <option value="subscriptions">subscriptions</option>
+        <option value="rating">Rating</option>
+        <option value="highestPrice">highest Price</option>
+        <option value="lowestPrice">lowest Price</option>
+      </select>
+      <i class="fa-solid fa-caret-down end-i"></i>
+    </div>
+    <div class="position-relative">
+      <select [(ngModel)]="selectedCity" class="select-filter" (change)="onCityChange()">
+        <option value="" hidden selected>City</option>
+        <option value="" [value]="''">All Cities</option>
+        <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
+      </select>
+      <i class="fa-solid fa-caret-down end-i"></i>
+    </div>
+  </div>
+
   <div class="row gy-5 gx-2">
     <div class="col-md-6 col-lg-4 responsive" *ngFor="let gym of gyms">
       <div class="card" >

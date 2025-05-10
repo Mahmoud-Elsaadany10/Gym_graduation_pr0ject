@@ -80,6 +80,7 @@ export class CoachDetailsComponent implements OnInit {
 
 
   getCoachById() {
+
     this.id = this.activeRoute.snapshot.paramMap.get("id")!;
     this._getDetails.getCoachById(this.id).subscribe({
       next: (coachDetail) => {
@@ -94,7 +95,10 @@ export class CoachDetailsComponent implements OnInit {
   }
 
   openRateModal() {
-    const coachId = (this.activeRoute.snapshot.paramMap.get('id'));
+    if (this._Check.userData.getValue() === null) {
+      this._toast.show("Please Login First", "light");
+  }else{
+       const coachId = (this.activeRoute.snapshot.paramMap.get('id'));
     const dialogRef =this.dialog.open(AddRateComponent, {
       width: '600px',
       data: {
@@ -110,9 +114,13 @@ export class CoachDetailsComponent implements OnInit {
       }
     });
   }
+  }
 
   openUpdateModal() {
-    const dialogRef = this.dialog.open(UpdateRateComponent, {
+    if (this._Check.userData.getValue() === null) {
+      this._toast.show("Please Login First", "light");
+  }else{
+        const dialogRef = this.dialog.open(UpdateRateComponent, {
       width: '600px',
       data: {
         type: 'training',
@@ -127,6 +135,8 @@ export class CoachDetailsComponent implements OnInit {
         this.getCoachById();
       }
     });
+  }
+
   }
 
 

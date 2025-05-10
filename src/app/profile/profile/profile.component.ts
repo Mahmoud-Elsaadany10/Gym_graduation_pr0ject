@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NavbarComponent } from "../../mainPage/navbar/navbar.component";
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ProfileService } from '../service/profile.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { jwtDecode } from 'jwt-decode';
 import { OnlineTrainingForm } from '../../Model/Models';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
@@ -30,12 +30,14 @@ export class ProfileComponent implements OnInit {
   gymImage : string |null = ''
   coachImage :string | null =""
   shopImage : string | null =""
+  previewUrl: string | ArrayBuffer | null = null;
 
 
   constructor(private fbulider: FormBuilder ,
     private _profileServer: ProfileService ,
     private modalService: NgbModal ,
-    private toastService: SharedService)
+    private toastService: SharedService ,
+    )
 
     {
     this.CoachInfo = this.fbulider.group({
@@ -89,6 +91,17 @@ export class ProfileComponent implements OnInit {
     this.getOnlineTrainingInfo()
     this.getShopDetails()
   }
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      const file = input.files[0];
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.previewUrl = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
 
   openPasswordModal() {
     this.modalService.open(ChangePasswordComponent, { centered: true });
@@ -112,14 +125,19 @@ export class ProfileComponent implements OnInit {
 
   getCoachInfo() {
     this._profileServer.getCoachInfo().subscribe({
+
       next: (coach) => {
         this.coachImage = coach.profilePictureUrl
+        const date = new Date(coach.dateOfBirth);
+        const formattedDOB = date.toISOString().split('T')[0];
+        console.log(coach)
         this.CoachInfo.patchValue({
           firstName: coach.firstName,
           lastName: coach.lastName,
           gender: coach.gender,
           bio: coach.bio,
-          dateOfBirth: coach.dateOfBirth
+          dateOfBirth: formattedDOB ,
+
         });
       },
       error: (err) => {
@@ -142,6 +160,8 @@ export class ProfileComponent implements OnInit {
       });
     }
   }
+
+
   getToken(): string | null {
     return localStorage.getItem('token') || sessionStorage.getItem('token');
   }
@@ -202,7 +222,8 @@ export class ProfileComponent implements OnInit {
           trainingType: res.data.onlineTrainings[0].trainingType,
           price: res.data.onlineTrainings[0].price,
           noOfSessionsPerWeek: res.data.onlineTrainings[0].noOfSessionsPerWeek,
-          durationOfSession: res.data.onlineTrainings[0].durationOfSession
+          durationOfSession: res.data.onlineTrainings[0].durationOfSession ,
+
         });
       },
       error: (err) => {

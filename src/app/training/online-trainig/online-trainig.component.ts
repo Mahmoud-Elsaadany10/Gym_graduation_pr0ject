@@ -28,6 +28,9 @@ export class OnlineTrainigComponent implements OnInit , OnDestroy{
   searchSubscription :Subscription | null = null
   filledStars: number = 0;
 
+  minRating = 0;
+  maxRating = 5;
+
   constructor(private _onlineTrainingService : OnlineTrainingService ,private router: Router) {}
   ngOnDestroy(): void {
     this.coachSubscription?.unsubscribe()
@@ -90,6 +93,55 @@ export class OnlineTrainigComponent implements OnInit , OnDestroy{
     this.coachName=''
     this.hide=true
   }
+
+  onSortChange(event: Event): void {
+    const selectedValue = (event.target as HTMLSelectElement).value;
+    if (selectedValue === 'none') {
+      this.getCoachByPage()
+    } else {
+      this._onlineTrainingService.sortOnlineTraining(selectedValue).subscribe({
+        next: (response) => {
+          if (response) {
+            this.coachs = response.data;
+            this.totalCoach = response.totalRecords;
+            this.page = 1;
+          }
+        },
+        error: (err) => console.error('Error fetching coaches:', err)
+      });
+    }
+  }
+
+  resetRating(): void {
+    this.minRating = 0;
+    this.maxRating = 5;
+    this.getCoachByPage();
+  }
+
+
+onRatingRangeChange(): void {
+  // Just ensure min is not greater than max (not needed here if max is fixed)
+  if (this.minRating > this.maxRating) {
+    this.minRating = this.maxRating;
+  }
+
+  this.coachSubscription = this._onlineTrainingService
+    .sortByRating(this.minRating, this.maxRating)
+    .subscribe({
+      next: (response) => {
+        if (response) {
+          this.coachs = response.data;
+          this.totalCoach = response.totalRecords;
+          this.page = 1;
+        }
+      },
+      error: (err) => console.error('Error fetching coaches by rating:', err)
+    });
+}
+
+
+
+
 
 
 }
