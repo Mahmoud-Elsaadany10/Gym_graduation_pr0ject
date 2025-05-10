@@ -120,7 +120,6 @@ export class OnlineTrainigComponent implements OnInit , OnDestroy{
 
 
 onRatingRangeChange(): void {
-  // Just ensure min is not greater than max (not needed here if max is fixed)
   if (this.minRating > this.maxRating) {
     this.minRating = this.maxRating;
   }

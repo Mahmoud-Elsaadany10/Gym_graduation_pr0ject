@@ -41,7 +41,7 @@
           <span class="rating-text">{{ averageRating }} Rating</span>
           <div class="stars d-flex">
             <ng-container *ngFor="let star of stars; let i = index">
-              <i class="star" [class.filled]="i < filledStars">&#9733;</i>
+              <span class="star" [class.filled]="i < filledStars">★</span>
             </ng-container>
           </div>
           <div class="actions d-flex gap-1">

@@ -16,14 +16,14 @@ h2 {
 .form-control:focus{
   border: none !important;
 }
-/* Form styling */
+
 .rate-form {
   display: flex;
   flex-direction: column;
   gap: 20px;
 }
 
-/* Rating input wrapper */
+
 .rating-input-wrapper {
   display: flex;
 

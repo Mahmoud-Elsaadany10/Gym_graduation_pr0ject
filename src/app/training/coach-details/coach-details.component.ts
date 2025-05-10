@@ -131,6 +131,7 @@ export class CoachDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'updated' || result === 'deleted') {
         this.loadRate();
+
         this.checkRate()
         this.getCoachById();
       }

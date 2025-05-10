@@ -43,12 +43,13 @@
   }
 
   .star-icons span {
-    font-size: 1.2rem;
+    font-size: 2rem;
     transition: color 0.3s;
   }
 
   .star-icons span.filled {
     color: gold;
+    transform: scale(1.2);
   }
 
   textarea {
@@ -96,5 +97,9 @@
       padding: 30px;
     }
 
+      .star-icons span {
+    font-size: 1.5rem;
+    transition: color 0.3s;
+  }
 
   }

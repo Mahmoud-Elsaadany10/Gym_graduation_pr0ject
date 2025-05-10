@@ -43,6 +43,7 @@ export class AddRateComponent {
       this.gymServices.sendRating(payload).subscribe({
         next: res => {
           this.dialogRef.close("sendRate");
+          this.gymServices.show("Rating added Successfully", "light");
         },
         error: err => console.error('Gym rating error:', err)
       });
@@ -51,7 +52,7 @@ export class AddRateComponent {
       payload.coachId = this.data.coachId;
       this.gymServices.sendTrainingRating(payload).subscribe({
         next: res => {
-          console.log('Training rating sent:', res);
+          this.gymServices.show("Rating added Successfully", "light");
           this.dialogRef.close("sended");
         },
         error: err => console.error('Training rating error:', err)
