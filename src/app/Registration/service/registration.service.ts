@@ -4,6 +4,7 @@ import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
 import { ApiResponse, loginResponse, ResetPasswordModel, TokenResponse, User, VerificationModel } from '../../Model/Models';
 import { environment } from '../../../environments/environment';
 import { jwtDecode } from 'jwt-decode';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { jwtDecode } from 'jwt-decode';
 export class RegistrationService {
   userData = new BehaviorSubject<any>(null);
 
-  constructor(private _http :HttpClient) {
+  constructor(private _http :HttpClient , private router: Router) {
     if (localStorage.getItem('token') || sessionStorage.getItem("token")) {
       this.saveUser();
     }
@@ -143,6 +144,7 @@ export class RegistrationService {
     localStorage.removeItem('refreshToken');
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('refreshToken');
+    this.router.navigate(['/layout/home']);
   }
   refreshToken(): Observable<string> {
     const refreshToken = this.getRefreshToken();
