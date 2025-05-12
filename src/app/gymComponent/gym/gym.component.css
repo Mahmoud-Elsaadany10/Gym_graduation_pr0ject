@@ -114,6 +114,9 @@ button{
   justify-content: center;
   align-items: center;
 }
+.card-img-top{
+  height: 12.5rem;
+}
 .input{
   padding: 16px 25px !important;
   width: 104%;

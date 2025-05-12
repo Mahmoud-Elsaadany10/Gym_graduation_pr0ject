@@ -11,14 +11,14 @@
   </div>
 
   <div class="d-flex justify-content-around mt-4 mb-5 ">
-    <div class="position-relative">
+    <!-- <div class="position-relative">
       <select [(ngModel)]="selectedCity" class="select-filter" (change)="onCityChange()">
         <option value="" hidden selected>City</option>
         <option value="" [value]="''">All Cities</option>
         <option *ngFor="let city of cities" [value]="city">{{ city }}</option>
       </select>
       <i class="fa-solid fa-caret-down end-i"></i>
-    </div>
+    </div> -->
     <div class="position-relative">
       <select class="select-filter" (change)="onSortChange($event)">
         <option value="" hidden selected>Sort</option>
@@ -43,7 +43,7 @@
   <div class="row gy-5 gx-2">
     <div class="col-md-6 col-lg-4 responsive" *ngFor="let gym of gyms">
       <div class="card" >
-        <img class="card-img-top" src="assets/Rectangle 20.jpg" alt="gym Image">
+        <img class="card-img-top" [src]="gym.pictureUrl || 'assets/Rectangle 20.jpg'" alt="gym Image">
         <div class="card-body">
           <p class="card-title mb-2">{{gym.gymName}}</p>
           <div class="d-flex mb-1 align-items-baseline">
