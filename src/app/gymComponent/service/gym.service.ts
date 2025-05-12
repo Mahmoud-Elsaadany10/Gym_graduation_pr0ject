@@ -44,7 +44,7 @@ export class GymService {
     return this._http.delete<APiRes>(`${environment.mainurl}/Follow/unfollow-gym/${id}`);
   }
   getStatus(id: number): Observable<any> {
-
-    return this._http.get<any>(`${environment.mainurl}/Follow/is-following-gym/${id}`);
+    return this._http.get<any>(`${environment.mainurl}/Follow/is-following-gym/${id}`,
+      { headers: { 'X-Skip-Error': 'true' } });
   }
 }
