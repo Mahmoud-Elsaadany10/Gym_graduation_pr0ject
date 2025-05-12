@@ -31,13 +31,13 @@
           <a class="nav-link" routerLink="/posts">Posts</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active"  routerLink="/layout/profile">Profile</a>
+          <a class="nav-link" routerLinkActive="active" *ngIf="isCoach"   routerLink="/layout/profile">Profile</a>
         </li>
       </ul>
 
       <div class="me-4">
-        <div class="join-btn" *ngIf="!expression" routerLink="/logging/login" >Join Us</div>
-        <div class="log-out" *ngIf="expression" (click)="logout()" >Log Out</div>
+        <div class="join-btn" *ngIf="!isLogged" routerLink="/logging/login" >Join Us</div>
+        <div class="log-out" *ngIf="isLogged" (click)="logout()" >Log Out</div>
       </div>
     </div>
   </div>

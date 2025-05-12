@@ -84,7 +84,13 @@ export class ChatService {
   }
 
   getAllMessage(UserId : string):Observable<ChatResponse>{
-    return this._http.get<ChatResponse>(`${environment.mainurl}/Chat/history/${UserId}?pageNumber=1&pageSize=20`)
+    return this._http.get<ChatResponse>(`${environment.mainurl}/Chat/history/${UserId}?pageNumber=1&pageSize=20`,
+      { headers: { 'X-Skip-Error': 'true' } })
+  }
+
+  getContact():Observable<any>{
+    return this._http.get<any>(`${environment.mainurl}/Chat/contacts`,
+      { headers: { 'X-Skip-Error': 'true' } })
   }
 }
 

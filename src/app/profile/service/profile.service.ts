@@ -16,24 +16,28 @@ export class ProfileService {
     return this._http.put<any>(`${environment.mainurl}/User/UpdateProfileDetails`,data)
   }
   getCoachInfo(): Observable<coachProfile> {
-    return this._http.get<coachProfile>(`${environment.mainurl}/User/ProfileDetails`);
+    return this._http.get<coachProfile>(`${environment.mainurl}/User/ProfileDetails`,
+      { headers: { 'X-Skip-Error': 'true' } });
   }
   //gym
   UpdateGymInfo(data : GymInfo ,id :number):Observable<ApiResponse>{
     return this._http.put<ApiResponse>(`${environment.mainurl}/Gym/${id}` ,data)
   }
   getGymInfo(id :string): Observable<GymInfo> {
-    return this._http.get<GymInfo>(`${environment.mainurl}/Gym/ByCoachId?CoachId=${id}`);
+    return this._http.get<GymInfo>(`${environment.mainurl}/Gym/ByCoachId?CoachId=${id}`,
+      { headers: { 'X-Skip-Error': 'true' } });
   }
   //OnlineTraining
   UpdateOnlineTraining(data : TrainingModelResponse,id :number):Observable<ApiResponse>{
     return this._http.put<ApiResponse>(`${environment.mainurl}/OnlineTraining/${id}`,data)
   }
   getCoachById(id : string):Observable<any>{
-    return this._http.get<any>(`${environment.mainurl}/User/CoachDetails/${id}`)
+    return this._http.get<any>(`${environment.mainurl}/User/CoachDetails/${id}`,
+      { headers: { 'X-Skip-Error': 'true' } })
   }
   getShopInfo(): Observable<ShopResponse> {
-    return this._http.get<ShopResponse>(`${environment.mainurl}/Shop/ShopsOfOwner`);
+    return this._http.get<ShopResponse>(`${environment.mainurl}/Shop/ShopsOfOwner`,
+      { headers: { 'X-Skip-Error': 'true' } });
   }
   updateShopInfo(id : number , data :any):Observable<ApiResponse>{
     return this._http.put<ApiResponse>(`${environment.mainurl}/Shop/${id}` , data)

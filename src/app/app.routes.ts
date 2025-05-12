@@ -6,7 +6,6 @@ import { SignupCoachComponent } from './Registration/signup-coach/signup-coach.c
 import { Component } from '@angular/core';
 import { LoggingLayoutComponent } from './Registration/logging-layout/logging-layout.component';
 import { LayoutComponent } from './layout/layout.component';
-// import { homeComponent, HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { ForgetPasswordComponent } from './Registration/forget-password/forget-password.component';
 import { PasswordVerificationComponent } from './Registration/password-verification/password-verification.component';
@@ -23,15 +22,15 @@ import { CoachDetailsComponent } from './training/coach-details/coach-details.co
 import { ProfileComponent } from './profile/profile/profile.component';
 import { GymDetailsComponent } from './gymComponent/gym-details/gym-details.component';
 import { ChatComponent } from './chat/chat/chat.component';
-// import { ProfileComponent } from './mainPage/profile/profile.component';
+import { roleGuard } from './core/guard/role.guard';
+import { isloggedGuard } from './core/guard/islogged.guard';
+
 
 export const routes: Routes = [
   {path : "logging",component:LoggingLayoutComponent,children:[
-    {path:'login', component:LoginComponent},
-
-      {path: 'user' ,component:SignupUserComponent},
-      {path:'coach',component :SignupCoachComponent},
-
+    {path:'login', component:LoginComponent },
+    {path: 'user' ,component:SignupUserComponent},
+    {path:'coach',component :SignupCoachComponent},
     {path:"otp",component:ForgetPasswordComponent},
     {path :"passwordReset",component:ResetPasswordComponent},
     {path:"VerifyCode",component:PasswordVerificationComponent},
@@ -40,14 +39,15 @@ export const routes: Routes = [
     {path :"traningInfo" ,component: TrainingInfoComponent},
     {path:"shopInfo" ,component:ShopInfoComponent},
     {path :"verifyEmail",component:VerifyEmailComponent}
-  ]}
+  ] ,canActivate:[isloggedGuard]}
+
   ,{path:"layout",component:LayoutComponent ,children:[
     {path:"home",component:HomeComponent} ,
     {path :"gym" ,component:GymComponent} ,
     {path :"GymDetails/:id" , component : GymDetailsComponent},
     {path : "onlineTraning" ,component:OnlineTrainigComponent},
     {path : "coachDetails/:id" ,component :CoachDetailsComponent},
-    {path : "profile" , component : ProfileComponent} ,
+    {path : "profile" , component : ProfileComponent ,canActivate:[roleGuard]} ,
     {path : "chat/:id" , component : ChatComponent}
 
   ]}

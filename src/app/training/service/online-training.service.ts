@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { APiRes, ApiResponse, coachResponse, TrainersResponse, TrainingSession } from '../../Model/Models';
+import { APiRes, ApiResponse, coachResponse, isFollowingResponse, TrainersResponse, TrainingSession } from '../../Model/Models';
 
 @Injectable({
   providedIn: 'root'
@@ -22,13 +22,17 @@ export class OnlineTrainingService {
     return this._http.get<coachResponse>(`${environment.mainurl}/User/CoachDetails/${id}`)
   }
   followCoach(id : string):Observable<APiRes>{
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${localStorage.getItem('token')}`
-    });
+    // const headers = new HttpHeaders({
+    //   Authorization: `Bearer ${localStorage.getItem('token')}`
+    // });
     return this._http.post<APiRes>(`${environment.mainurl}/Follow/follow-user/${id}`,{} )
   }
   unfollowCoach(id: string): Observable<APiRes> {
     return this._http.delete<APiRes>(`${environment.mainurl}/Follow/unfollow-user/${id}`);
+  }
+  getStatus(id : string):Observable<isFollowingResponse>{
+    return this._http.get<isFollowingResponse>(`${environment.mainurl}/Follow/is-following-user/${id}`,
+      { headers: { 'X-Skip-Error': 'true' } })
   }
   sortOnlineTraining(Option : string):Observable<TrainersResponse>{
     return this._http.get<TrainersResponse>(`${environment.mainurl}/User/GetAllCoaches?SortBy=${Option}`)

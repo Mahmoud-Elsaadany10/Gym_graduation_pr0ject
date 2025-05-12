@@ -36,6 +36,7 @@ export class GymDetailsComponent implements OnInit {
   stars = Array(5).fill(0);
   selectedTab: string = 'Description';
   isRated: boolean = false;
+  followed :boolean =false;
 
   constructor(private route: ActivatedRoute,
     private dialog: MatDialog ,
@@ -104,21 +105,6 @@ private _Check: RegistrationService,
 
   }
 
-//   openUpdateModal(){
-//     if (this._Check.userData.getValue() === null) {
-//       this._loadRate.show("Please Login First", "light");
-//   }else{
-//     this.dialog.open(UpdateRateComponent, {
-//       width: '600px',
-//       data: {
-//         type: 'gym',
-//         coachId: this.gymId
-//       }
-//     });
-
-//   }
-// }
-
 
 
   ngOnInit(): void {
@@ -127,7 +113,6 @@ private _Check: RegistrationService,
     if (this.gymId) {
       this._gymService.getGymById(this.gymId).subscribe({
         next: (data) => {
-          // console.log('Gym data:', data);
           this.gymName = data.gymName;
           this.coachName = data.coachFullName;
           this.averageRating = data.averageRating;
@@ -149,8 +134,43 @@ private _Check: RegistrationService,
 
     this.loadRate();
     this.isRatedGym();
+    this.getStatus();
   }
 
+
+  follow() {
+    if (this._Check.userData.getValue() === null) {
+        this._loadRate.show("Please Login First", "light");
+    } else {
+      this._gymService.followGym(this.gymId).subscribe({
+        next: (res) => {
+          if (res.message.includes('You Now Follow')) {
+            this.followed = true;
+            this._loadRate.show(res.message, "light");
+          }
+        },
+        error: (err) => console.error('Follow error:', err)
+      });
+    }
+  }
+
+  unfollow() {
+    this._gymService.unfollowGym(this.gymId).subscribe({
+      next: () =>{
+        this.followed = false
+        this._loadRate.show("you unfollowed this gym", "light");
+      }
+    });
+  }
+
+  getStatus() {
+    this._gymService.getStatus(this.gymId).subscribe({
+      next: (res) => {
+        this.followed = res.isFollowing;
+        console.log(res)
+      }
+    });
+  }
 
 
 

@@ -55,7 +55,7 @@ export class CoachDetailsComponent implements OnInit {
     this.getCoachById();
     this.getGroupTrainingById();
     this.checkRate()
-
+    this.getStatus()
   }
 
   loadRate() {
@@ -80,7 +80,6 @@ export class CoachDetailsComponent implements OnInit {
 
 
   getCoachById() {
-
     this.id = this.activeRoute.snapshot.paramMap.get("id")!;
     this._getDetails.getCoachById(this.id).subscribe({
       next: (coachDetail) => {
@@ -131,7 +130,6 @@ export class CoachDetailsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result === 'updated' || result === 'deleted') {
         this.loadRate();
-
         this.checkRate()
         this.getCoachById();
       }
@@ -164,7 +162,16 @@ export class CoachDetailsComponent implements OnInit {
     this._getDetails.unfollowCoach(this.id).subscribe({
       next: () =>{
         this.followed = false
-        this._toast.show("all Done", "light");
+        this._toast.show("you unfollowed this coach", "light");
+      }
+    });
+  }
+
+  getStatus() {
+    this._getDetails.getStatus(this.id).subscribe({
+      next: (res) => {
+        this.followed = res.isFollowing;
+        console.log(res)
       }
     });
   }

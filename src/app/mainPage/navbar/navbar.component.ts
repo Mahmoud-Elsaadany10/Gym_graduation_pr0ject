@@ -12,19 +12,20 @@ import { jwtDecode } from 'jwt-decode';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent implements OnInit{
-  expression :boolean =false
+  isLogged :boolean =false
   isCoach :boolean =false
   constructor(private _Register : RegistrationService){}
 
   ngOnInit(): void {
     this.islOggedIn()
+    this.checheRole()
   }
   islOggedIn(){
     this._Register.userData.subscribe(() =>{
       if(this._Register.userData.getValue() !== null){
-        this.expression = true
+        this.isLogged = true
       }else{
-        this.expression = false
+        this.isLogged = false
       }
     })
 

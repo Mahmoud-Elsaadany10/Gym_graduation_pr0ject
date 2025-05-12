@@ -1,7 +1,6 @@
-/* Links Styling */
 .navbar .nav-link {
     color: rgba(85, 103, 156, 0.6) !important;
-    font-size: 18px; /* Increased font size */
+    font-size: 18px;
     font-family: 'Inria Serif', serif;
     font-weight: 400;
     transition: color 0.3s;

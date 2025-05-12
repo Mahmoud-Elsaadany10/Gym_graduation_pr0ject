@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { GymResponse } from '../../Model/Models';
+import { APiRes, GymResponse } from '../../Model/Models';
 
 @Injectable({
   providedIn: 'root'
@@ -33,5 +33,18 @@ export class GymService {
   chechIfRated(id: number): Observable<any> {
     return this._http.get<any>(`${environment.mainurl}/GymRating/hasRated/${id}`,
       { headers: { 'X-Skip-Error': 'true' } });
+  }
+
+  //follow
+
+  followGym(id: number): Observable<APiRes> {
+    return this._http.post<APiRes>(`${environment.mainurl}/Follow/follow-gym/${id}`, {});
+  }
+  unfollowGym(id: number): Observable<APiRes> {
+    return this._http.delete<APiRes>(`${environment.mainurl}/Follow/unfollow-gym/${id}`);
+  }
+  getStatus(id: number): Observable<any> {
+
+    return this._http.get<any>(`${environment.mainurl}/Follow/is-following-gym/${id}`);
   }
 }

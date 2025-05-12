@@ -4,9 +4,13 @@
     <button class="custom-btn">
       <i class="fas fa-comment-alt"></i> Chat
     </button>
-    <button class="custom-btn">
+    <button class="custom-btn" *ngIf="!followed" (click)="follow()">
       <i class="fas fa-user-plus"></i> Follow
     </button>
+    <button class="custom-btn unfollow " *ngIf="followed" (click)="unfollow()">
+      unFollow
+    </button>
+
   </div>
 
   <div class="overlay">
@@ -19,7 +23,6 @@
 <div class="container py-4">
   <div class="row align-items-center justify-content-between">
 
-    <!-- اليسار -->
     <div class="col-md-6 d-flex align-items-center gap-3 flex-md-nowrap flex-wrap">
       <img
         [src]="coachImage"
@@ -94,12 +97,10 @@
 
 
   <section id="description-section" class="fitness-section">
-    <!-- الصورة -->
     <div class="fitness-image-wrapper">
       <img src="/assets/Rectangle 40.png" alt="Runner" class="fitness-image" />
     </div>
 
-    <!-- النص والعناصر -->
     <div class="fitness-content">
       <h1>Welcome to <br /><strong>{{gymName}}</strong></h1>
       <p class="description">

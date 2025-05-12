@@ -30,18 +30,24 @@
         z-index: 10;
       }
 
-      .custom-btn {
+      .custom-btn ,.unfollow {
         display: flex;
         align-items: center;
         gap: 0.5rem;
         padding: 0.6rem 1.2rem;
         background-color: transparent;
         color: white;
-        border: 2px solid white;
         border-radius: 999px;
         font-size: 1rem;
         cursor: pointer;
         transition: background-color 0.3s, color 0.3s;
+      }
+      .unfollow{
+        border: none ;
+        background-color: var( --color-third);
+      }
+      .custom-btn{
+        border: 1px solid white
       }
 
       .custom-btn:hover {
@@ -81,7 +87,7 @@
   }
 
   .tabs-section {
-    background-color: #c2cde7; /* اللون اللبني */
+    background-color: #c2cde7;
     padding: 1rem;
     border-radius: 10px;
     max-width: 80%;
@@ -138,7 +144,7 @@
   .fitness-image {
     max-height: 80%;
     width: 100%;
-    object-fit: contain; /* عشان ما تتقصش */
+    object-fit: contain;
     border-radius: 10px;
   }
 
@@ -150,25 +156,25 @@
   }
 
   .fitness-content h1 {
-    font-size: 4rem; /* كان 2.5rem */
+    font-size: 4rem;
     line-height: 1.4;
     color: #2b2b52;
   }
 
   .fitness-content .description {
-    font-size: 1.1rem; /* كان 0.9rem */
+    font-size: 1.1rem;
     color: #444;
     max-width: 550px;
   }
 
   .features {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* اتنين جنب بعض */
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
     margin-top: 1rem;
   }
   .feature i {
-    font-size: 1.5rem; /* كان 1.2rem */
+    font-size: 1.5rem;
     margin-bottom: 0.4rem;
   }
 
@@ -196,7 +202,7 @@
 
 
     .packages-section {
-        margin-top: 15rem; /* مسافة من فوق */
+        margin-top: 15rem;
         text-align: center;
         padding: 4rem 2rem;
 
@@ -218,7 +224,7 @@
   }
 
   .package-card {
-    background-color: #f5f7fb; /* اللون الافتراضي */
+    background-color: #f5f7fb;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
@@ -227,9 +233,9 @@
   }
 
   .package-card:hover {
-    background: var(--secondary, #7C93C3); /* لون الهوفر */
-    transform: translateY(-20px); /* يطلع لفوق */
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* ظل أقوى مع الحركة */
+    background: var(--secondary, #7C93C3);
+    transform: translateY(-20px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   }
 
 
@@ -304,14 +310,14 @@
 
   .offers-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* كارتين في كل صف */
+    grid-template-columns: repeat(2, 1fr);
     gap: 30px;
     justify-items: center;
   }
 
   @media (max-width: 768px) {
     .offers-grid {
-      grid-template-columns: 1fr; /* على الشاشات الصغيرة كارت واحد */
+      grid-template-columns: 1fr;
     }
   }
 
@@ -356,7 +362,7 @@
   .offer-stars {
     font-size: 16px;
     margin: 5px 0;
-    color: #ffc107; /* لون النجوم ذهبي */
+    color: #ffc107;
   }
 
   .offer-price {
@@ -439,7 +445,7 @@
   }
 
   .buy-btn {
-    background-color: #7C93C3; /* نفس اللون اللي طلبتيه */
+    background-color: #7C93C3;
     color: #fff;
     border: none;
     padding: 8px 20px;
@@ -528,12 +534,12 @@
   }
 
   .add-btn {
-    background-color: #f44336; /* أحمر */
+    background-color: #f44336;
     color: white;
   }
 
   .edit-btn {
-    background-color: #3b5998; /* أزرق */
+    background-color: #3b5998;
     color: white;
   }
   @media (max-width: 768px) {

@@ -217,3 +217,6 @@ export interface ChatResponse {
     data: Message[];
   };
 }
+export interface isFollowingResponse {
+  isFollowing: boolean;
+}
