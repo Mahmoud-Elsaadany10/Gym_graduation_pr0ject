@@ -213,7 +213,6 @@ export class CoachDetailsComponent implements OnInit {
 
   async payment(id: number) {
     const model = { onlineTrainingId: id };
-
     this._getDetails.payment(model).subscribe({
       next: async (res) => {
         if (res.url) {

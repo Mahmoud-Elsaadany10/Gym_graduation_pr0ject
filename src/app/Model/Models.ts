@@ -49,6 +49,11 @@ export interface User {
   dateOfBirth: Date | string;
   bio: string;
 }
+export interface GoogleAuthTokens {
+  idToken: string;
+  accessToken: string;
+}
+
 export interface gymData{
   gymName: string
   pictureUrl ?: string,

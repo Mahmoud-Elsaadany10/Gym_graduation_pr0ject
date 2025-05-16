@@ -144,7 +144,7 @@ export class RegistrationService {
     localStorage.removeItem('refreshToken');
     sessionStorage.removeItem('token');
     sessionStorage.removeItem('refreshToken');
-    this.router.navigate(['/layout/home']);
+
   }
   refreshToken(): Observable<string> {
     const refreshToken = this.getRefreshToken();
@@ -175,11 +175,4 @@ export class RegistrationService {
   }
 
 }
-// {
-//   "isSuccess": true,
-//   "data": {
-//       "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0ZDRhZDExMS1jNDNiLTRhY2QtYjFjNC04MmI2MzZiM2JiNjMiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjQ0MjlhZGZjLWJiOGUtNGZmNi04MjY0LWUzMGJjMGEyNTk0MyIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJkZXh5bHVmeUBsb2dzbWFydGVyLm5ldCIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkNvYWNoIiwiZXhwIjoxNzQyNDE4MTQwLCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo3MTI4IiwiYXVkIjoiaHR0cHM6Ly9sb2NhbGhvc3Q6NDAwNC8ifQ.XD1EedxtERFM64jgZHwdnJUA5mZWt-3u3XxS48UXYts",
-//       "refreshToken": "9FKuyO7ueIk3WhdjMzlFu8G5v8+87NnzjDGm/DJ20O0=",
-//       "exipiration": "2025-03-19T22:32:21.1212356+01:00"
-//   }
-// }
+

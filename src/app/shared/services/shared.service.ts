@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { loadStripe, Stripe } from '@stripe/stripe-js';
+
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -14,15 +14,11 @@ export class SharedService {
   private _loading = new BehaviorSubject<boolean>(false);
   public loading$ = this._loading.asObservable();
   private requestCount = 0;
-  private stripePromise: Promise<Stripe | null>;
+
 
 
   constructor(private _http : HttpClient) {
-    this.stripePromise =  loadStripe('pk_test_51RED2v2cRXTSXYgVo0fOSrsKQkvpJXlyvsm48rgkuUykYCD0YMJqCrGm7bgzHzPkpHZBNgc9yyTsFuEVRLQYde8j00ubFmrg3v');
-  }
 
-  getStripe(): Promise<Stripe | null> {
-    return this.stripePromise;
   }
 
   show(message: string, type: 'success' | 'error' | 'warning' | 'light' = 'success') {
