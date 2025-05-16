@@ -1,17 +1,19 @@
 import { Component } from '@angular/core';
-import { RoutSignUpComponent } from "../rout-sign-up/rout-sign-up.component";
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ReactiveFormsModule, FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
+
 import { CommonModule } from '@angular/common';
 import { RegistrationService } from '../service/registration.service';
 import { ApiResponse } from '../../Model/Models';
 import { SharedService } from '../../shared/services/shared.service';
 import { NgbModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { passwordMatchValidator, strongPasswordValidator } from '../../core/custom/passwordCheck';
+import { Router, RouterModule } from '@angular/router';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RoutSignUpComponent } from "../rout-sign-up/rout-sign-up.component";
+
 
 @Component({
   selector: 'app-signup-user',
-  imports: [RoutSignUpComponent ,CommonModule ,FormsModule  ,ReactiveFormsModule , RouterModule ,NgbToastModule , NgbModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, RouterModule, NgbToastModule, NgbModule, RoutSignUpComponent],
   templateUrl: './signup-user.component.html',
   styleUrl: './signup-user.component.css'
 })
@@ -24,8 +26,10 @@ export class SignupUserComponent {
   selectedDate: string = '';
   formattedDate: string = '';
 
-  constructor(private router: Router, private fbulider: FormBuilder ,
-    private sendToBackend : RegistrationService
+  constructor(private router: Router,
+    private fbulider: FormBuilder
+
+    ,private sendToBackend : RegistrationService
   ) {
     this.signupForUser = this.fbulider.group({
       firstName: ['', [Validators.required, Validators.minLength(3)]],

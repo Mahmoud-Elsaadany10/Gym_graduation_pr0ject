@@ -6,13 +6,14 @@ import { environment } from '../../../environments/environment';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
 
+
 @Injectable({
   providedIn: 'root'
 })
 export class RegistrationService {
   userData = new BehaviorSubject<any>(null);
 
-  constructor(private _http :HttpClient , private router: Router) {
+  constructor(private _http :HttpClient , private router : Router) {
     if (localStorage.getItem('token') || sessionStorage.getItem("token")) {
       this.saveUser();
     }

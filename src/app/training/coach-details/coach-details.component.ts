@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { NavbarComponent } from "../../mainPage/navbar/navbar.component";
 import { OnlineTrainingService } from '../service/online-training.service';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+
 import { CommonModule } from '@angular/common';
 import { coachDetails, TrainingSession } from '../../Model/Models';
 import { RegistrationService } from '../../Registration/service/registration.service';
@@ -12,6 +12,7 @@ import { AddRateComponent } from '../../shared/add-rate/add-rate.component';
 import { MatDialog } from '@angular/material/dialog';
 import { UpdateRateComponent } from '../../shared/update-rate/update-rate.component';
 import { DialogRef } from '@angular/cdk/dialog';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-coach-details',

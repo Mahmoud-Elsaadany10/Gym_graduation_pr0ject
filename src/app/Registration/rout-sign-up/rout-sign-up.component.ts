@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, NavigationEnd, RouterModule } from '@angular/router';
+
+import { RouterModule, Router, NavigationEnd } from '@angular/router';
+
 import { filter } from 'rxjs/operators';
 
 @Component({
