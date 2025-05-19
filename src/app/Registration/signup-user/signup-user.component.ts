@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -8,13 +8,12 @@ import { HttpClient } from '@angular/common/http';
 import { RegistrationService } from '../service/registration.service';
 import { passwordMatchValidator, strongPasswordValidator } from '../../core/custom/passwordCheck';
 import { SetRoleComponent } from '../set-role/set-role.component';
+import { RoutSignUpComponent } from "../rout-sign-up/rout-sign-up.component";
 
 declare const google: any;
 
 @Component({
   selector: 'app-signup-user',
-  standalone: true,
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: './signup-user.component.html',
   styleUrls: ['./signup-user.component.css'],
   imports: [
@@ -24,9 +23,10 @@ declare const google: any;
     RouterModule,
     NgbToastModule,
     NgbModule,
-  ]
+    RoutSignUpComponent
+]
 })
-export class SignupUserComponent implements OnInit {
+export class SignupUserComponent implements OnInit, AfterViewInit {
   signupForUser!: FormGroup;
 
   private tokenClient: any;
@@ -43,6 +43,10 @@ export class SignupUserComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // no Google logic here
+  }
+
+  ngAfterViewInit(): void {
     this.loadGoogleApi();
   }
 
@@ -108,24 +112,33 @@ export class SignupUserComponent implements OnInit {
   }
 
   private initGoogleAuth(): void {
-    if (this.tokenClient || typeof google === 'undefined') return;
+    // Initialize button for ID token
+    google.accounts.id.initialize({
+      client_id: this.clientId,
+      callback: this.handleCredentialResponse.bind(this)
+    });
 
-    try {
-      this.tokenClient = google.accounts.oauth2.initTokenClient({
-        client_id: this.clientId,
-        scope: 'openid email profile',
-        callback: (tokenResponse: any) => {
-          if (tokenResponse?.access_token) {
-            this.handleGoogleAccessToken(tokenResponse.access_token);
-          } else {
-            console.error('No access_token in token response');
-          }
-        },
-        ux_mode: 'popup',
+    const div = document.getElementById('googleSignInDiv');
+    if (div) {
+      google.accounts.id.renderButton(div, {
+        theme: 'outline',
+        size: 'large'
       });
-    } catch (err) {
-      console.error('Google auth initialization error:', err);
     }
+
+    // Initialize token client for access token
+    this.tokenClient = google.accounts.oauth2.initTokenClient({
+      client_id: this.clientId,
+      scope: 'openid email profile',
+      callback: (tokenResponse: any) => {
+        if (tokenResponse?.access_token) {
+          this.handleGoogleAccessToken(tokenResponse.access_token);
+        } else {
+          console.error('No access_token in token response');
+        }
+      },
+      ux_mode: 'popup'
+    });
   }
 
   handleGoogleLogin(): void {
@@ -136,30 +149,38 @@ export class SignupUserComponent implements OnInit {
     this.tokenClient.requestAccessToken({ prompt: 'consent' });
   }
 
+  private handleCredentialResponse(response: any): void {
+    const idToken = response.credential;
+    const accessToken = sessionStorage.getItem('googleAccessToken');
+
+    if (!accessToken) {
+      console.warn('No access token available. Please click "Continue with Google" again.');
+      return;
+    }
+
+    this.sendTokensToApi(idToken, accessToken);
+  }
+
   private handleGoogleAccessToken(accessToken: string): void {
     sessionStorage.setItem('googleAccessToken', accessToken);
+    google.accounts.id.prompt(); // prompts the user to sign in and trigger ID token
+  }
 
-    fetch(`https://oauth2.googleapis.com/tokeninfo?access_token=${accessToken}`)
-      .then(res => res.json())
-      .then(data => {
-        const idToken = data.id_token;
-        if (!idToken) throw new Error('ID token not found');
+  private sendTokensToApi(idToken: string, accessToken: string): void {
+    this.http.post('https://fitnesspro.runasp.net/api/Account/GoogleLogin', {
+      idToken,
+      accessToken
+    }).subscribe({
+      next: () => {
+        sessionStorage.removeItem('googleAccessToken');
+        this.openConfirmModal();
 
-        this.http.post('https://fitnesspro.runasp.net/api/Account/GoogleLogin', {
-          idToken,
-          accessToken
-        }).subscribe({
-          next: () => {
-            sessionStorage.removeItem('googleAccessToken');
-            this.openConfirmModal();
-          },
-          error: err => {
-            console.error('Google login API error:', err);
-            sessionStorage.removeItem('googleAccessToken');
-          }
-        });
-      })
-      .catch(err => console.error('Failed to fetch ID token:', err));
+      },
+      error: err => {
+        console.error('Google login API error:', err);
+        sessionStorage.removeItem('googleAccessToken');
+      }
+    });
   }
 
   private openConfirmModal(): void {
