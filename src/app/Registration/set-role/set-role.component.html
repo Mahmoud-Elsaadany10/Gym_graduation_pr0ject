@@ -1,0 +1,9 @@
+<div class="modal-header">
+  <h5 class="modal-title">Choose Your Role</h5>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+
+<div class="modal-body text-center">
+  <button class="btn btn-primary m-2 w-75" (click)="selectRole('Coach')">Coach</button>
+  <button class="btn btn-success m-2 w-75" (click)="selectRole('Trainee')">Trainee</button>
+</div>

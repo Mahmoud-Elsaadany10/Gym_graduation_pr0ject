@@ -37,6 +37,7 @@ export class GymDetailsComponent implements OnInit {
   selectedTab: string = 'Description';
   isRated: boolean = false;
   followed :boolean =false;
+  rating : number = 0;
 
   constructor(private route: ActivatedRoute,
     private dialog: MatDialog ,
@@ -72,7 +73,8 @@ private _Check: RegistrationService,
   loadRate() {
     this._loadRate.getRatingById(this.gymId).subscribe({
       next: (res) => {
-        this.averageRating = res.ratingValue;
+        this.rating = res.ratingValue;
+        this.filledStars = Math.round(this.rating);
       }
     });
   }
@@ -116,7 +118,7 @@ private _Check: RegistrationService,
           this.gymName = data.gymName;
           this.coachName = data.coachFullName;
           this.averageRating = data.averageRating;
-          this.filledStars = Math.round(this.averageRating);
+          // this.filledStars = Math.round(this.rating);
           this.Desctibtion=data.description;
           this.fortnightlyPrice=data.fortnightlyPrice;
           this.monthlyPrice=data.monthlyPrice;

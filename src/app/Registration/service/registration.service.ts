@@ -5,6 +5,7 @@ import { ApiResponse, loginResponse, ResetPasswordModel, TokenResponse, User, Ve
 import { environment } from '../../../environments/environment';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
+import { SocialAuthService, GoogleLoginProvider, SocialUser } from '@abacritt/angularx-social-login'
 
 
 @Injectable({
@@ -13,7 +14,9 @@ import { Router } from '@angular/router';
 export class RegistrationService {
   userData = new BehaviorSubject<any>(null);
 
-  constructor(private _http :HttpClient , private router : Router) {
+  constructor(private _http :HttpClient , private router : Router ,
+    private socialAuthService: SocialAuthService
+  ) {
     if (localStorage.getItem('token') || sessionStorage.getItem("token")) {
       this.saveUser();
     }
@@ -68,6 +71,8 @@ export class RegistrationService {
     });
     return this._http.post<ApiResponse>(`${environment.mainurl}/Account/ResetPassword`, data, { headers });
   }
+
+
   private saveUser() {
     const token = this.getToken();
     if (token) {
@@ -148,13 +153,25 @@ export class RegistrationService {
 
   }
   refreshToken(): Observable<string> {
-    const refreshToken = this.getRefreshToken();
-    if (!refreshToken) {
-      this.logout();
-      return throwError(() => new Error('No refresh token found.'));
-    }
+  const refreshToken = this.getRefreshToken();
+  if (!refreshToken) {
+    this.logout();
+    return throwError(() => new Error('No refresh token found.'));
+  }
 
-    return this._http.post<TokenResponse>(`${environment.mainurl}/Account/RefreshToken`, { refreshToken }).pipe(
+  try {
+    const decoded: any = jwtDecode(refreshToken);
+    const now = Date.now() / 1000;
+    if (decoded.exp < now) {
+      this.logout();
+      return throwError(() => new Error('Refresh token expired.'));
+    }
+  } catch (e) {
+    this.logout();
+    return throwError(() => new Error('Invalid refresh token.'));
+  }
+
+  return this._http.post<TokenResponse>(`${environment.mainurl}/Account/RefreshToken`, { refreshToken }).pipe(
       map((response: TokenResponse) => {
         if (response.token && response.refreshToken) {
           if (localStorage.getItem('refreshToken')) {
@@ -174,6 +191,11 @@ export class RegistrationService {
       })
     );
   }
+
+  setRole(Role :{role: string}): Observable<any> {
+    return this._http.post<any>(`${environment.mainurl}/Account/SetUserRole`, Role)
+  }
+
 
 }
 

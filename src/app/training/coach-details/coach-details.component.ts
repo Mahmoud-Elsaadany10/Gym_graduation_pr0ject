@@ -57,12 +57,14 @@ export class CoachDetailsComponent implements OnInit {
     this.getGroupTrainingById();
     this.checkRate()
     this.getStatus()
+    this.loadRate();
   }
 
   loadRate() {
     this._Rate.getTrainingRatingById(this.id).subscribe({
       next: (res) => {
         this.rating = res.ratingValue;
+        this.filledStars = Math.round(this.rating);
       }
     });
   }
@@ -85,7 +87,7 @@ export class CoachDetailsComponent implements OnInit {
     this._getDetails.getCoachById(this.id).subscribe({
       next: (coachDetail) => {
         this.coachDtd = coachDetail.data;
-        this.filledStars = Math.round(this.coachDtd.rating);
+
       },
       error: (err) => {
         console.error('Error fetching coach details:', err);
