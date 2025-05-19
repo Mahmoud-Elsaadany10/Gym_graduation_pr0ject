@@ -7,7 +7,6 @@ import { HttpClient } from '@angular/common/http';
 
 import { RegistrationService } from '../service/registration.service';
 import { passwordMatchValidator, strongPasswordValidator } from '../../core/custom/passwordCheck';
-import { RoutSignUpComponent } from '../rout-sign-up/rout-sign-up.component';
 import { SetRoleComponent } from '../set-role/set-role.component';
 
 declare const google: any;
@@ -25,16 +24,13 @@ declare const google: any;
     RouterModule,
     NgbToastModule,
     NgbModule,
-    RoutSignUpComponent
   ]
 })
 export class SignupUserComponent implements OnInit {
   signupForUser!: FormGroup;
-  private accessToken: string = '';
+
   private tokenClient: any;
   private readonly clientId = '611861831803-tkbkdcm2908ks6g8e5vobq5t2a8o4tu1.apps.googleusercontent.com';
-  private isProcessingAuth = false;
-  private googleAuthInitialized = false;
 
   constructor(
     private fb: FormBuilder,
@@ -62,7 +58,7 @@ export class SignupUserComponent implements OnInit {
     }, { validators: passwordMatchValidator });
   }
 
-    get firstName() { return this.signupForUser.get('firstName'); }
+  get firstName() { return this.signupForUser.get('firstName'); }
   get lastName() { return this.signupForUser.get('lastName'); }
   get email() { return this.signupForUser.get('email'); }
   get password() { return this.signupForUser.get('password'); }
@@ -112,107 +108,58 @@ export class SignupUserComponent implements OnInit {
   }
 
   private initGoogleAuth(): void {
-    if (this.googleAuthInitialized || typeof google === 'undefined') return;
+    if (this.tokenClient || typeof google === 'undefined') return;
 
     try {
-      google.accounts.id.initialize({
-        client_id: this.clientId,
-        callback: this.handleCredentialResponse.bind(this),
-        ux_mode: 'popup',
-        cancel_on_tap_outside: true,
-        auto_select: false,
-        itp_support: true,
-        use_fedcm_for_prompt: false
-      });
-
       this.tokenClient = google.accounts.oauth2.initTokenClient({
         client_id: this.clientId,
-        scope: 'openid email profile https://www.googleapis.com/auth/user.birthday.read https://www.googleapis.com/auth/user.gender.read',
+        scope: 'openid email profile',
         callback: (tokenResponse: any) => {
           if (tokenResponse?.access_token) {
-            this.accessToken = tokenResponse.access_token;
-            sessionStorage.setItem('googleAccessToken', this.accessToken);
+            this.handleGoogleAccessToken(tokenResponse.access_token);
+          } else {
+            console.error('No access_token in token response');
           }
-        }
+        },
+        ux_mode: 'popup',
       });
-
-      this.googleAuthInitialized = true;
     } catch (err) {
       console.error('Google auth initialization error:', err);
     }
   }
 
   handleGoogleLogin(): void {
-    if (this.isProcessingAuth || !this.googleAuthInitialized) {
-      if (!this.googleAuthInitialized) this.loadGoogleApi();
+    if (!this.tokenClient) {
+      console.warn('Google token client not initialized.');
       return;
     }
-
-    this.isProcessingAuth = true;
-
     this.tokenClient.requestAccessToken({ prompt: 'consent' });
-
-    setTimeout(() => {
-      google.accounts.id.prompt((notification: any) => {
-        if (notification.isNotDisplayed()) {
-          console.warn('Google prompt not displayed:', notification.getNotDisplayedReason());
-          this.useAlternativeGoogleAuth();
-        } else if (notification.isSkippedMoment() || notification.isDismissedMoment()) {
-          console.warn('Google prompt was skipped/dismissed:', notification.getSkippedReason() || notification.getDismissedReason());
-        }
-        this.isProcessingAuth = false;
-      });
-    }, 500);
   }
 
-  private useAlternativeGoogleAuth(): void {
-    try {
-      const authWindow = window.open(
-        `https://accounts.google.com/o/oauth2/v2/auth?client_id=${this.clientId}&redirect_uri=${encodeURIComponent(window.location.origin)}&response_type=token&scope=${encodeURIComponent('openid email profile')}`,
-        'googleAuthPopup',
-        'width=500,height=600'
-      );
+  private handleGoogleAccessToken(accessToken: string): void {
+    sessionStorage.setItem('googleAccessToken', accessToken);
 
-      window.addEventListener('message', (event) => {
-        if (event.origin === window.location.origin && event.data.type === 'googleAuthCallback') {
-          this.fetchUserInfoAndIdToken(event.data.token);
-        }
-      }, { once: true });
-
-    } catch (error) {
-      console.error('Alternative Google auth failed:', error);
-    }
-  }
-
-  private fetchUserInfoAndIdToken(token: string): void {
-    fetch(`https://oauth2.googleapis.com/tokeninfo?access_token=${token}`)
+    fetch(`https://oauth2.googleapis.com/tokeninfo?access_token=${accessToken}`)
       .then(res => res.json())
-      .then(data => this.processGoogleTokens(data.id_token || '', token))
+      .then(data => {
+        const idToken = data.id_token;
+        if (!idToken) throw new Error('ID token not found');
+
+        this.http.post('https://fitnesspro.runasp.net/api/Account/GoogleLogin', {
+          idToken,
+          accessToken
+        }).subscribe({
+          next: () => {
+            sessionStorage.removeItem('googleAccessToken');
+            this.openConfirmModal();
+          },
+          error: err => {
+            console.error('Google login API error:', err);
+            sessionStorage.removeItem('googleAccessToken');
+          }
+        });
+      })
       .catch(err => console.error('Failed to fetch ID token:', err));
-  }
-
-  private processGoogleTokens(idToken: string, accessToken: string): void {
-    this.http.post('https://fitnesspro.runasp.net/api/Account/GoogleLogin', {
-      idToken, accessToken
-    }).subscribe({
-      next: () => {
-        sessionStorage.removeItem('googleAccessToken');
-        this.openConfirmModal();
-      },
-      error: err => {
-        console.error('Google login API error:', err);
-        sessionStorage.removeItem('googleAccessToken');
-      }
-    });
-  }
-
-  handleCredentialResponse(response: any): void {
-    if (!response?.credential) return;
-
-    const idToken = response.credential;
-    const accessToken = sessionStorage.getItem('googleAccessToken') || '';
-
-    this.processGoogleTokens(idToken, accessToken);
   }
 
   private openConfirmModal(): void {
