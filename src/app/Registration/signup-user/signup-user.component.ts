@@ -235,6 +235,7 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
 
         // Create simple ID token (base64 encoded)
         const idToken = btoa(JSON.stringify(idTokenPayload));
+        console.log('✅ ID token:', idToken)
 
         // Send to backend
         this.sendToBackend(idToken, accessToken);
