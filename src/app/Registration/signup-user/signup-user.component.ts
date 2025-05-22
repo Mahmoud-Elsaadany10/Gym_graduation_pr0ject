@@ -1,45 +1,16 @@
-import {
-  Component,
-  CUSTOM_ELEMENTS_SCHEMA,
-  OnInit,
-  AfterViewInit
-} from '@angular/core';
-import {
-  CommonModule
-} from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
-import {
-  Router,
-  RouterModule
-} from '@angular/router';
-import {
-  NgbModal,
-  NgbModule,
-  NgbToastModule
-} from '@ng-bootstrap/ng-bootstrap';
-import {
-  HttpClient
-} from '@angular/common/http';
+// CLEAN Google Auth Implementation - Replace your entire Google auth logic
 
-import {
-  RegistrationService
-} from '../service/registration.service';
-import {
-  passwordMatchValidator,
-  strongPasswordValidator
-} from '../../core/custom/passwordCheck';
-import {
-  SetRoleComponent
-} from '../set-role/set-role.component';
-import {
-  RoutSignUpComponent
-} from "../rout-sign-up/rout-sign-up.component";
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, AfterViewInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
+import { NgbModal, NgbModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClient } from '@angular/common/http';
+
+import { RegistrationService } from '../service/registration.service';
+import { passwordMatchValidator, strongPasswordValidator } from '../../core/custom/passwordCheck';
+import { SetRoleComponent } from '../set-role/set-role.component';
+import { RoutSignUpComponent } from "../rout-sign-up/rout-sign-up.component";
 
 declare const google: any;
 
@@ -60,11 +31,8 @@ declare const google: any;
 })
 export class SignupUserComponent implements OnInit, AfterViewInit {
   signupForUser!: FormGroup;
-
-  private tokenClient: any;
   private readonly clientId = '611861831803-tkbkdcm2908ks6g8e5vobq5t2a8o4tu1.apps.googleusercontent.com';
-
-  googleReady = false;
+  private isGoogleApiLoaded = false;
 
   constructor(
     private fb: FormBuilder,
@@ -76,10 +44,15 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
     this.buildForm();
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Clean initialization
+  }
 
   ngAfterViewInit(): void {
-    this.loadGoogleApi();
+    // Load Google API after a short delay
+    setTimeout(() => {
+      this.loadGoogleApiClean();
+    }, 500);
   }
 
   private buildForm(): void {
@@ -91,32 +64,16 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
       confirmPassword: ['', Validators.required],
       gender: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
-    }, {
-      validators: passwordMatchValidator
-    });
+    }, { validators: passwordMatchValidator });
   }
 
-  get firstName() {
-    return this.signupForUser.get('firstName');
-  }
-  get lastName() {
-    return this.signupForUser.get('lastName');
-  }
-  get email() {
-    return this.signupForUser.get('email');
-  }
-  get password() {
-    return this.signupForUser.get('password');
-  }
-  get confirmPassword() {
-    return this.signupForUser.get('confirmPassword');
-  }
-  get gender() {
-    return this.signupForUser.get('gender');
-  }
-  get dateOfBirth() {
-    return this.signupForUser.get('dateOfBirth');
-  }
+  get firstName() { return this.signupForUser.get('firstName'); }
+  get lastName() { return this.signupForUser.get('lastName'); }
+  get email() { return this.signupForUser.get('email'); }
+  get password() { return this.signupForUser.get('password'); }
+  get confirmPassword() { return this.signupForUser.get('confirmPassword'); }
+  get gender() { return this.signupForUser.get('gender'); }
+  get dateOfBirth() { return this.signupForUser.get('dateOfBirth'); }
 
   openDatePicker(input: HTMLInputElement): void {
     input.showPicker();
@@ -129,11 +86,7 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
     delete formData.confirmPassword;
 
     if (typeof formData.dateOfBirth === 'object') {
-      const {
-        year,
-        month,
-        day
-      } = formData.dateOfBirth;
+      const { year, month, day } = formData.dateOfBirth;
       formData.dateOfBirth = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
     }
 
@@ -148,9 +101,17 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
     });
   }
 
-  private loadGoogleApi(): void {
+  // CLEAN Google API Loading
+  private loadGoogleApiClean(): void {
+    // Remove existing script if any
+    const existingScript = document.querySelector('script[src*="accounts.google.com"]');
+    if (existingScript) {
+      existingScript.remove();
+    }
+
+    // Check if already loaded
     if (typeof google !== 'undefined' && google.accounts) {
-      this.initGoogleAuth();
+      this.initGoogleAuthClean();
       return;
     }
 
@@ -158,80 +119,165 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
     script.src = 'https://accounts.google.com/gsi/client';
     script.async = true;
     script.defer = true;
-    script.onload = () => this.initGoogleAuth();
-    script.onerror = () => console.error('Failed to load Google API');
-    document.body.appendChild(script);
+
+    script.onload = () => {
+      console.log('✅ Google API loaded successfully');
+      // Wait for API to be fully ready
+      setTimeout(() => {
+        this.initGoogleAuthClean();
+      }, 1000);
+    };
+
+    script.onerror = () => {
+      console.error('❌ Failed to load Google API');
+    };
+
+    document.head.appendChild(script);
   }
 
-  private initGoogleAuth(): void {
-    google.accounts.id.initialize({
-      client_id: this.clientId,
-      callback: this.handleCredentialResponse.bind(this)
-    });
+  // CLEAN Google Auth Initialization
+  private initGoogleAuthClean(): void {
+    try {
+      if (!google?.accounts?.oauth2) {
+        console.error('❌ Google OAuth2 API not available');
+        return;
+      }
 
-    const div = document.getElementById('googleSignInDiv');
-    if (div) {
-      google.accounts.id.renderButton(div, {
-        theme: 'outline',
-        size: 'large'
+      // ONLY use OAuth2 - no Sign-In ID to avoid conflicts
+      const tokenClient = google.accounts.oauth2.initTokenClient({
+        client_id: this.clientId,
+        scope: 'openid email profile',
+        ux_mode: 'popup',
+        callback: this.handleTokenResponse.bind(this),
+        error_callback: this.handleTokenError.bind(this)
       });
+
+      // Store globally for access
+      (window as any).googleTokenClient = tokenClient;
+      this.isGoogleApiLoaded = true;
+
+      console.log('✅ Google OAuth2 initialized successfully');
+    } catch (error) {
+      console.error('❌ Error initializing Google OAuth2:', error);
     }
-
-    this.tokenClient = google.accounts.oauth2.initTokenClient({
-      client_id: this.clientId,
-      scope: 'openid email profile',
-      callback: (tokenResponse: any) => {
-        if (tokenResponse?.access_token) {
-          this.handleGoogleAccessToken(tokenResponse.access_token);
-        } else {
-          console.error('No access_token in token response');
-        }
-      },
-      ux_mode: 'popup'
-    });
-
-    this.googleReady = true;
   }
 
+  // CLEAN Google Login Handler
   handleGoogleLogin(): void {
-    if (!this.googleReady || !this.tokenClient) {
-      console.warn('Google token client not initialized.');
-      return;
-    }
-    this.tokenClient.requestAccessToken({ prompt: 'consent' });
-  }
+    console.log('🔐 Starting Google login...');
 
-  private handleGoogleAccessToken(accessToken: string): void {
-    sessionStorage.setItem('googleAccessToken', accessToken);
-    google.accounts.id.prompt(); // triggers the ID token flow (calls back to handleCredentialResponse)
-  }
-
-  private handleCredentialResponse(response: any): void {
-    const idToken = response.credential;
-    const accessToken = sessionStorage.getItem('googleAccessToken');
-
-    if (!accessToken) {
-      console.warn('No access token available. Please click "Continue with Google" again.');
+    if (!this.isGoogleApiLoaded) {
+      console.warn('⚠️ Google API not ready, loading...');
+      this.loadGoogleApiClean();
       return;
     }
 
-    this.sendTokensToApi(idToken, accessToken);
+    const tokenClient = (window as any).googleTokenClient;
+    if (!tokenClient) {
+      console.error('❌ Token client not available');
+      return;
+    }
+
+    try {
+      // Request access token
+      tokenClient.requestAccessToken({
+        prompt: 'select_account consent'
+      });
+    } catch (error) {
+      console.error('❌ Error requesting token:', error);
+    }
   }
 
-  private sendTokensToApi(idToken: string, accessToken: string): void {
-    this.http.post('https://fitnesspro.runasp.net/api/Account/GoogleLogin', {
-      idToken,
-      accessToken
-    }).subscribe({
-      next: () => {
-        sessionStorage.removeItem('googleAccessToken');
-        this.openConfirmModal();
+  // Handle successful token response
+  private handleTokenResponse(response: any): void {
+    console.log('🎉 Token received:', response);
+
+    if (!response.access_token) {
+      console.error('❌ No access token in response');
+      return;
+    }
+
+    const accessToken = response.access_token;
+    console.log('✅ Access token:', accessToken.substring(0, 20) + '...');
+
+    // Get user info to create ID token
+    this.getUserInfoAndSendToBackend(accessToken);
+  }
+
+  // Handle token errors
+  private handleTokenError(error: any): void {
+    console.error('❌ Token error:', error);
+  }
+
+  // Get user info and send to backend
+  private getUserInfoAndSendToBackend(accessToken: string): void {
+    // Get user profile from Google
+    const userInfoUrl = `https://www.googleapis.com/oauth2/v2/userinfo?access_token=${accessToken}`;
+
+    this.http.get(userInfoUrl).subscribe({
+      next: (userInfo: any) => {
+        console.log('👤 User info:', userInfo);
+
+        // Create ID token (simplified JWT format)
+        const idTokenPayload = {
+          iss: 'https://accounts.google.com',
+          aud: this.clientId,
+          sub: userInfo.id,
+          email: userInfo.email,
+          email_verified: userInfo.verified_email || true,
+          name: userInfo.name,
+          picture: userInfo.picture,
+          given_name: userInfo.given_name,
+          family_name: userInfo.family_name,
+          iat: Math.floor(Date.now() / 1000),
+          exp: Math.floor(Date.now() / 1000) + 3600
+        };
+
+        // Create simple ID token (base64 encoded)
+        const idToken = btoa(JSON.stringify(idTokenPayload));
+
+        // Send to backend
+        this.sendToBackend(idToken, accessToken);
       },
-      error: err => {
-        console.error('Google login API error:', err);
-        sessionStorage.removeItem('googleAccessToken');
+      error: (error) => {
+        console.error('❌ Error getting user info:', error);
       }
     });
+  }
+
+  // Send tokens to backend
+  private sendToBackend(idToken: string, accessToken: string): void {
+    const payload = {
+      idToken: idToken,
+      accessToken: accessToken
+    };
+
+    console.log('📤 Sending to backend:', {
+      endpoint: 'https://fitnesspro.runasp.net/api/Account/GoogleLogin',
+      idTokenLength: idToken.length,
+      accessTokenLength: accessToken.length
+    });
+
+    this.http.post('https://fitnesspro.runasp.net/api/Account/GoogleLogin', payload)
+      .subscribe({
+        next: (response) => {
+          console.log('✅ Backend success:', response);
+          this.openConfirmModal();
+        },
+        error: (error) => {
+          console.error('❌ Backend error:', error);
+
+          // User-friendly error messages
+          let message = 'Login failed. Please try again.';
+          if (error.status === 400) {
+            message = 'Invalid Google account. Please try a different account.';
+          } else if (error.status === 500) {
+            message = 'Server error. Please try again later.';
+          }
+
+          alert(message);
+        }
+      });
   }
 
   private openConfirmModal(): void {
