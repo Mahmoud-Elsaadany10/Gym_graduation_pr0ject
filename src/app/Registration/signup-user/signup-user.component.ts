@@ -252,7 +252,6 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
     const payload = { idToken, accessToken };
     this.registrationService.googleSignp(payload).subscribe({
       next: (response) => {
-        const token = response.data.checktoken
         console.log('✅ Backend response:', response);
         sessionStorage.setItem('checktoken', response.data.checktoken);
         this.openConfirmModal();

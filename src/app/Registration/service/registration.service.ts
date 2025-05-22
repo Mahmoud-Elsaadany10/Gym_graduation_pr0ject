@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
-import { ApiResponse, CheckTokenResponse, GoogleLoginPayload, loginResponse, ResetPasswordModel, TokenResponse, User, VerificationModel } from '../../Model/Models';
+import { ApiResponse, CheckTokenResponse, GoogleAuthTokens, loginResponse, ResetPasswordModel, TokenResponse, User, VerificationModel } from '../../Model/Models';
 import { environment } from '../../../environments/environment';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
@@ -192,15 +192,43 @@ export class RegistrationService {
     );
   }
 
-  googleSignp(payload: GoogleLoginPayload): Observable<CheckTokenResponse> {
+  googleSignp(payload: GoogleAuthTokens): Observable<CheckTokenResponse> {
     return this._http.post<CheckTokenResponse>(`${environment.mainurl}/Account/GoogleLogin`, payload);
   }
-  setRole(Role :{role: string}): Observable<any> {
+  setRole(Role :{role: string}): Observable<loginResponse> {
     const token = sessionStorage.getItem('checktoken');
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`
     });
-    return this._http.post<any>(`${environment.mainurl}/Account/SetUserRole`, Role, { headers })
+    return this._http.post<loginResponse>(`${environment.mainurl}/Account/SetUserRole`, Role, { headers }).pipe(
+      map((res: loginResponse) => {
+        if (res.isSuccess && res.data.token && res.data.refreshToken) {
+          this.setTokens(res.data.token, res.data.refreshToken);
+          this.saveUser();
+        }
+        return res;
+      }),
+      catchError((error) => {
+        console.error('Set role error:', error);
+        return throwError(() => new Error('Failed to set role.'));
+      })
+    )
+  }
+  googleLogin(payload :GoogleAuthTokens): Observable<any>{
+    return this._http.post<any>(`${environment.mainurl}/Account/GoogleLogin`, payload).pipe(
+      map((res: loginResponse) => {
+        if (res.isSuccess ) {
+          this.setTokens(res.data.token, res.data.refreshToken);
+          this.router.navigate(['/layout/home']);
+          this.saveUser();
+        }
+        return res;
+      }),
+      catchError((error) => {
+        console.error('Google login error:', error);
+        return throwError(() => new Error('Google login failed.'));
+      })
+    )
   }
 
 

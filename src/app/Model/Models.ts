@@ -61,10 +61,7 @@ export interface CheckTokenResponse {
   };
 }
 
-export interface GoogleLoginPayload {
-  idToken: string;
-  accessToken: string;
-}
+
 
 export interface gymData{
   gymName: string
