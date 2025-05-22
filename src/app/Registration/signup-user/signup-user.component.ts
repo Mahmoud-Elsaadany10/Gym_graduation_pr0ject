@@ -11,7 +11,6 @@ import { RegistrationService } from '../service/registration.service';
 import { passwordMatchValidator, strongPasswordValidator } from '../../core/custom/passwordCheck';
 import { SetRoleComponent } from '../set-role/set-role.component';
 import { RoutSignUpComponent } from "../rout-sign-up/rout-sign-up.component";
-import { JsonHubProtocol } from '@microsoft/signalr';
 
 declare const google: any;
 
@@ -254,6 +253,7 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
       next: (response) => {
         console.log('✅ Backend response:', response);
         sessionStorage.setItem('checktoken', response.data.checktoken);
+
         this.openConfirmModal();
       },
       error: (error) => {
