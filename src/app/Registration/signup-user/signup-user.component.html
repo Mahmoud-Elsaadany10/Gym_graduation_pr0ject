@@ -137,8 +137,13 @@
     <!-- Social Icons -->
     <div class="social d-flex justify-content-evenly w-75 align-items-baseline">
       <a role="button"><img class="icon" src="assets/Facebook.svg" alt="Facebook"></a>
-
-      <a role="button" (click)="handleGoogleLogin()"><img class="icon" src="assets/Group.svg" alt="Google"></a>
+<a
+  role="button"
+  [class.disabled]="!googleReady"
+  (click)="googleReady && handleGoogleLogin()"
+>
+  <img class="icon" src="assets/Group.svg" alt="Google">
+</a>
 
 
 

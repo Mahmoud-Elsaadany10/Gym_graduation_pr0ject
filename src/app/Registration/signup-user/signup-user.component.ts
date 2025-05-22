@@ -1,14 +1,45 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit, AfterViewInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
-import { NgbModal, NgbModule, NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
-import { HttpClient } from '@angular/common/http';
+import {
+  Component,
+  CUSTOM_ELEMENTS_SCHEMA,
+  OnInit,
+  AfterViewInit
+} from '@angular/core';
+import {
+  CommonModule
+} from '@angular/common';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
+import {
+  Router,
+  RouterModule
+} from '@angular/router';
+import {
+  NgbModal,
+  NgbModule,
+  NgbToastModule
+} from '@ng-bootstrap/ng-bootstrap';
+import {
+  HttpClient
+} from '@angular/common/http';
 
-import { RegistrationService } from '../service/registration.service';
-import { passwordMatchValidator, strongPasswordValidator } from '../../core/custom/passwordCheck';
-import { SetRoleComponent } from '../set-role/set-role.component';
-import { RoutSignUpComponent } from "../rout-sign-up/rout-sign-up.component";
+import {
+  RegistrationService
+} from '../service/registration.service';
+import {
+  passwordMatchValidator,
+  strongPasswordValidator
+} from '../../core/custom/passwordCheck';
+import {
+  SetRoleComponent
+} from '../set-role/set-role.component';
+import {
+  RoutSignUpComponent
+} from "../rout-sign-up/rout-sign-up.component";
 
 declare const google: any;
 
@@ -24,13 +55,16 @@ declare const google: any;
     NgbToastModule,
     NgbModule,
     RoutSignUpComponent
-]
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SignupUserComponent implements OnInit, AfterViewInit {
   signupForUser!: FormGroup;
 
   private tokenClient: any;
   private readonly clientId = '611861831803-tkbkdcm2908ks6g8e5vobq5t2a8o4tu1.apps.googleusercontent.com';
+
+  googleReady = false;
 
   constructor(
     private fb: FormBuilder,
@@ -42,9 +76,7 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
     this.buildForm();
   }
 
-  ngOnInit(): void {
-    // no Google logic here
-  }
+  ngOnInit(): void {}
 
   ngAfterViewInit(): void {
     this.loadGoogleApi();
@@ -59,16 +91,32 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
       confirmPassword: ['', Validators.required],
       gender: ['', Validators.required],
       dateOfBirth: ['', Validators.required],
-    }, { validators: passwordMatchValidator });
+    }, {
+      validators: passwordMatchValidator
+    });
   }
 
-  get firstName() { return this.signupForUser.get('firstName'); }
-  get lastName() { return this.signupForUser.get('lastName'); }
-  get email() { return this.signupForUser.get('email'); }
-  get password() { return this.signupForUser.get('password'); }
-  get confirmPassword() { return this.signupForUser.get('confirmPassword'); }
-  get gender() { return this.signupForUser.get('gender'); }
-  get dateOfBirth() { return this.signupForUser.get('dateOfBirth'); }
+  get firstName() {
+    return this.signupForUser.get('firstName');
+  }
+  get lastName() {
+    return this.signupForUser.get('lastName');
+  }
+  get email() {
+    return this.signupForUser.get('email');
+  }
+  get password() {
+    return this.signupForUser.get('password');
+  }
+  get confirmPassword() {
+    return this.signupForUser.get('confirmPassword');
+  }
+  get gender() {
+    return this.signupForUser.get('gender');
+  }
+  get dateOfBirth() {
+    return this.signupForUser.get('dateOfBirth');
+  }
 
   openDatePicker(input: HTMLInputElement): void {
     input.showPicker();
@@ -81,7 +129,11 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
     delete formData.confirmPassword;
 
     if (typeof formData.dateOfBirth === 'object') {
-      const { year, month, day } = formData.dateOfBirth;
+      const {
+        year,
+        month,
+        day
+      } = formData.dateOfBirth;
       formData.dateOfBirth = `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
     }
 
@@ -112,7 +164,6 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
   }
 
   private initGoogleAuth(): void {
-    // Initialize button for ID token
     google.accounts.id.initialize({
       client_id: this.clientId,
       callback: this.handleCredentialResponse.bind(this)
@@ -126,7 +177,6 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
       });
     }
 
-    // Initialize token client for access token
     this.tokenClient = google.accounts.oauth2.initTokenClient({
       client_id: this.clientId,
       scope: 'openid email profile',
@@ -139,14 +189,21 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
       },
       ux_mode: 'popup'
     });
+
+    this.googleReady = true;
   }
 
   handleGoogleLogin(): void {
-    if (!this.tokenClient) {
+    if (!this.googleReady || !this.tokenClient) {
       console.warn('Google token client not initialized.');
       return;
     }
     this.tokenClient.requestAccessToken({ prompt: 'consent' });
+  }
+
+  private handleGoogleAccessToken(accessToken: string): void {
+    sessionStorage.setItem('googleAccessToken', accessToken);
+    google.accounts.id.prompt(); // triggers the ID token flow (calls back to handleCredentialResponse)
   }
 
   private handleCredentialResponse(response: any): void {
@@ -161,11 +218,6 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
     this.sendTokensToApi(idToken, accessToken);
   }
 
-  private handleGoogleAccessToken(accessToken: string): void {
-    sessionStorage.setItem('googleAccessToken', accessToken);
-    google.accounts.id.prompt(); // prompts the user to sign in and trigger ID token
-  }
-
   private sendTokensToApi(idToken: string, accessToken: string): void {
     this.http.post('https://fitnesspro.runasp.net/api/Account/GoogleLogin', {
       idToken,
@@ -174,7 +226,6 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
       next: () => {
         sessionStorage.removeItem('googleAccessToken');
         this.openConfirmModal();
-
       },
       error: err => {
         console.error('Google login API error:', err);
