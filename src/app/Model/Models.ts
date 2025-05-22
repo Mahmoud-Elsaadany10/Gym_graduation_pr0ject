@@ -53,11 +53,15 @@ export interface GoogleAuthTokens {
   idToken: string;
   accessToken: string;
 }
-export interface CheckTokenResponse {
+export interface googleTokenResponse {
   isSuccess: boolean;
   data: {
-    checktoken: string;
-    exipiration: string;
+    checktoken?: string;
+    exipiration?: Date;
+    token?: string;
+    refreshToken?: string;
+
+
   };
 }
 

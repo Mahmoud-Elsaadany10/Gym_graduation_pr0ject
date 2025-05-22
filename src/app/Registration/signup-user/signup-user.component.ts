@@ -249,12 +249,9 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
   // Send tokens to backend
   sendToBackend(idToken: string, accessToken: string): void {
     const payload = { idToken, accessToken };
-    this.registrationService.googleSignp(payload).subscribe({
+    this.registrationService.googleLogin(payload).subscribe({
       next: (response) => {
-        console.log('✅ Backend response:', response);
-        sessionStorage.setItem('checktoken', response.data.checktoken);
 
-        this.openConfirmModal();
       },
       error: (error) => {
         console.error('❌ Backend error:', error);
@@ -262,13 +259,13 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
     });
   }
 
-  private openConfirmModal(): void {
-    this.modalService.open(SetRoleComponent, {
-      windowClass: 'medium-top-modal',
-      backdrop: 'static',
-      keyboard: false
-    });
-  }
+  // private openConfirmModal(): void {
+  //   this.modalService.open(SetRoleComponent, {
+  //     windowClass: 'medium-top-modal',
+  //     backdrop: 'static',
+  //     keyboard: false
+  //   });
+  // }
 }
 
 

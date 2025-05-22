@@ -1,11 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
-import { ApiResponse, CheckTokenResponse, GoogleAuthTokens, loginResponse, ResetPasswordModel, TokenResponse, User, VerificationModel } from '../../Model/Models';
+import { ApiResponse, GoogleAuthTokens, googleTokenResponse, loginResponse, ResetPasswordModel, TokenResponse, User, VerificationModel } from '../../Model/Models';
 import { environment } from '../../../environments/environment';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
 import { SocialAuthService, GoogleLoginProvider, SocialUser } from '@abacritt/angularx-social-login'
+import { SetRoleComponent } from '../set-role/set-role.component';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 
 @Injectable({
@@ -15,7 +17,8 @@ export class RegistrationService {
   userData = new BehaviorSubject<any>(null);
 
   constructor(private _http :HttpClient , private router : Router ,
-    private socialAuthService: SocialAuthService
+    private socialAuthService: SocialAuthService ,
+      private modalService: NgbModal
   ) {
     if (localStorage.getItem('token') || sessionStorage.getItem("token")) {
       this.saveUser();
@@ -192,9 +195,9 @@ export class RegistrationService {
     );
   }
 
-  googleSignp(payload: GoogleAuthTokens): Observable<CheckTokenResponse> {
-    return this._http.post<CheckTokenResponse>(`${environment.mainurl}/Account/GoogleLogin`, payload);
-  }
+  // googleSignp(payload: GoogleAuthTokens): Observable<CheckTokenResponse> {
+  //   return this._http.post<CheckTokenResponse>(`${environment.mainurl}/Account/GoogleLogin`, payload);
+  // }
   setRole(Role :{role: string}): Observable<loginResponse> {
     const token = sessionStorage.getItem('checktoken');
     const headers = new HttpHeaders({
@@ -216,12 +219,16 @@ export class RegistrationService {
   }
   googleLogin(payload :GoogleAuthTokens): Observable<any>{
     return this._http.post<any>(`${environment.mainurl}/Account/GoogleLogin`, payload).pipe(
-      map((res: loginResponse) => {
-        if (res.isSuccess ) {
+      map((res: googleTokenResponse) => {
+        if (res.isSuccess && res.data.token && res.data.refreshToken) {
           this.setTokens(res.data.token, res.data.refreshToken);
           this.router.navigate(['/layout/home']);
           this.saveUser();
+        }else if(res.data.checktoken){
+          this.openConfirmModal()
+          sessionStorage.setItem('checktoken', res.data.checktoken);
         }
+
         return res;
       }),
       catchError((error) => {
@@ -231,6 +238,12 @@ export class RegistrationService {
     )
   }
 
-
+    private openConfirmModal(): void {
+      this.modalService.open(SetRoleComponent, {
+        windowClass: 'medium-top-modal',
+        backdrop: 'static',
+        keyboard: false
+      });
+    }
 }
 
