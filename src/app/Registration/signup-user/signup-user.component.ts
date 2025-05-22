@@ -11,6 +11,7 @@ import { RegistrationService } from '../service/registration.service';
 import { passwordMatchValidator, strongPasswordValidator } from '../../core/custom/passwordCheck';
 import { SetRoleComponent } from '../set-role/set-role.component';
 import { RoutSignUpComponent } from "../rout-sign-up/rout-sign-up.component";
+import { JsonHubProtocol } from '@microsoft/signalr';
 
 declare const google: any;
 
@@ -235,7 +236,7 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
 
         // Create simple ID token (base64 encoded)
         const idToken = btoa(JSON.stringify(idTokenPayload));
-        console.log('✅ ID token:', idToken)
+        console.log('✅ ID token:', idToken.toString());
 
         // Send to backend
         this.sendToBackend(idToken, accessToken);
@@ -247,38 +248,19 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
   }
 
   // Send tokens to backend
-  private sendToBackend(idToken: string, accessToken: string): void {
-    const payload = {
-      idToken: idToken,
-      accessToken: accessToken
-    };
-
-    console.log('📤 Sending to backend:', {
-      endpoint: 'https://fitnesspro.runasp.net/api/Account/GoogleLogin',
-      idTokenLength: idToken.length,
-      accessTokenLength: accessToken.length
+  sendToBackend(idToken: string, accessToken: string): void {
+    const payload = { idToken, accessToken };
+    this.registrationService.googleSignp(payload).subscribe({
+      next: (response) => {
+        const token = response.data.checktoken
+        console.log('✅ Backend response:', response);
+        sessionStorage.setItem('checktoken', response.data.checktoken);
+        this.openConfirmModal();
+      },
+      error: (error) => {
+        console.error('❌ Backend error:', error);
+      }
     });
-
-    this.http.post('https://fitnesspro.runasp.net/api/Account/GoogleLogin', payload)
-      .subscribe({
-        next: (response) => {
-          console.log('✅ Backend success:', response);
-          this.openConfirmModal();
-        },
-        error: (error) => {
-          console.error('❌ Backend error:', error);
-
-          // User-friendly error messages
-          let message = 'Login failed. Please try again.';
-          if (error.status === 400) {
-            message = 'Invalid Google account. Please try a different account.';
-          } else if (error.status === 500) {
-            message = 'Server error. Please try again later.';
-          }
-
-          alert(message);
-        }
-      });
   }
 
   private openConfirmModal(): void {
@@ -289,3 +271,6 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
     });
   }
 }
+
+
+

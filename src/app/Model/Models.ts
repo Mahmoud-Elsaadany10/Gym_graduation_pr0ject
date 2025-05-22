@@ -53,6 +53,18 @@ export interface GoogleAuthTokens {
   idToken: string;
   accessToken: string;
 }
+export interface CheckTokenResponse {
+  isSuccess: boolean;
+  data: {
+    checktoken: string;
+    exipiration: string;
+  };
+}
+
+export interface GoogleLoginPayload {
+  idToken: string;
+  accessToken: string;
+}
 
 export interface gymData{
   gymName: string
