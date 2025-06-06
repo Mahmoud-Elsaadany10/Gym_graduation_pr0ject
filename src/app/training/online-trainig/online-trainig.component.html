@@ -9,11 +9,11 @@
       <button (click)="searchCoach()" class="rounded-pill search"><i class="fa-solid fa-magnifying-glass me-2"></i>Search</button>
   </div>
 
-  <div class="d-flex justify-content-around mt-4 mb-5 ">
+  <div class="d-flex justify-content-around mt-4 mb-5 filter">
     <div class="position-relative">
     <div class="rating-filter">
     <label class="fw-bold d-block mb-2">Rating: {{ minRating }} to 5</label>
-    <div class="d-flex align-items-center">
+    <div class="d-flex align-items-center pointer">
       <input
       type="range"
       min="0"
@@ -24,7 +24,7 @@
       class="rating-range me-2"
     />
       <i
-    class="fa fa-refresh reset-icon"
+    class="fa fa-refresh reset-icon pointer"
     title="Reset"
     (click)="resetRating()"
   ></i>
@@ -43,12 +43,12 @@
       </select>
       <i class="fa-solid fa-caret-down end-i"></i>
     </div>
-
-
-
   </div>
-  <div class="gy-5 gx-5 row">
+
+  <div class="gy-5 gx-5 row" *ngIf="dataLoaded">
+    <ng-container *ngIf="coachs.length > 0 ; else noCoachFound">
     <div class="col-md-6 col-lg-4 responsive" *ngFor="let coach of coachs">
+
       <div class="position-relative ">
         <img [src]="coach.profilePictureUrl || 'assets/coach.png'" alt="">
         <div class="position-absolute content d-flex flex-column  ">
@@ -73,8 +73,15 @@
         </div>
 
       </div>
+
     </div>
+    </ng-container>
+
+    <ng-template #noCoachFound>
+      <h5 class="text-primary fw-semibold mb-4 text-center noContacts" >No Coaches Found</h5>
+    </ng-template>
   </div>
+
 
   <div class="d-flex justify-content-center mt-4">
     <ngb-pagination

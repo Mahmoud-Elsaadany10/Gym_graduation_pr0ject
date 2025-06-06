@@ -29,6 +29,7 @@ export class GymComponent implements OnInit , OnDestroy {
   gymSubscription :Subscription | null = null
   searchSubscription :Subscription | null = null
   selectedCity: string ="";
+  dataLoaded: boolean = false;
 
 
   constructor(private gymData: GymService ,
@@ -53,9 +54,12 @@ export class GymComponent implements OnInit , OnDestroy {
           this.gyms = response.data
           this.totalGym = response.totalRecords
           console.log('Gym data:', this.gyms);
+          this.dataLoaded = true;
         }
       },
-      error: (err) => console.error('Error fetching gyms:', err)
+      error: (err) => {
+        this.dataLoaded = true;
+        console.error('Error fetching gyms:', err)}
     });
   }
 
@@ -80,6 +84,7 @@ export class GymComponent implements OnInit , OnDestroy {
             this.hide =false
             this.dynamicMaxSize = this.gyms.length > 3 ? 5 : this.gyms.length;
             this.page = 1;
+            this.dataLoaded = true;
           }
       }
     })

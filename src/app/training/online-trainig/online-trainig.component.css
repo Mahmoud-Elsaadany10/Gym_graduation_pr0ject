@@ -34,8 +34,9 @@ img {
     outline: none;
     border-color: #3f51b5 !important;
 }
-
-
+.pointer{
+  cursor: pointer;
+}
 
 .content {
   background-color: rgba(124, 147, 195, 0.54);
@@ -80,15 +81,39 @@ p{
     --bs-gutter-x: 0rem !important;
     }
 }
-@media (max-width : 576px){
+@media (max-width: 576px) {
+  .rating-filter {
+    font-size: 14px;
+    padding: 14px 20px;
+  }
   .select-filter{
-    font-size: 12px;
-    padding: 12px 30px;
-  }.rating-filter{
-    padding: 5px;
-    font-size: 12px;
+    font-size: 16px;
+    padding: 19px 20px;
+  }
+
+  .filter {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: space-between;
+  }
+
+  .position-relative {
+    flex: 1 1 48%;
+  }
+
+  .select-filter,
+  .rating-filter {
+    width: 100%;
+  }
+
+  .end-i {
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
   }
 }
+
+
 .x{
   outline: none;
   border-color: transparent;

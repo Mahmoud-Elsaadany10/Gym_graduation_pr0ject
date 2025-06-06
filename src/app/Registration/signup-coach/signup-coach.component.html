@@ -106,18 +106,7 @@
         </small>
       </div>
 
-      <!-- Remember Me and Forget Password -->
-      <!-- <div class="d-flex mb-2 justify-content-between align-items-baseline">
-        <div class="check">
-          <input type="checkbox" class="me-1" value="lsRememberMe" id="rememberMe" name="rememberMe">
-          <label for="rememberMe">Remember me</label>
-        </div>
-        <div class="rout  ">
-          <a routerLink="/logging/otp">Forget Password?</a>
-        </div>
-      </div> -->
 
-      <!-- Continue Button -->
       <button class="btn mt-2" [disabled]="signupForCoach.invalid">Next</button>
 
       <!-- Sign In Link -->
@@ -127,18 +116,19 @@
       </div>
     </form>
 
-    <!-- Or continue with -->
+
     <div class="line-group mb-2">
       <span class="me-1"></span>
       <p class="or m-0">Or continue with</p>
       <span class="ms-1"></span>
     </div>
 
-    <!-- Social Icons -->
     <div class="social d-flex justify-content-evenly w-75 align-items-baseline">
-      <a role="button"><img class="icon" src="assets/Facebook.svg" alt="Facebook"></a>
-      <a role="button"><img class="icon" src="assets/Group.svg" alt="Google"></a>
-      <a role="button"><img class="icon" src="assets/foundation_social-apple.svg" alt="Apple"></a>
+      <!-- <a role="button"><img class="icon" src="assets/Facebook.svg" alt="Facebook"></a> -->
+      <a role="button" (click)="handleGoogleLogin()">
+        <img class="icon" src="assets/Group.svg" alt="Google">
+      </a>
+      <!-- <a role="button"><img class="icon" src="assets/foundation_social-apple.svg" alt="Apple"></a> -->
     </div>
   </div>
 </div>

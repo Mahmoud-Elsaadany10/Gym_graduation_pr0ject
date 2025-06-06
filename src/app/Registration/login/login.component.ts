@@ -68,7 +68,7 @@ export class LoginComponent implements OnInit , AfterViewInit {
 
   login(){
     const userLogin : loginUser ={...this.loginForm.value}
-    console.log(userLogin)
+
     this.sendToBackend.login(userLogin,this.rememberMe).subscribe((response : loginResponse)=>{
       if(response.isSuccess){
         if(this.getRole() == "Coach"){
@@ -99,8 +99,7 @@ export class LoginComponent implements OnInit , AfterViewInit {
     script.defer = true;
 
     script.onload = () => {
-      console.log('✅ Google API loaded successfully');
-      // Wait for API to be fully ready
+
       setTimeout(() => {
         this.initGoogleAuthClean();
       }, 1000);
@@ -133,8 +132,6 @@ export class LoginComponent implements OnInit , AfterViewInit {
       // Store globally for access
       (window as any).googleTokenClient = tokenClient;
       this.isGoogleApiLoaded = true;
-
-      console.log('✅ Google OAuth2 initialized successfully');
     } catch (error) {
       console.error('❌ Error initializing Google OAuth2:', error);
     }
@@ -142,7 +139,6 @@ export class LoginComponent implements OnInit , AfterViewInit {
 
   // CLEAN Google Login Handler
   handleGoogleLogin(): void {
-    console.log('🔐 Starting Google login...');
 
     if (!this.isGoogleApiLoaded) {
       console.warn('⚠️ Google API not ready, loading...');
@@ -168,15 +164,14 @@ export class LoginComponent implements OnInit , AfterViewInit {
 
   // Handle successful token response
   private handleTokenResponse(response: any): void {
-    console.log('🎉 Token received:', response);
 
     if (!response.access_token) {
-      console.error('❌ No access token in response');
+
       return;
     }
 
     const accessToken = response.access_token;
-    console.log('✅ Access token:', accessToken.substring(0, 20) + '...');
+
 
     // Get user info to create ID token
     this.getUserInfoAndSendToBackend(accessToken);
@@ -193,9 +188,7 @@ export class LoginComponent implements OnInit , AfterViewInit {
 
     this.http.get(userInfoUrl).subscribe({
       next: (userInfo: any) => {
-        console.log('👤 User info:', userInfo);
 
-        // Create ID token (simplified JWT format)
         const idTokenPayload = {
           iss: 'https://accounts.google.com',
           aud: this.clientId,
@@ -210,11 +203,9 @@ export class LoginComponent implements OnInit , AfterViewInit {
           exp: Math.floor(Date.now() / 1000) + 3600
         };
 
-        // Create simple ID token (base64 encoded)
-        const idToken = btoa(JSON.stringify(idTokenPayload));
-        console.log('✅ ID token:', idToken.toString());
 
-        // Send to backend
+        const idToken = btoa(JSON.stringify(idTokenPayload));
+
         this.LogInGoogle(idToken, accessToken);
       },
       error: (error) => {
@@ -227,7 +218,7 @@ export class LoginComponent implements OnInit , AfterViewInit {
     const payload = { idToken, accessToken };
     this.sendToBackend.googleLogin(payload).subscribe({
       next: (response) => {
-        console.log('✅ Backend response:', response);
+
         sessionStorage.setItem('checktoken', response.data.checktoken);
       },
       error: (error) => {

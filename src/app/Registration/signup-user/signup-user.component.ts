@@ -121,7 +121,7 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
     script.defer = true;
 
     script.onload = () => {
-      console.log('✅ Google API loaded successfully');
+
       // Wait for API to be fully ready
       setTimeout(() => {
         this.initGoogleAuthClean();
@@ -155,8 +155,6 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
       // Store globally for access
       (window as any).googleTokenClient = tokenClient;
       this.isGoogleApiLoaded = true;
-
-      console.log('✅ Google OAuth2 initialized successfully');
     } catch (error) {
       console.error('❌ Error initializing Google OAuth2:', error);
     }
@@ -164,7 +162,6 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
 
   // CLEAN Google Login Handler
   handleGoogleLogin(): void {
-    console.log('🔐 Starting Google login...');
 
     if (!this.isGoogleApiLoaded) {
       console.warn('⚠️ Google API not ready, loading...');
@@ -179,7 +176,7 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
     }
 
     try {
-      // Request access token
+
       tokenClient.requestAccessToken({
         prompt: 'select_account consent'
       });
@@ -188,9 +185,8 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
     }
   }
 
-  // Handle successful token response
   private handleTokenResponse(response: any): void {
-    console.log('🎉 Token received:', response);
+
 
     if (!response.access_token) {
       console.error('❌ No access token in response');
@@ -198,27 +194,24 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
     }
 
     const accessToken = response.access_token;
-    console.log('✅ Access token:', accessToken.substring(0, 20) + '...');
 
-    // Get user info to create ID token
+
     this.getUserInfoAndSendToBackend(accessToken);
   }
 
-  // Handle token errors
+
   private handleTokenError(error: any): void {
     console.error('❌ Token error:', error);
   }
 
-  // Get user info and send to backend
+
   private getUserInfoAndSendToBackend(accessToken: string): void {
-    // Get user profile from Google
+
     const userInfoUrl = `https://www.googleapis.com/oauth2/v2/userinfo?access_token=${accessToken}`;
 
     this.http.get(userInfoUrl).subscribe({
       next: (userInfo: any) => {
-        console.log('👤 User info:', userInfo);
 
-        // Create ID token (simplified JWT format)
         const idTokenPayload = {
           iss: 'https://accounts.google.com',
           aud: this.clientId,
@@ -233,11 +226,8 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
           exp: Math.floor(Date.now() / 1000) + 3600
         };
 
-        // Create simple ID token (base64 encoded)
         const idToken = btoa(JSON.stringify(idTokenPayload));
-        console.log('✅ ID token:', idToken.toString());
 
-        // Send to backend
         this.sendToBackend(idToken, accessToken);
       },
       error: (error) => {
@@ -259,13 +249,6 @@ export class SignupUserComponent implements OnInit, AfterViewInit {
     });
   }
 
-  // private openConfirmModal(): void {
-  //   this.modalService.open(SetRoleComponent, {
-  //     windowClass: 'medium-top-modal',
-  //     backdrop: 'static',
-  //     keyboard: false
-  //   });
-  // }
 }
 
 

@@ -27,6 +27,7 @@ export class OnlineTrainigComponent implements OnInit , OnDestroy{
   coachSubscription :Subscription | null = null
   searchSubscription :Subscription | null = null
   filledStars: number = 0;
+  dataLoaded : boolean = false;
 
   minRating = 0;
   maxRating = 5;
@@ -52,11 +53,13 @@ export class OnlineTrainigComponent implements OnInit , OnDestroy{
         if(response){
           this.coachs = response.data
           this.totalCoach = response.totalRecords
+          this.dataLoaded = true;
 
           console.log(this.coachs)
         }
       },
       error : (err) => {console.error('Error fetching coaches:', err)
+        this.dataLoaded = true;
 
       }
 
@@ -71,9 +74,12 @@ export class OnlineTrainigComponent implements OnInit , OnDestroy{
           this.hide =false
           this.dynamicMaxSize = this.coachs.length > 3 ? 5 : this.coachs.length;
           this.page = 1;
+          this.dataLoaded = true;
         }
       },
-      error : (err) => console.error('Error fetching coaches:', err)
+      error : (err) => {
+        this.dataLoaded = true;
+        console.error('Error fetching coaches:', err)}
   })}
   onPageChange(newPage: number) {
     this.page = newPage;

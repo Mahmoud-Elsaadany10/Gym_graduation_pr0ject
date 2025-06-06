@@ -89,7 +89,7 @@ button{
 }@media (max-width : 576px){
   .select-filter{
     font-size: 12px;
-    padding: 0px;
+    padding: 14px 20px;
   }
 }
 .x{
