@@ -1,0 +1,69 @@
+
+
+
+
+.custom-modal-content {
+  background-color: var(--color-third);
+  border: none;
+  border-radius: 0;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+  color: var(--white);
+}
+
+.custom-modal-header {
+  background-color: var(--main-color);
+  color: var(--white);
+  border-bottom: none;
+  padding: 1rem;
+}
+
+.custom-modal-body {
+  padding: 2rem 1.5rem;
+  background-color: var(--color-third);
+  text-align: center;
+}
+
+.role-subtitle {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.role-btn {
+  min-width: 130px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--white);
+  border-radius: 0;
+  border: none;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.coach-btn {
+  background-color: var(--secodanry-color);
+  width: 40%;
+}
+
+.trainee-btn {
+  background-color: var(--main-color);
+}
+
+.role-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 576px) {
+  .modal-body > div {
+    flex-direction: row !important;
+  }
+
+  .role-btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .role-subtitle {
+    font-size: 1rem;
+  }
+}

@@ -1,0 +1,35 @@
+<app-navbar></app-navbar>
+
+<div class="container py-5">
+  <div class="col-12 col-md-6 col-lg-4 mx-auto main" *ngIf="dataLoaded">
+    <ng-container *ngIf="contacts.length > 0; else noContacts">
+      <h5 class="text-primary fw-semibold mb-4">Direct Messages</h5>
+
+      <div class="list-group shadow-sm rounded-3">
+        <a
+          *ngFor="let contact of contacts"
+          class="list-group-item list-group-item-action d-flex align-items-center gap-3 py-3 border-0 border-bottom custom-contact"
+          [routerLink]="['/layout/chat', contact.userId]"
+          routerLinkActive="active"
+        >
+          <img
+            [src]="contact.user.profilePictureUrl || 'https://via.placeholder.com/40'"
+            alt="Profile"
+            class="rounded-circle border"
+            style="width: 50px; height: 50px; object-fit: cover;"
+          />
+          <div class="flex-grow-1">
+            <div class="fw-semibold">{{ contact.user.firstName }} {{ contact.user.lastName }}</div>
+            <div class="text-muted small text-truncate">
+              {{ contact.lastMessage || 'No messages yet' }}
+            </div>
+          </div>
+        </a>
+      </div>
+    </ng-container>
+
+    <ng-template #noContacts>
+      <h5 class="text-primary fw-semibold mb-4 text-center noContacts" >No Contacts Found</h5>
+    </ng-template>
+  </div>
+</div>

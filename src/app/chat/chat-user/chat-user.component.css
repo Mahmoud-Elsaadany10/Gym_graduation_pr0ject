@@ -1,0 +1,19 @@
+.custom-contact:hover {
+  background-color: #f8f9fa;
+  transition: background-color 0.2s ease-in-out;
+}
+
+a.active.custom-contact {
+  background-color: #e9f3ff;
+  font-weight: 600;
+}
+
+img {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+.main{
+  margin-top: 9px;
+}
+.noContacts{
+  padding: 41.5px 0 !important;
+}

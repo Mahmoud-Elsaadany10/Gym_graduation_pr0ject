@@ -15,9 +15,7 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" routerLinkActive="active" routerLink="/layout/home">Home</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">About Us</a>
-        </li>
+
         <li class="nav-item">
           <a class="nav-link" href="#">Shop</a>
         </li>
@@ -31,7 +29,11 @@
           <a class="nav-link" routerLink="/posts">Posts</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link"  routerLinkActive="active" *ngIf="!isCoach" routerLink="/layout/Chat">Chat</a>
           <a class="nav-link" routerLinkActive="active" *ngIf="isCoach"   routerLink="/layout/profile">Profile</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLinkActive="active" *ngIf="isCoach" [routerLink]="['/layout/chat',getId()]">Chat</a>
         </li>
       </ul>
 

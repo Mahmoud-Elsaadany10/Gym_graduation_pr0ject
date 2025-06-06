@@ -24,6 +24,7 @@ import { GymDetailsComponent } from './gymComponent/gym-details/gym-details.comp
 import { ChatComponent } from './chat/chat/chat.component';
 import { roleGuard } from './core/guard/role.guard';
 import { isloggedGuard } from './core/guard/islogged.guard';
+import { ChatUserComponent } from './chat/chat-user/chat-user.component';
 
 
 export const routes: Routes = [
@@ -48,7 +49,8 @@ export const routes: Routes = [
     {path : "onlineTraning" ,component:OnlineTrainigComponent},
     {path : "coachDetails/:id" ,component :CoachDetailsComponent},
     {path : "profile" , component : ProfileComponent ,canActivate:[roleGuard]} ,
-    {path : "chat/:id" , component : ChatComponent}
+    {path : "chat/:id" , component : ChatComponent} ,
+    {path : "Chat" , component :ChatUserComponent}
 
   ]}
 

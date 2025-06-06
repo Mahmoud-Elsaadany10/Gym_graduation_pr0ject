@@ -1,9 +1,15 @@
-<div class="modal-header">
-  <h5 class="modal-title">Choose Your Role</h5>
-  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+<div class="modal-content custom-modal-content">
+  <div class="custom-modal-header">
+    <h5 class="modal-title text-light w-100 text-center">Choose Your Role</h5>
+  </div>
+
+  <div class="modal-body custom-modal-body">
+    <h6 class="role-subtitle mb-4 text-white text-center">Select the role you want to continue as:</h6>
+<div class="d-flex justify-content-center gap-3">
+  <button class="btn coach-btn" (click)="selectRole('Coach')">Coach</button>
+  <button class="btn coach-btn" (click)="selectRole('Trainee')">Trainee</button>
 </div>
 
-<div class="modal-body text-center">
-  <button class="btn btn-primary m-2 w-75" (click)="selectRole('Coach')">Coach</button>
-  <button class="btn btn-success m-2 w-75" (click)="selectRole('Trainee')">Trainee</button>
+  </div>
 </div>
+

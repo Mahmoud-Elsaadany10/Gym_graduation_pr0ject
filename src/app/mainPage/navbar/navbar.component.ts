@@ -44,6 +44,16 @@ export class NavbarComponent implements OnInit{
     return role
     }
   }
+  getId(){
+  const token = this.getToken()
+  if(token){
+    const decodedToken: any = jwtDecode(token);
+    const id = decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+    return id
+    }
+  }
+
+
 
   checheRole(){
     if(this.getRole() ==="Coach"){

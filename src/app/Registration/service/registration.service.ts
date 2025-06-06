@@ -195,9 +195,7 @@ export class RegistrationService {
     );
   }
 
-  // googleSignp(payload: GoogleAuthTokens): Observable<CheckTokenResponse> {
-  //   return this._http.post<CheckTokenResponse>(`${environment.mainurl}/Account/GoogleLogin`, payload);
-  // }
+
   setRole(Role :{role: string}): Observable<loginResponse> {
     const token = sessionStorage.getItem('checktoken');
     const headers = new HttpHeaders({
@@ -240,7 +238,7 @@ export class RegistrationService {
 
     private openConfirmModal(): void {
       this.modalService.open(SetRoleComponent, {
-        windowClass: 'medium-top-modal',
+        windowClass: 'centered-modal',
         backdrop: 'static',
         keyboard: false
       });
