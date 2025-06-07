@@ -67,12 +67,10 @@
       </div>
     </form>
 
-    <!-- Gym Information -->
-
+  </div>
     <div class="head">
       <p>Gym Information</p>
     </div>
-  </div>
   <div class="row align-items-center ">
     <div class=" col-3 img  d-flex">
       <img [src]="gymImage || 'assets/avatardefault.svg'" alt="gym Picture" class="coach-img" />
@@ -168,7 +166,6 @@
 
   </div>
 
-  <!-- training Information -->
   <div class="head my-3">
     <p>Online Training Information</p>
   </div>
@@ -187,8 +184,8 @@
         </div>
         <div class="row g-2">
           <div class="col-sm-6 w-50">
-            <label for="noOfSessionsPerWeek">no.Of Sessions Per Week</label>
-            <input type="number" min="1" id="noOfSessionsPerWeek" formControlName="noOfSessionsPerWeek">
+            <label for="noOfSessionsPerWeek">no.Of Sessions</label>
+            <input type="number" min="1" id="noOfSessionsPerWeek" placeholder="no.Of Sessions Per Week" formControlName="noOfSessionsPerWeek">
           </div>
           <div class="col-sm-6 w-50">
             <label for="durationOfSession">Duration Of Session</label>

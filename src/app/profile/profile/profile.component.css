@@ -1,19 +1,20 @@
 
-.top-section {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-  padding: 20px;
-}
-
 .coach-img {
   width: 110px;
   height: 110px;
   border-radius: 50%;
   object-fit: cover;
-
+  border: 4px solid #ffffff;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
+.coach-img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+}
+
+/* Enhanced Input Styles */
 input[type="number"] {
   -moz-appearance: textfield;
   appearance: textfield;
@@ -25,137 +26,428 @@ input[type="number"]::-webkit-inner-spin-button {
   margin: 0;
 }
 
+/* Enhanced Button Styles */
 .change-btn, .delete-btn, .password-btn, .submit-btn {
   font-size: 16px;
-  font-weight: bold;
-  border-radius: 5px;
+  font-weight: 600;
+  border-radius: 8px;
   cursor: pointer;
   border: none;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .change-btn {
-  background: #55679c;
+  background: linear-gradient(135deg, #55679c 0%, #4a5a8a 100%);
   color: white;
-  padding:16px 20px ;
-  font-size: 14px ;
+  padding: 16px 20px;
+  font-size: 14px;
+  box-shadow: 0 4px 15px rgba(85, 103, 156, 0.3);
+}
+
+.change-btn:hover {
+  background: linear-gradient(135deg, #4a5a8a 0%, #3e4c75 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(85, 103, 156, 0.4);
 }
 
 .delete-btn {
-  background: #fee7e7;
-  color: rgba(234, 67, 53, 0.8);
-  padding: 16px 20px ;
-  font-size: 14px ;
+  background: linear-gradient(135deg, #fee7e7 0%, #fdd8d8 100%);
+  color: #e53e3e;
+  padding: 16px 20px;
+  font-size: 14px;
+  border: 1px solid rgba(234, 67, 53, 0.2);
+  box-shadow: 0 4px 15px rgba(234, 67, 53, 0.15);
+}
+
+.delete-btn:hover {
+  background: linear-gradient(135deg, #fdd8d8 0%, #fcc9c9 100%);
+  color: #c53030;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(234, 67, 53, 0.25);
 }
 
 .password-btn {
-  background: #2c3552;
+  background: linear-gradient(135deg, #2c3552 0%, #242b42 100%);
   color: white;
   display: flex;
   align-items: center;
-  padding: 16px 20px ;
+  padding: 16px 20px;
   font-size: 12px;
+  box-shadow: 0 4px 15px rgba(44, 53, 82, 0.3);
 }
 
-
-
-label{
-  color: rgba(0, 0, 0, 0.911);
-  margin-bottom: 5px;
+.password-btn:hover {
+  background: linear-gradient(135deg, #242b42 0%, #1e2538 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(44, 53, 82, 0.4);
 }
 
+.password-btn i {
+  margin-right: 8px;
+  font-size: 14px;
+}
+
+/* Enhanced Form Elements */
+label {
+  color: #2d3748;
+  margin-bottom: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 0.5px;
+  display: block;
+}
 
 input {
-  padding: 12px;
+  padding: 14px 16px;
   font-size: 14px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background: #f7f7f7;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
+  background: #ffffff;
   width: 100%;
   outline: none;
-  margin-bottom: 5px;
-  box-shadow: 0px 3px 2px 0px #00000054;
-
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  font-family: inherit;
 }
-textarea{
-  padding: 12px;
+
+input:focus {
+  border-color: #55679c;
+  box-shadow: 0 0 0 3px rgba(85, 103, 156, 0.1), 0 4px 12px rgba(0, 0, 0, 0.12);
+  background: #fafbfc;
+}
+
+input:hover {
+  border-color: #cbd5e0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+textarea {
+  padding: 14px 16px;
   font-size: 14px;
   width: 50%;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
   outline: none;
-  margin-bottom: 5px;
-  background: #f7f7f7;
-  box-shadow: 0px 3px 2px 0px #00000054;
+  margin-bottom: 16px;
+  background: #ffffff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  resize: vertical;
+  min-height: 120px;
+  font-family: inherit;
+  line-height: 1.6;
+}
 
+textarea:focus {
+  border-color: #55679c;
+  box-shadow: 0 0 0 3px rgba(85, 103, 156, 0.1), 0 4px 12px rgba(0, 0, 0, 0.12);
+  background: #fafbfc;
 }
-.head p{
-  font-size: 22px;
+
+textarea:hover {
+  border-color: #cbd5e0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Enhanced Headers */
+.head p {
+  font-size: 24px;
   font-weight: 700;
-  margin: 5px 0;
+  margin: 20px 0;
+  color: #2d3748;
+  position: relative;
+  padding-bottom: 12px;
 }
+
+.head p::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(135deg, #55679c 0%, #4a5a8a 100%);
+  border-radius: 2px;
+}
+
 .submit-btn {
   width: 20%;
-  background: #2c3552;
+  background: linear-gradient(135deg, #2c3552 0%, #242b42 100%);
   color: white;
-  padding: 14px;
-  margin-top: 20px;
+  padding: 16px 24px;
+  margin-top: 30px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 15px rgba(44, 53, 82, 0.3);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+.submit-btn:hover {
+  background: linear-gradient(135deg, #242b42 0%, #1e2538 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(44, 53, 82, 0.4);
+}
 
+/* Enhanced Container */
+.container {
+  padding: 30px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  margin: 20px auto;
+  max-width: 1200px;
+}
+
+/* Enhanced Form Sections */
+.coachInfo, .GymInfo, .trainInfo {
+  background: #f8f9fa;
+  padding: 30px;
+  border-radius: 12px;
+  margin: 30px 0;
+  border: 1px solid #e9ecef;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.row {
+  margin-bottom: 20px;
+}
+
+/* Button Row Alignment */
+.row.align-items-center {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 10px;
+}
+
+.row.align-items-center .col-3 {
+  flex: 1;
+  min-width: 0;
+}
+
+.d-flex.justify-content-center button {
+  white-space: nowrap;
+  min-width: fit-content;
+}
+
+@media (max-width: 1024px) {
+  .container {
+    padding: 20px;
+  }
+
+  .submit-btn {
+    width: 30%;
+  }
+
+  textarea {
+    width: 70%;
+  }
+
+  .row.align-items-center {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 768px) {
   .coach-img {
-    width: 70px;
-    height: 70px;
+    width: 80px;
+    height: 80px;
+    border-width: 3px;
   }
-  .password-btn{
-    padding: 9px;
-    font-size: 9px;
-  }
-  .delete-btn , .change-btn{
-    padding: 10px 4px;
+
+  .password-btn {
+    padding: 10px 12px;
     font-size: 10px;
   }
-  button{
-    font-size: 15px;
+
+  .password-btn i {
+    font-size: 11px;
+    margin-right: 4px;
   }
+
+  .delete-btn, .change-btn {
+    padding: 10px 12px;
+    font-size: 10px;
+  }
+
   .submit-btn {
     width: 50%;
+    padding: 14px 20px;
+    font-size: 14px;
   }
-  label{
-    font-size: 10px;
+
+  label {
+    font-size: 13px;
+  }
+
+  input, textarea {
+    padding: 12px 14px;
+    font-size: 13px;
+    margin-bottom: 14px;
+  }
+
+  textarea {
+    width: 80%;
+  }
+
+  .head p {
+    font-size: 20px;
+  }
+
+  .container {
+    padding: 15px;
+  }
+
+  .coachInfo, .GymInfo, .trainInfo {
+    padding: 20px;
+    margin: 20px 0;
+  }
+
+
+
+  .row.align-items-center {
+    flex-wrap: nowrap;
+    gap: 6px;
+  }
+
+  .row.align-items-center .col-3 {
+    flex: 1;
+    min-width: 0;
   }
 }
-@media (max-width: 576px){
-  .password-btn{
-    padding: 7px;
-    font-size: 5px;
+
+@media (max-width: 576px) {
+  .coach-img {
+    width: 60px;
+    height: 60px;
+    border-width: 2px;
   }
+
+  .password-btn {
+    padding: 8px 10px;
+    font-size: 8px;
+    min-height: 36px;
+  }
+
+  .password-btn i {
+    font-size: 9px;
+    margin-right: 3px;
+  }
+
+  .delete-btn, .change-btn {
+    padding: 8px 10px;
+    font-size: 8px;
+    min-height: 36px;
+  }
+
+  .submit-btn {
+    width: 70%;
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+
+  label {
+    font-size: 12px;
+  }
+
+  input, textarea {
+    padding: 10px 12px;
+    font-size: 12px;
+    margin-bottom: 12px;
+  }
+
+  textarea {
+    width: 95%;
+    min-height: 100px;
+  }
+
+  .head p {
+    font-size: 18px;
+    margin: 15px 0;
+  }
+
+  .container {
+
+    border-radius: 12px;
+  }
+
+  .coachInfo, .GymInfo, .trainInfo {
+    padding: 15px;
+    margin: 15px 0;
+  }
+
+  .top-section {
+    padding: 10px;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .row {
+    margin-bottom: 15px;
+  }
+
+  .row.align-items-center {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    gap: 4px;
+    align-items: center;
+  }
+
+  .row.align-items-center .col-3 {
+    flex: 1;
+    min-width: 0;
+    width: auto !important;
+    margin-bottom: 0;
+  }
+
+  .row.align-items-center .col-3:first-child {
+    flex: 0 0 auto;
+    margin-right: 8px;
+  }
+}
+
+@media (max-width: 480px) {
   .coach-img {
     width: 50px;
     height: 50px;
   }
-  .delete-btn , .change-btn{
-    padding: 7px;
-    font-size: 5px;
-  }
+
   .submit-btn {
     width: 30%;
-  }
-  label{
-    font-size: 10px;
-  }
-  button{
     font-size: 12px;
   }
-  input{
-    font-size: 12px;
-  }
-  textarea{
-    font-size: 12px;
-  }
-  .head p{
-    font-size: 19px;
 
+  .head p {
+    font-size: 16px;
+  }
+
+  input, textarea {
+    font-size: 11px;
+  }
+
+  .password-btn, .delete-btn, .change-btn {
+    font-size: 8px;
+    padding: 8px 10px;
   }
 }
+
+button:focus, input:focus, textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(85, 103, 156, 0.3);
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+
+/* .my-3 {
+  margin: 2rem 0;
+}
+
+.my-5 {
+  margin: 3rem 0;
+} */
+
+
