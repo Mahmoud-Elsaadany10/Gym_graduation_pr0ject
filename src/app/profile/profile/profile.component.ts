@@ -268,7 +268,6 @@ export class ProfileComponent implements OnInit {
   }
 
   updateShop(){
-
     this._profileServer.updateShopInfo(this.shopId,this.updateShopInfo.value).subscribe({
       next: () => {
         this.updateShopInfo.disable();

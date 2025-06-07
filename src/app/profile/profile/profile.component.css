@@ -230,6 +230,9 @@ textarea:hover {
   white-space: nowrap;
   min-width: fit-content;
 }
+.describe{
+  width: 50%;
+}
 
 @media (max-width: 1024px) {
   .container {
@@ -243,6 +246,9 @@ textarea:hover {
   textarea {
     width: 70%;
   }
+  .describe{
+  width: 70%;
+}
 
   .row.align-items-center {
     gap: 8px;
@@ -288,7 +294,7 @@ textarea:hover {
   }
 
   textarea {
-    width: 80%;
+    width: 70%;
   }
 
   .head p {
@@ -361,6 +367,10 @@ textarea:hover {
     width: 95%;
     min-height: 100px;
   }
+  .describe{
+  width: 95%;
+}
+
 
   .head p {
     font-size: 18px;
@@ -406,6 +416,7 @@ textarea:hover {
     margin-right: 8px;
   }
 }
+
 
 @media (max-width: 480px) {
   .coach-img {
