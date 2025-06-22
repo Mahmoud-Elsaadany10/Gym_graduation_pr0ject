@@ -48,7 +48,7 @@ export const routes: Routes = [
     {path :"GymDetails/:id" , component : GymDetailsComponent},
     {path : "onlineTraning" ,component:OnlineTrainigComponent},
     {path : "coachDetails/:id" ,component :CoachDetailsComponent},
-    {path : "profile" , component : ProfileComponent ,canActivate:[roleGuard]} ,
+    {path : "profile" , component : ProfileComponent } ,
     {path : "chat/:id" , component : ChatComponent} ,
     {path : "Chat" , component :ChatUserComponent}
 

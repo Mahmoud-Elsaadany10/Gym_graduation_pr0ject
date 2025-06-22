@@ -30,7 +30,9 @@ export class ProfileComponent implements OnInit {
   gymImage : string |null = ''
   coachImage :string | null =""
   shopImage : string | null =""
-  previewUrl: string | ArrayBuffer | null = null;
+
+
+  selectedFile: File | null = null;
 
 
   constructor(private fbulider: FormBuilder ,
@@ -45,7 +47,7 @@ export class ProfileComponent implements OnInit {
       lastName: [{ value: '', disabled: true }],
       gender: [{ value: '', disabled: true }],
       dateOfBirth: [{ value: '', disabled: true }],
-      bio: [{ value: '', disabled: true }],
+      bio: [{ value: '', disabled: true }]
     });
 
     this.updateGymInfo = this.fbulider.group({
@@ -90,17 +92,38 @@ export class ProfileComponent implements OnInit {
     this.getGymInfo()
     this.getOnlineTrainingInfo()
     this.getShopDetails()
+
   }
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      const file = input.files[0];
-      const reader = new FileReader();
-      reader.onload = () => {
-        this.previewUrl = reader.result;
-      };
-      reader.readAsDataURL(file);
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+      this.uploadImage();
     }
+  }
+
+  uploadImage(): void {
+    if (!this.selectedFile) return;
+
+    this._profileServer.uploadUserImage(this.selectedFile).subscribe({
+      next: (res) => {
+        console.log('Upload success:', res)
+        this.toastService.show("Image Uploaded Successfully", "light");
+        this.getCoachInfo();
+      },
+      error: (err) => console.error('Upload failed:', err)
+    });
+  }
+
+  deleteImage(): void {
+    this._profileServer.deleteUserImage().subscribe({
+      next: (res) => {
+        console.log('Delete success:', res)
+        this.toastService.show("Image Deleted Successfully", "light");
+        this.getCoachInfo();
+      },
+      error: (err) => console.error('Delete failed:', err)
+    });
   }
 
   openPasswordModal() {
@@ -125,9 +148,8 @@ export class ProfileComponent implements OnInit {
 
   getCoachInfo() {
     this._profileServer.getCoachInfo().subscribe({
-
       next: (coach) => {
-        this.coachImage = coach.profilePictureUrl
+        this.coachImage = coach.profilePictureUrl + '?t=' + new Date().getTime();
         const date = new Date(coach.dateOfBirth);
         const formattedDOB = date.toISOString().split('T')[0];
         console.log(coach)
@@ -137,7 +159,6 @@ export class ProfileComponent implements OnInit {
           gender: coach.gender,
           bio: coach.bio,
           dateOfBirth: formattedDOB ,
-
         });
       },
       error: (err) => {
@@ -172,10 +193,43 @@ export class ProfileComponent implements OnInit {
       const coachId = decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
       return coachId
     }
+  }
+
+  onGymFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+      this.uploadGymImage();
     }
+  }
+
+  uploadGymImage(): void {
+    if (!this.selectedFile) return;
+    this._profileServer.uploadGymImage(this.selectedFile, this.gymId).subscribe({
+      next: (res) => {
+        console.log('Upload success:', res)
+        this.toastService.show("Image Uploaded Successfully", "light");
+        this.getGymInfo();
+      },
+      error: (err) => console.error('Upload failed:', err)
+    });
+  }
+
+  deleteGymImage(): void {
+    this._profileServer.deleteGymImage(this.gymId).subscribe({
+      next: (res) => {
+        console.log('Delete success:', res)
+        this.toastService.show("Image Deleted Successfully", "light");
+        this.getGymInfo();
+      },
+      error: (err) => console.error('Delete failed:', err)
+    });
+  }
+
   getGymInfo() {
     this._profileServer.getGymInfo(this.getCoachId()).subscribe({
       next: (gym) => {
+        this.gymImage= gym.pictureUrl + '?t=' + new Date().getTime();
         this.updateGymInfo.patchValue({
           gymName: gym.gymName,
           phoneNumber: gym.phoneNumber,
@@ -188,8 +242,8 @@ export class ProfileComponent implements OnInit {
           fortnightlyPrice: gym.fortnightlyPrice,
           description: gym.description
         });
+        console.log(gym)
         this.gymId = gym.gymID
-        this.gymImage = gym.pictureUrl
       },
       error: (err) => {
         console.error('Failed to load gym info:', err);
@@ -247,9 +301,41 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+    onShopFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+      this.uploadShopImage();
+    }
+  }
+
+  uploadShopImage(): void {
+    if (!this.selectedFile) return;
+    this._profileServer.uploadShopImage(this.selectedFile, this.shopId).subscribe({
+      next: (res) => {
+        console.log('Upload success:', res)
+        this.toastService.show("Image Uploaded Successfully", "light");
+        this.getShopDetails();
+      },
+      error: (err) => console.error('Upload failed:', err)
+    });
+  }
+
+  deleteShopImage(): void {
+    this._profileServer.deleteShopImage(this.shopId).subscribe({
+      next: (res) => {
+        console.log('Delete success:', res)
+        this.toastService.show("Image Deleted Successfully", "light");
+        this.getShopDetails();
+      },
+      error: (err) => console.error('Delete failed:', err)
+    });
+  }
+
   getShopDetails() {
     this._profileServer.getShopInfo().subscribe({
       next: (res) => {
+        this.shopImage = res.data[0].pictureUrl + '?t=' + new Date().getTime();
         console.log(res)
         this.shopImage = res.data[0].pictureUrl
         this.shopId = res.data[0].shopId

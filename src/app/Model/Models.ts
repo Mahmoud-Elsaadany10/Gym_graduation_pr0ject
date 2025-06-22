@@ -238,3 +238,12 @@ export interface ChatResponse {
 export interface isFollowingResponse {
   isFollowing: boolean;
 }
+
+export interface featuresResponse {
+  isSuccess: boolean;
+  data: {
+    hasGym: boolean;
+    hasOnlineTrainng: boolean;
+    hasShop: boolean;
+  };
+}

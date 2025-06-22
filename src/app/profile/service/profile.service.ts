@@ -46,4 +46,71 @@ export class ProfileService {
     return this._http.post<ApiResponse>(`${environment.mainurl}/Account/ChangePassword` ,data)
   }
 
+
+  uploadUserImage(file: File) {
+    const formData = new FormData();
+    formData.append('File', file);
+    formData.append('FileName', file.name);
+    formData.append('Name', 'user-image');
+    formData.append('ContentType', file.type);
+    formData.append('ContentDisposition', 'form-data');
+    formData.append('Length', file.size.toString());
+
+    const headersObject = {
+      additionalProp1: ['value1'],
+      additionalProp2: ['value2'],
+      additionalProp3: ['value3']
+    };
+    formData.append('Headers', JSON.stringify(headersObject));
+
+    return this._http.post(`${environment.mainurl}/Images/upload-user-image`, formData);
+  }
+
+  deleteUserImage(): Observable<any> {
+    return this._http.delete(`${environment.mainurl}/Images/delete-user-image`);
+  }
+
+  uploadGymImage(file: File , gymId: number) {
+    const formData = new FormData();
+    formData.append('File', file);
+    formData.append('FileName', file.name);
+    formData.append('Name', 'gym-image');
+    formData.append('ContentType', file.type);
+    formData.append('ContentDisposition', 'form-data');
+    formData.append('Length', file.size.toString());
+
+    const headersObject = {
+      additionalProp1: ['value1'],
+      additionalProp2: ['value2'],
+      additionalProp3: ['value3']
+    };
+    formData.append('Headers', JSON.stringify(headersObject));
+
+    return this._http.post(`${environment.mainurl}/Images/upload-gym-image/${gymId}`, formData);
+  }
+  deleteGymImage(gymId: number): Observable<any> {
+    return this._http.delete(`${environment.mainurl}/Images/delete-gym-image/${gymId}`);
+  }
+  uploadShopImage(file: File , shopId: number) {
+    const formData = new FormData();
+    formData.append('File', file);
+    formData.append('FileName', file.name);
+    formData.append('Name', 'gym-image');
+    formData.append('ContentType', file.type);
+    formData.append('ContentDisposition', 'form-data');
+    formData.append('Length', file.size.toString());
+
+    const headersObject = {
+      additionalProp1: ['value1'],
+      additionalProp2: ['value2'],
+      additionalProp3: ['value3']
+    };
+    formData.append('Headers', JSON.stringify(headersObject));
+
+    return this._http.post(`${environment.mainurl}/Images/upload-shop-image/${shopId}`, formData);
+  }
+  deleteShopImage(shopId: number): Observable<any> {
+    return this._http.delete(`${environment.mainurl}/Images/delete-shop-image/${shopId}`);
+  }
+
 }

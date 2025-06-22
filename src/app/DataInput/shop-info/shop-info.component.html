@@ -16,24 +16,24 @@
 
       <!-- Shop Name -->
       <div class="form-group mb-3"
-          [ngStyle]="(shopName?.invalid && shopName?.touched) ? {'margin-bottom': '0'} : {}">
+          [ngStyle]="(ShopName?.invalid && ShopName?.touched) ? {'margin-bottom': '0'} : {}">
         <div class="position-relative">
-          <input type="text" class="w-100 input" placeholder="Shop Name" formControlName="shopName" />
+          <input type="text" class="w-100 input" placeholder="Shop Name" formControlName="ShopName" />
         </div>
-        <small *ngIf="shopName?.invalid && shopName?.touched">
-          <span *ngIf="shopName?.errors?.['required']">Gym Name is required.</span>
+        <small *ngIf="ShopName?.invalid && ShopName?.touched">
+          <span *ngIf="ShopName?.errors?.['required']">Gym Name is required.</span>
         </small>
       </div>
 
       <!-- Address -->
       <div class="form-group mb-3"
-          [ngStyle]="(address?.invalid && address?.touched) ? {'margin-bottom': '0'} : {}">
+          [ngStyle]="(Address?.invalid && Address?.touched) ? {'margin-bottom': '0'} : {}">
         <div class="position-relative">
-          <input type="text" class="w-100 input" placeholder="Address" formControlName="address" />
+          <input type="text" class="w-100 input" placeholder="Address" formControlName="Address" />
           <i class="fa-solid fa-location-dot end-i"></i>
         </div>
-        <small *ngIf="address?.invalid && address?.touched">
-          <span *ngIf="address?.errors?.['required']">Address is required.</span>
+        <small *ngIf="Address?.invalid && Address?.touched">
+          <span *ngIf="Address?.errors?.['required']">Address is required.</span>
         </small>
       </div>
 
@@ -41,26 +41,26 @@
       <div class="row g-2">
         <div class="col-12 col-sm-6 w-50">
           <div class="form-group mb-3"
-              [ngStyle]="(governorate?.invalid && governorate?.touched) ? {'margin-bottom': '0'} : {}">
+              [ngStyle]="(Governorate?.invalid && Governorate?.touched) ? {'margin-bottom': '0'} : {}">
             <div class="position-relative">
-              <input type="text" class="w-100 input" placeholder="Governorate" formControlName="governorate" />
+              <input type="text" class="w-100 input" placeholder="Governorate" formControlName="Governorate" />
               <i class="fa-solid fa-location-dot end-i"></i>
             </div>
-            <small *ngIf="governorate?.invalid && governorate?.touched">
-              <span *ngIf="governorate?.errors?.['required']">Governorate is required.</span>
+            <small *ngIf="Governorate?.invalid && Governorate?.touched">
+              <span *ngIf="Governorate?.errors?.['required']">Governorate is required.</span>
             </small>
           </div>
         </div>
 
         <div class="col-12 col-sm-6 w-50">
           <div class="form-group mb-3"
-               [ngStyle]="(city?.invalid && city?.touched) ? {'margin-bottom': '0'} : {}">
+               [ngStyle]="(City?.invalid && City?.touched) ? {'margin-bottom': '0'} : {}">
             <div class="position-relative">
-              <input type="text" class="w-100 input" placeholder="City" formControlName="city" />
+              <input type="text" class="w-100 input" placeholder="City" formControlName="City" />
               <i class="fa-solid fa-location-dot end-i"></i>
             </div>
-            <small *ngIf="city?.invalid && city?.touched">
-              <span *ngIf="city?.errors?.['required']">City is required.</span>
+            <small *ngIf="City?.invalid && City?.touched">
+              <span *ngIf="City?.errors?.['required']">City is required.</span>
             </small>
           </div>
         </div>
@@ -70,7 +70,7 @@
       <div class="form-group mb-3"
           [ngStyle]="(phoneNumber?.invalid && phoneNumber?.touched) ? {'margin-bottom': '0'} : {}">
         <div class="position-relative">
-          <input type="number" class="w-100 input" placeholder="Phone Number" formControlName="phoneNumber" />
+          <input type="number" class="w-100 input" placeholder="Phone Number" formControlName="PhoneNumber" />
           <i class="fa-solid fa-mobile-screen-button end-i"></i>
         </div>
         <small *ngIf="phoneNumber?.invalid && phoneNumber?.touched">
@@ -81,10 +81,10 @@
 
       <!-- Description -->
       <div class="form-group mb-3"
-          [ngStyle]="(description?.invalid && description?.touched) ? {'margin-bottom': '0'} : {}">
-        <textarea name="description" rows="2" class="w-100" formControlName="description" placeholder="Description"></textarea>
-        <small *ngIf="description?.invalid && description?.touched">
-          <span *ngIf="description?.errors?.['required']">Description is required.</span>
+          [ngStyle]="(Description?.invalid && Description?.touched) ? {'margin-bottom': '0'} : {}">
+        <textarea name="description" rows="2" class="w-100" formControlName="Description" placeholder="Description"></textarea>
+        <small *ngIf="Description?.invalid && Description?.touched">
+          <span *ngIf="Description?.errors?.['required']">Description is required.</span>
         </small>
       </div>
 

@@ -19,42 +19,42 @@ export class ShopInfoComponent {
     private router: Router
   ) {
     this.shopInfoForm = this.fbuilder.group({
-      shopName: ['', [Validators.required]],
-      governorate: ['', [Validators.required]],
-      city: ['', [Validators.required]],
-      address: ['', [Validators.required]],
-      phoneNumber: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-      imageUrl: [''],
+      ShopName: ['', [Validators.required]],
+      Governorate: ['', [Validators.required]],
+      City: ['', [Validators.required]],
+      Address: ['', [Validators.required]],
+      PhoneNumber: ['', [Validators.required]],
+      Description: ['', [Validators.required]],
+      ImageUrl: [''],
     })
 
   }
 
-  get shopName() {
-    return this.shopInfoForm.get('shopName');
+  get ShopName() {
+    return this.shopInfoForm.get('ShopName');
   }
 
-  get governorate() {
-    return this.shopInfoForm.get('governorate');
+  get Governorate() {
+    return this.shopInfoForm.get('Governorate');
   }
 
-  get city() {
-    return this.shopInfoForm.get('city');
+  get City() {
+    return this.shopInfoForm.get('City');
   }
 
-  get address() {
-    return this.shopInfoForm.get('address');
+  get Address() {
+    return this.shopInfoForm.get('Address');
   }
 
   get phoneNumber() {
-    return this.shopInfoForm.get('phoneNumber');
+    return this.shopInfoForm.get('PhoneNumber');
   }
-  get description() {
-    return this.shopInfoForm.get('description');
+  get Description() {
+    return this.shopInfoForm.get('Description');
   }
 
   sendData(){
-    this.shopInfoForm.value.phoneNumber = this.shopInfoForm.value.phoneNumber.toString()
+    this.shopInfoForm.value.PhoneNumber = this.shopInfoForm.value.PhoneNumber.toString()
     if (this.shopInfoForm.valid) {
       console.log(this.shopInfoForm.value);
       this._send.sendShopInfo({...this.shopInfoForm.value}).subscribe({

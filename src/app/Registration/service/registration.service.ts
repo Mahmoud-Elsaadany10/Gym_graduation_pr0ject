@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
-import { ApiResponse, GoogleAuthTokens, googleTokenResponse, loginResponse, ResetPasswordModel, TokenResponse, User, VerificationModel } from '../../Model/Models';
+import { ApiResponse, featuresResponse, GoogleAuthTokens, googleTokenResponse, loginResponse, ResetPasswordModel, TokenResponse, User, VerificationModel } from '../../Model/Models';
 import { environment } from '../../../environments/environment';
 import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
@@ -243,5 +243,9 @@ export class RegistrationService {
         keyboard: false
       });
     }
+
+  getCoachBusiness():Observable<featuresResponse> {
+    return this._http.get<featuresResponse>(`${environment.mainurl}/User/check-coach-business`)
+  }
 }
 

@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { SendDataService } from '../service/send-data.service';
 import { FooterComponent } from "../../shared/footer/footer.component";
+import { RegistrationService } from '../../Registration/service/registration.service';
 
 @Component({
   selector: 'app-gym-info',
@@ -16,7 +17,8 @@ export class GymInfoComponent {
   GymInfo!: FormGroup;
 
   constructor(private router: Router, private fbulider: FormBuilder
-    ,private _send : SendDataService) {
+    ,private _send : SendDataService ,
+    private _check :RegistrationService) {
     this.GymInfo = this.fbulider.group({
       gymName: ['', Validators.required],
       governorate: ['', Validators.required],
@@ -78,5 +80,22 @@ export class GymInfoComponent {
         this.router.navigate(["/logging/traningInfo"])
       }
     })
+  }
+    skipForNow(){
+    this._check.getCoachBusiness().subscribe({
+      next: (response) => {
+        if(!response.data.hasOnlineTrainng && response.data.hasShop){
+          this.router.navigate(["/logging/traningInfo"]);
+        }else if(!response.data.hasShop && response.data.hasOnlineTrainng){
+          this.router.navigate(["/logging/shopInfo"]);
+        }
+        else{
+          this.router.navigate(["/layout/home"]);
+        }
+      },
+      error: (err) => {
+        console.error("Error checking coach business:", err);
+      }
+    });
   }
 }

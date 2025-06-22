@@ -6,6 +6,7 @@ import { loginResponse, loginUser } from '../../Model/Models';
 import { RegistrationService } from '../service/registration.service';
 import { jwtDecode } from 'jwt-decode';
 import { HttpClient } from '@angular/common/http';
+import { switchMap, of } from 'rxjs';
 
 declare const google: any;
 @Component({
@@ -14,12 +15,16 @@ declare const google: any;
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent implements OnInit , AfterViewInit {
+export class LoginComponent implements OnInit  {
   loginForm !:FormGroup
   whichRole :string =""
   private readonly clientId = '611861831803-tkbkdcm2908ks6g8e5vobq5t2a8o4tu1.apps.googleusercontent.com';
   private isGoogleApiLoaded = false;
   rememberMe : boolean =true
+  hasGym : boolean = false;
+  hasOnlineTrainng : boolean = false;
+  hasShop : boolean = false;
+  isCoach :boolean=false
 
   constructor(private fbulider: FormBuilder,  private router: Router ,
     private sendToBackend : RegistrationService ,
@@ -36,11 +41,15 @@ export class LoginComponent implements OnInit , AfterViewInit {
 
   }
 
-  ngAfterViewInit(): void {
-    // Load Google API after a short delay
-    setTimeout(() => {
-      this.loadGoogleApiClean();
-    }, 500);
+  getCoachInfo(){
+    this.sendToBackend.getCoachBusiness().subscribe({
+      next: (response) => {
+        this.hasGym = response.data.hasGym;
+        this.hasOnlineTrainng = response.data.hasOnlineTrainng;
+        this.hasShop = response.data.hasShop;
+        this.isCoach=response.isSuccess
+      }
+    })
   }
 
   get email() {
@@ -54,33 +63,50 @@ export class LoginComponent implements OnInit , AfterViewInit {
   routeToSignup(){
     this.router.navigate(['Logging/user'])
   }
-  getToken(): string | null {
-    return localStorage.getItem('token') || sessionStorage.getItem('token');
-  }
-  getRole(){
-  const token = this.getToken()
-  if(token){
-    const decodedToken: any = jwtDecode(token);
-    const role = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
-    return role
-  }
-  }
 
-  login(){
-    const userLogin : loginUser ={...this.loginForm.value}
 
-    this.sendToBackend.login(userLogin,this.rememberMe).subscribe((response : loginResponse)=>{
-      if(response.isSuccess){
-        if(this.getRole() == "Coach"){
-          this.router.navigate(["/logging/gymInfo"])
-        }else{
-          this.router.navigate(["/layout/home"])
-        }
+login() {
+  const userLogin: loginUser = { ...this.loginForm.value };
 
-    }})
-  }
+  this.sendToBackend.login(userLogin, this.rememberMe).pipe(
+    switchMap((response: loginResponse) => {
+      if (response.isSuccess) {
 
-    private loadGoogleApiClean(): void {
+        return this.sendToBackend.getCoachBusiness();
+      } else {
+
+        return of(null);
+      }
+    })
+  ).subscribe({
+    next: (featuresResponse) => {
+      if (!featuresResponse) return;
+
+      this.hasGym = featuresResponse.data.hasGym;
+      this.hasOnlineTrainng = featuresResponse.data.hasOnlineTrainng;
+      this.hasShop = featuresResponse.data.hasShop;
+      this.isCoach = true;
+
+
+      if (this.isCoach && !this.hasGym && !this.hasOnlineTrainng && !this.hasShop) {
+        this.router.navigate(["/logging/gymInfo"]);
+      } else if (this.isCoach && this.hasGym && !this.hasOnlineTrainng) {
+        this.router.navigate(["/logging/traningInfo"]);
+      } else if (this.isCoach && this.hasGym && this.hasOnlineTrainng && !this.hasShop) {
+        this.router.navigate(["/logging/shopInfo"]);
+      } else {
+        this.router.navigate(["/layout/home"]);
+      }
+    },
+    error: (err) => {
+      console.error("Error during login or business fetch:", err);
+    }
+  });
+}
+
+
+
+  private loadGoogleApiClean(): void {
     // Remove existing script if any
     const existingScript = document.querySelector('script[src*="accounts.google.com"]');
     if (existingScript) {
@@ -112,7 +138,6 @@ export class LoginComponent implements OnInit , AfterViewInit {
     document.head.appendChild(script);
   }
 
-  // CLEAN Google Auth Initialization
   private initGoogleAuthClean(): void {
     try {
       if (!google?.accounts?.oauth2) {
@@ -120,7 +145,6 @@ export class LoginComponent implements OnInit , AfterViewInit {
         return;
       }
 
-      // ONLY use OAuth2 - no Sign-In ID to avoid conflicts
       const tokenClient = google.accounts.oauth2.initTokenClient({
         client_id: this.clientId,
         scope: 'openid email profile',
@@ -137,7 +161,7 @@ export class LoginComponent implements OnInit , AfterViewInit {
     }
   }
 
-  // CLEAN Google Login Handler
+
   handleGoogleLogin(): void {
 
     if (!this.isGoogleApiLoaded) {
@@ -162,7 +186,6 @@ export class LoginComponent implements OnInit , AfterViewInit {
     }
   }
 
-  // Handle successful token response
   private handleTokenResponse(response: any): void {
 
     if (!response.access_token) {
@@ -181,7 +204,7 @@ export class LoginComponent implements OnInit , AfterViewInit {
     console.error('❌ Token error:', error);
   }
 
-  // Get user info and send to backend
+
   private getUserInfoAndSendToBackend(accessToken: string): void {
     // Get user profile from Google
     const userInfoUrl = `https://www.googleapis.com/oauth2/v2/userinfo?access_token=${accessToken}`;

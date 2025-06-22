@@ -214,7 +214,6 @@ textarea:hover {
   margin-bottom: 20px;
 }
 
-/* Button Row Alignment */
 .row.align-items-center {
   display: flex;
   flex-wrap: nowrap;

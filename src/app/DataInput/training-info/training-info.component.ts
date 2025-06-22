@@ -4,6 +4,7 @@ import { Router, RouterModule } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SendDataService } from '../service/send-data.service';
 import { CommonModule } from '@angular/common';
+import { RegistrationService } from '../../Registration/service/registration.service';
 
 @Component({
   selector: 'app-training-info',
@@ -14,7 +15,9 @@ import { CommonModule } from '@angular/common';
 export class TrainingInfoComponent {
   OnlineTrainingForm!: FormGroup;
 
-  constructor(private router: Router, private fb: FormBuilder, private _send: SendDataService) {
+  constructor(private router: Router, private fb: FormBuilder
+    , private _send: SendDataService ,
+     private _check : RegistrationService) {
     this.OnlineTrainingForm = this.fb.group({
       title: ['', Validators.required],
       description: ['', Validators.required],
@@ -67,6 +70,20 @@ export class TrainingInfoComponent {
         }
       });
     }
+  }
+  skipForNow(){
+    this._check.getCoachBusiness().subscribe({
+      next: (response) => {
+        if(!response.data.hasShop){
+          this.router.navigate(["/logging/shopInfo"]);
+        }else{
+          this.router.navigate(["/layout/home"]);
+        }
+      },
+      error: (err) => {
+        console.error("Error checking coach business:", err);
+      }
+    });
   }
 
 }
