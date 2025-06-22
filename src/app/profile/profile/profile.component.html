@@ -2,7 +2,7 @@
 
 <div class="container">
   <div class="head my-3">
-    <p>Coach Information</p>
+    <p>Your Information</p>
   </div>
   <div class="row align-items-center ">
     <div class=" col-3 img  d-flex">
@@ -51,7 +51,7 @@
         </div>
       </div>
 
-      <div class="d-flex justify-content-center flex-column align-items-center">
+      <div *ngIf="isCoach" class="d-flex justify-content-center flex-column align-items-center">
         <label for="bio" class="w-50  justify-content-start d-flex">Bio</label>
         <textarea id="bio" rows="5" formControlName="bio"></textarea>
       </div>
@@ -67,212 +67,221 @@
     </form>
 
   </div>
-    <div class="head">
-      <p>Gym Information</p>
-    </div>
-  <div class="row align-items-center ">
-    <div class=" col-3 img  d-flex">
-      <img [src]="gymImage || 'assets/avatardefault.svg'" alt="gym Picture" class="coach-img" />
-    </div>
 
-    <div class="col-3  ">
-      <div class=" d-flex  justify-content-center ">
-          <input type="file" #fileGym (change)="onGymFileSelected($event)" hidden />
-        <button class="change-btn " (click)="fileGym.click()" >Change Picture</button>
-
+  <div *ngIf="isCoach">
+  <!-- Gym Information -->
+    <div *ngIf="hasGym">
+      <div class="head">
+          <p>Gym Information</p>
       </div>
-    </div>
-    <div class="col-3 ">
-      <div class=" d-flex  justify-content-center ">
-        <button class="delete-btn" (click)="deleteGymImage()">Delete Picture</button>
-      </div>
-    </div>
-  </div>
+      <div class="row align-items-center ">
+        <div class=" col-3 img  d-flex">
+          <img [src]="gymImage || 'assets/avatardefault.svg'" alt="gym Picture" class="coach-img" />
+        </div>
 
-  <div class="GymInfo my-5">
+        <div class="col-3  ">
+          <div class=" d-flex  justify-content-center ">
+              <input type="file" #fileGym (change)="onGymFileSelected($event)" hidden />
+            <button class="change-btn " (click)="fileGym.click()" >Change Picture</button>
 
-<form [formGroup]="updateGymInfo" (ngSubmit)="GymUpdate()">
-  <div class="row g-2">
-    <div class=" col-sm-6 w-50">
-      <label for="gymName">Gym Name</label>
-      <input type="text" id="gymName" placeholder="Gym Name" formControlName="gymName">
-    </div>
-    <div class=" col-sm-6 w-50">
-      <label for="phoneNumber">Phone Number</label>
-      <input type="text" id="phoneNumber" placeholder="Phone Number" formControlName="phoneNumber">
-    </div>
-  </div>
-
-  <div class="head">
-    <p>Address Information</p>
-  </div>
-
-  <div class="row g-2">
-    <div class=" col-sm-6 w-50">
-      <label for="governorate">Governorate</label>
-      <input type="text" id="governorate" placeholder="Governorate" formControlName="governorate">
-    </div>
-    <div class=" col-sm-6 w-50">
-      <label for="city">City</label>
-      <input type="text" id="city" placeholder="City" formControlName="city">
-    </div>
-  </div>
-
-  <div class="d-flex justify-content-center flex-column align-items-center">
-    <label for="address" class="w-50 justify-content-start d-flex">Address</label>
-    <input type="text" id="address" class="w-50" placeholder="Address" formControlName="address">
-  </div>
-
-  <div class="head">
-    <p>Price Information</p>
-  </div>
-
-  <div class="row g-2">
-    <div class=" col-sm-6 w-50">
-      <label for="yearlyPrice">Yearly Price</label>
-      <input type="number" min="0" id="yearlyPrice" placeholder="Yearly Price" formControlName="yearlyPrice">
-    </div>
-    <div class=" col-sm-6 w-50">
-      <label for="monthlyPrice">Monthly Price</label>
-      <input type="number" min="0" id="monthlyPrice" placeholder="Monthly Price" formControlName="monthlyPrice">
-    </div>
-  </div>
-
-  <div class="row g-2">
-    <div class=" col-sm-6 w-50">
-      <label for="sessionPrice">Session Price</label>
-      <input type="number" min="0" id="sessionPrice" placeholder="Session Price" formControlName="sessionPrice">
-    </div>
-    <div class=" col-sm-6 w-50">
-      <label for="fortnightlyPrice">Fortnightly Price</label>
-      <input type="number" min="0" id="fortnightlyPrice" placeholder="Fortnightly Price" formControlName="fortnightlyPrice">
-    </div>
-  </div>
-
-  <div class="d-flex justify-content-center flex-column align-items-center">
-    <label for="description" class=" describe justify-content-start d-flex">Description</label>
-    <textarea id="description" rows="5" placeholder="Description" formControlName="description"></textarea>
-  </div>
-
-  <div class="d-flex justify-content-center">
-    <button type="button" class="submit-btn me-2" (click)="enableGymEdit()" *ngIf="!isEidtGymMode">
-      Edit
-    </button>
-    <button type="submit" class="submit-btn" *ngIf="isEidtGymMode">
-      Update
-    </button>
-  </div>
-</form>
-
-  </div>
-
-  <div class="head my-3">
-    <p>Online Training Information</p>
-  </div>
-
-    <div class="trainInfo my-5">
-      <form [formGroup]="UpdateOnlineTrainingInfo" (ngSubmit)="updateOnlineTraining()">
-        <div class="row g-2">
-          <div class="col-sm-6 w-50">
-            <label for="title">Title</label>
-            <input type="text" id="title" placeholder="Title" formControlName="title">
-          </div>
-          <div class="col-sm-6 w-50">
-            <label for="trainingType">Training Type</label>
-            <input type="text" id="trainingType" placeholder="Training Type" formControlName="trainingType">
           </div>
         </div>
-        <div class="row g-2">
-          <div class="col-sm-6 w-50">
-            <label for="noOfSessionsPerWeek">no.Of Sessions</label>
-            <input type="number" min="1" id="noOfSessionsPerWeek" placeholder="no.Of Sessions Per Week" formControlName="noOfSessionsPerWeek">
-          </div>
-          <div class="col-sm-6 w-50">
-            <label for="durationOfSession">Duration Of Session</label>
-            <input type="number" id="durationOfSession" placeholder="Duration Of Session (in minutes)" formControlName="durationOfSession">
+        <div class="col-3 ">
+          <div class=" d-flex  justify-content-center ">
+            <button class="delete-btn" (click)="deleteGymImage()">Delete Picture</button>
           </div>
         </div>
+      </div>
+
+      <div class="GymInfo my-5">
+
+      <form [formGroup]="updateGymInfo" (ngSubmit)="GymUpdate()">
+        <div class="row g-2">
+          <div class=" col-sm-6 w-50">
+            <label for="gymName">Gym Name</label>
+            <input type="text" id="gymName" placeholder="Gym Name" formControlName="gymName">
+          </div>
+          <div class=" col-sm-6 w-50">
+            <label for="phoneNumber">Phone Number</label>
+            <input type="text" id="phoneNumber" placeholder="Phone Number" formControlName="phoneNumber">
+          </div>
+        </div>
+
+        <div class="head">
+          <p>Address Information</p>
+        </div>
+
+        <div class="row g-2">
+          <div class=" col-sm-6 w-50">
+            <label for="governorate">Governorate</label>
+            <input type="text" id="governorate" placeholder="Governorate" formControlName="governorate">
+          </div>
+          <div class=" col-sm-6 w-50">
+            <label for="city">City</label>
+            <input type="text" id="city" placeholder="City" formControlName="city">
+          </div>
+        </div>
+
         <div class="d-flex justify-content-center flex-column align-items-center">
-          <label for="price" class="w-50 justify-content-start d-flex">Price</label>
-          <input type="number" min="1" id="price" class="w-50" placeholder="Price" formControlName="price">
+          <label for="address" class="w-50 justify-content-start d-flex">Address</label>
+          <input type="text" id="address" class="w-50" placeholder="Address" formControlName="address">
+        </div>
+
+        <div class="head">
+          <p>Price Information</p>
+        </div>
+
+        <div class="row g-2">
+          <div class=" col-sm-6 w-50">
+            <label for="yearlyPrice">Yearly Price</label>
+            <input type="number" min="0" id="yearlyPrice" placeholder="Yearly Price" formControlName="yearlyPrice">
+          </div>
+          <div class=" col-sm-6 w-50">
+            <label for="monthlyPrice">Monthly Price</label>
+            <input type="number" min="0" id="monthlyPrice" placeholder="Monthly Price" formControlName="monthlyPrice">
+          </div>
+        </div>
+
+        <div class="row g-2">
+          <div class=" col-sm-6 w-50">
+            <label for="sessionPrice">Session Price</label>
+            <input type="number" min="0" id="sessionPrice" placeholder="Session Price" formControlName="sessionPrice">
+          </div>
+          <div class=" col-sm-6 w-50">
+            <label for="fortnightlyPrice">Fortnightly Price</label>
+            <input type="number" min="0" id="fortnightlyPrice" placeholder="Fortnightly Price" formControlName="fortnightlyPrice">
+          </div>
         </div>
 
         <div class="d-flex justify-content-center flex-column align-items-center">
           <label for="description" class=" describe justify-content-start d-flex">Description</label>
-          <textarea id="description" placeholder="description" rows="5" formControlName="description"></textarea>
+          <textarea id="description" rows="5" placeholder="Description" formControlName="description"></textarea>
         </div>
 
         <div class="d-flex justify-content-center">
-          <button type="button" class="submit-btn me-2" (click)="enableOnlinttainingEdit()" *ngIf="!isEditOnlineTrainingMode">
+          <button type="button" class="submit-btn me-2" (click)="enableGymEdit()" *ngIf="!isEidtGymMode">
             Edit
           </button>
-          <button type="submit" class="submit-btn" *ngIf="isEditOnlineTrainingMode">
+          <button type="submit" class="submit-btn" *ngIf="isEidtGymMode">
             Update
           </button>
         </div>
       </form>
 
-    </div>
-
-    <!-- shop Information -->
-    <div class="head">
-      <p>Shop Information</p>
-    </div>
-    <div class="row align-items-center ">
-      <div class=" col-3 img  d-flex">
-        <img [src]="shopImage || 'assets/avatardefault.svg'" alt="shop Picture" class="coach-img" />
-      </div>
-
-      <div class="col-3  ">
-        <div class=" d-flex  justify-content-center ">
-          <input type="file" #fileShop (change)="onShopFileSelected($event)" hidden />
-          <button class="change-btn " (click)="fileShop.click()" >Change Picture</button>
-        </div>
-      </div>
-      <div class="col-3 ">
-        <div class=" d-flex  justify-content-center ">
-          <button class="delete-btn" (click)="deleteShopImage()">Delete Picture</button>
-        </div>
       </div>
     </div>
 
-    <div class="coachInfo my-5">
-      <form [formGroup]="updateShopInfo" (ngSubmit)="updateShop()">
-        <div class="row g-2">
-          <div class="col-sm-6 w-50">
-            <label for="shop">Shop Name</label>
-            <input type="text" id="shop" placeholder="Shop Name" formControlName="shopName">
+  <!-- Online Training Information -->
+    <div *ngIf="hasOnlineTraining">
+      <div class="head my-3">
+        <p>Online Training Information</p>
+      </div>
+      <div class="trainInfo my-5">
+        <form [formGroup]="UpdateOnlineTrainingInfo" (ngSubmit)="updateOnlineTraining()">
+          <div class="row g-2">
+            <div class="col-sm-6 w-50">
+              <label for="title">Title</label>
+              <input type="text" id="title" placeholder="Title" formControlName="title">
+            </div>
+            <div class="col-sm-6 w-50">
+              <label for="trainingType">Training Type</label>
+              <input type="text" id="trainingType" placeholder="Training Type" formControlName="trainingType">
+            </div>
           </div>
-          <div class="col-sm-6 w-50">
-            <label for="Phone">Phone Number</label>
-            <input type="number" id="Phone" placeholder="Phone Number" formControlName="phoneNumber">
+          <div class="row g-2">
+            <div class="col-sm-6 w-50">
+              <label for="noOfSessionsPerWeek">no.Of Sessions</label>
+              <input type="number" min="1" id="noOfSessionsPerWeek" placeholder="no.Of Sessions Per Week" formControlName="noOfSessionsPerWeek">
+            </div>
+            <div class="col-sm-6 w-50">
+              <label for="durationOfSession">Duration Of Session</label>
+              <input type="number" id="durationOfSession" placeholder="Duration Of Session (in minutes)" formControlName="durationOfSession">
+            </div>
           </div>
-        </div>
-        <div class="row g-2">
-          <div class="col-sm-6 w-50">
-            <label for="Governorate">Governorate</label>
-            <input type="text" id="Governorate" placeholder="Governorate" formControlName="governorate">
+          <div class="d-flex justify-content-center flex-column align-items-center">
+            <label for="price" class="w-50 justify-content-start d-flex">Price</label>
+            <input type="number" min="1" id="price" class="w-50" placeholder="Price" formControlName="price">
           </div>
-          <div class="col-sm-6 w-50">
-            <label for="city">City</label>
-            <input type="text" id="city" placeholder="City" formControlName="city">
+
+          <div class="d-flex justify-content-center flex-column align-items-center">
+            <label for="description" class=" describe justify-content-start d-flex">Description</label>
+            <textarea id="description" placeholder="description" rows="5" formControlName="description"></textarea>
           </div>
-        </div>
-        <div class="d-flex justify-content-center flex-column align-items-center">
-          <label for="description" class=" describe justify-content-start d-flex">Description</label>
-          <textarea id="description" placeholder="Description" rows="5" formControlName="description"></textarea>
-        </div>
 
           <div class="d-flex justify-content-center">
-            <button type="button" class="submit-btn me-2" (click)="enableShopEdit()" *ngIf="!isEidtShop">
+            <button type="button" class="submit-btn me-2" (click)="enableOnlinttainingEdit()" *ngIf="!isEditOnlineTrainingMode">
               Edit
             </button>
-            <button type="submit" class="submit-btn" *ngIf="isEidtShop">
+            <button type="submit" class="submit-btn" *ngIf="isEditOnlineTrainingMode">
               Update
             </button>
           </div>
+        </form>
 
-      </form>
+      </div>
     </div>
+
+    <!-- shop Information -->
+    <div *ngIf="hasShop">
+      <div class="head">
+        <p>Shop Information</p>
+      </div>
+      <div class="row align-items-center ">
+        <div class=" col-3 img  d-flex">
+          <img [src]="shopImage || 'assets/avatardefault.svg'" alt="shop Picture" class="coach-img" />
+        </div>
+
+        <div class="col-3  ">
+          <div class=" d-flex  justify-content-center ">
+            <input type="file" #fileShop (change)="onShopFileSelected($event)" hidden />
+            <button class="change-btn " (click)="fileShop.click()" >Change Picture</button>
+          </div>
+        </div>
+        <div class="col-3 ">
+          <div class=" d-flex  justify-content-center ">
+            <button class="delete-btn" (click)="deleteShopImage()">Delete Picture</button>
+          </div>
+        </div>
+      </div>
+      <div class="coachInfo my-5">
+        <form [formGroup]="updateShopInfo" (ngSubmit)="updateShop()">
+          <div class="row g-2">
+            <div class="col-sm-6 w-50">
+              <label for="shop">Shop Name</label>
+              <input type="text" id="shop" placeholder="Shop Name" formControlName="shopName">
+            </div>
+            <div class="col-sm-6 w-50">
+              <label for="Phone">Phone Number</label>
+              <input type="number" id="Phone" placeholder="Phone Number" formControlName="phoneNumber">
+            </div>
+          </div>
+          <div class="row g-2">
+            <div class="col-sm-6 w-50">
+              <label for="Governorate">Governorate</label>
+              <input type="text" id="Governorate" placeholder="Governorate" formControlName="governorate">
+            </div>
+            <div class="col-sm-6 w-50">
+              <label for="city">City</label>
+              <input type="text" id="city" placeholder="City" formControlName="city">
+            </div>
+          </div>
+          <div class="d-flex justify-content-center flex-column align-items-center">
+            <label for="description" class=" describe justify-content-start d-flex">Description</label>
+            <textarea id="description" placeholder="Description" rows="5" formControlName="description"></textarea>
+          </div>
+
+            <div class="d-flex justify-content-center">
+              <button type="button" class="submit-btn me-2" (click)="enableShopEdit()" *ngIf="!isEidtShop">
+                Edit
+              </button>
+              <button type="submit" class="submit-btn" *ngIf="isEidtShop">
+                Update
+              </button>
+            </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
 
 </div>

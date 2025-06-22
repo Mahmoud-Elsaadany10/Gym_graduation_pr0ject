@@ -8,6 +8,7 @@ import { OnlineTrainingForm } from '../../Model/Models';
 import { ChangePasswordComponent } from '../change-password/change-password.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SharedService } from '../../shared/services/shared.service';
+import { RegistrationService } from '../../Registration/service/registration.service';
 
 @Component({
   selector: 'app-profile',
@@ -30,6 +31,10 @@ export class ProfileComponent implements OnInit {
   gymImage : string |null = ''
   coachImage :string | null =""
   shopImage : string | null =""
+  hasGym: boolean = false;
+  hasOnlineTraining: boolean = false;
+  hasShop: boolean = false;
+  isCoach: boolean = false;
 
 
   selectedFile: File | null = null;
@@ -39,6 +44,7 @@ export class ProfileComponent implements OnInit {
     private _profileServer: ProfileService ,
     private modalService: NgbModal ,
     private toastService: SharedService ,
+    private _check : RegistrationService
     )
 
     {
@@ -92,7 +98,18 @@ export class ProfileComponent implements OnInit {
     this.getGymInfo()
     this.getOnlineTrainingInfo()
     this.getShopDetails()
+    this.checkBusiness();
 
+  }
+  checkBusiness() {
+    this._check.getCoachBusiness().subscribe({
+      next: (response) => {
+        this.hasGym = response.data.hasGym;
+        this.hasOnlineTraining = response.data.hasOnlineTrainng;
+        this.hasShop = response.data.hasShop;
+        this.isCoach = response.isSuccess;
+      }
+    });
   }
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
