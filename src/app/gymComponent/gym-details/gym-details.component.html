@@ -1,5 +1,5 @@
 <app-navbar></app-navbar>
-<section class="hero-section" >
+<section class="hero-section" [ngStyle]="{'background-image': 'url(' + (gymImage || '/assets/gym.jpg') + ')'}">
   <div class="action-buttons">
     <button class="custom-btn">
       <i class="fas fa-comment-alt"></i> Chat

@@ -38,6 +38,7 @@ export class GymDetailsComponent implements OnInit {
   isRated: boolean = false;
   followed :boolean =false;
   rating : number = 0;
+  gymImage: string =""
 
   constructor(private route: ActivatedRoute,
     private dialog: MatDialog ,
@@ -124,9 +125,11 @@ private _Check: RegistrationService,
           this.monthlyPrice=data.monthlyPrice;
           this.sessionPrice=data.sessionPrice;
           this.yearlyPrice=data.yearlyPrice
-          if (data.coachProfilePictureUrl) {
-            this.coachImage = data.coachProfilePictureUrl;
-          }
+          this.gymImage = data.pictureUrl
+          console.log(data);
+          // if (data.coachProfilePictureUrl) {
+          //   this.gymImage = data.;
+          // }
         },
         error: (err) => {
           console.error(err);

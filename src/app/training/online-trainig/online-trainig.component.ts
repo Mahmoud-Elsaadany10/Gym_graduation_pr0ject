@@ -29,6 +29,7 @@ export class OnlineTrainigComponent implements OnInit , OnDestroy{
   filledStars: number = 0;
   dataLoaded : boolean = false;
 
+
   minRating = 0;
   maxRating = 5;
 
@@ -55,7 +56,7 @@ export class OnlineTrainigComponent implements OnInit , OnDestroy{
           this.totalCoach = response.totalRecords
           this.dataLoaded = true;
 
-          console.log(this.coachs)
+
         }
       },
       error : (err) => {console.error('Error fetching coaches:', err)
