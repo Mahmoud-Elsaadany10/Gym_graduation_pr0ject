@@ -245,7 +245,8 @@ export class RegistrationService {
     }
 
   getCoachBusiness():Observable<featuresResponse> {
-    return this._http.get<featuresResponse>(`${environment.mainurl}/User/check-coach-business`)
+    return this._http.get<featuresResponse>(`${environment.mainurl}/User/check-coach-business`,
+      { headers: { 'X-Skip-Error': 'true' } })
   }
 }
 

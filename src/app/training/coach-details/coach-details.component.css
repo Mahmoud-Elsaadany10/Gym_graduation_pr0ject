@@ -186,10 +186,16 @@ select{
   width: 16px;
   height: 16px;
 }
+.card-body details{
+  width: 60%;
+}
 @media (max-width : 576px){
   .card{
     flex-direction: column;
   }
+  .card-body details{
+  width: 100%;
+}
   .card img{
     width: 100%;
     object-fit: cover;
@@ -237,6 +243,9 @@ select{
     object-fit: cover;
     height: 30rem;
   }
+    .card-body details{
+  width: 100%;
+}
 
 }
 

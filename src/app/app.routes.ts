@@ -40,7 +40,8 @@ export const routes: Routes = [
     {path :"traningInfo" ,component: TrainingInfoComponent},
     {path:"shopInfo" ,component:ShopInfoComponent},
     {path :"verifyEmail",component:VerifyEmailComponent}
-  ] ,canActivate:[isloggedGuard]}
+  ] ,canActivate:[isloggedGuard],
+    data: { requireLogin: false }}
 
   ,{path:"layout",component:LayoutComponent ,children:[
     {path:"home",component:HomeComponent} ,
@@ -48,7 +49,7 @@ export const routes: Routes = [
     {path :"GymDetails/:id" , component : GymDetailsComponent},
     {path : "onlineTraning" ,component:OnlineTrainigComponent},
     {path : "coachDetails/:id" ,component :CoachDetailsComponent},
-    {path : "profile" , component : ProfileComponent } ,
+    {path : "profile" , component : ProfileComponent , canActivate:[isloggedGuard], data: { requireLogin: true }},
     {path : "chat/:id" , component : ChatComponent} ,
     {path : "Chat" , component :ChatUserComponent}
 

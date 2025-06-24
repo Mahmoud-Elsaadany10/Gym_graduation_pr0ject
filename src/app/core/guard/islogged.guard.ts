@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
-import { jwtDecode } from 'jwt-decode';
-import { Observable } from 'rxjs';
+import { CanActivate, Router, ActivatedRouteSnapshot } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -9,13 +7,19 @@ import { Observable } from 'rxjs';
 export class isloggedGuard implements CanActivate {
   constructor(private router: Router) {}
 
-  canActivate(): boolean {
-    const token =  localStorage.getItem('token') || sessionStorage.getItem('token');
-      if (token) {
-        return false;
-      } else {
-        return true;
-      }
-    }
-  }
+  canActivate(route: ActivatedRouteSnapshot): boolean {
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    const requireLogin = route.data['requireLogin'] as boolean;
 
+    const isLoggedIn = !!token;
+
+    if (requireLogin && !isLoggedIn) {
+      return false;
+    }
+    if (!requireLogin && isLoggedIn) {
+      return false;
+    }
+
+    return true;
+  }
+}

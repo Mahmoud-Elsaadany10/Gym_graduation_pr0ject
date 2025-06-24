@@ -136,6 +136,7 @@ export class ProfileComponent implements OnInit {
     this._profileServer.deleteUserImage().subscribe({
       next: (res) => {
         console.log('Delete success:', res)
+        this.coachImage = null;
         this.toastService.show("Image Deleted Successfully", "light");
         this.getCoachInfo();
       },
@@ -166,7 +167,10 @@ export class ProfileComponent implements OnInit {
   getCoachInfo() {
     this._profileServer.getCoachInfo().subscribe({
       next: (coach) => {
-        this.coachImage = coach.profilePictureUrl + '?t=' + new Date().getTime();
+        this.coachImage = coach.profilePictureUrl
+        ? coach.profilePictureUrl + '?t=' + new Date().getTime()
+        : null;
+
         const date = new Date(coach.dateOfBirth);
         const formattedDOB = date.toISOString().split('T')[0];
         console.log(coach)
@@ -235,7 +239,7 @@ export class ProfileComponent implements OnInit {
   deleteGymImage(): void {
     this._profileServer.deleteGymImage(this.gymId).subscribe({
       next: (res) => {
-        console.log('Delete success:', res)
+        this.gymImage = null;
         this.toastService.show("Image Deleted Successfully", "light");
         this.getGymInfo();
       },
@@ -246,7 +250,7 @@ export class ProfileComponent implements OnInit {
   getGymInfo() {
     this._profileServer.getGymInfo(this.getCoachId()).subscribe({
       next: (gym) => {
-        this.gymImage= gym.pictureUrl + '?t=' + new Date().getTime();
+        this.gymImage=gym.pictureUrl ? gym.pictureUrl + '?t=' + new Date().getTime() : null;
         this.updateGymInfo.patchValue({
           gymName: gym.gymName,
           phoneNumber: gym.phoneNumber,
@@ -344,6 +348,7 @@ export class ProfileComponent implements OnInit {
         console.log('Delete success:', res)
         this.toastService.show("Image Deleted Successfully", "light");
         this.getShopDetails();
+        this.shopImage = null;
       },
       error: (err) => console.error('Delete failed:', err)
     });
@@ -352,7 +357,7 @@ export class ProfileComponent implements OnInit {
   getShopDetails() {
     this._profileServer.getShopInfo().subscribe({
       next: (res) => {
-        this.shopImage = res.data[0].pictureUrl + '?t=' + new Date().getTime();
+        this.shopImage = res.data[0].pictureUrl ? res.data[0].pictureUrl + '?t=' + new Date().getTime() : null;
         console.log(res)
         this.shopImage = res.data[0].pictureUrl
         this.shopId = res.data[0].shopId

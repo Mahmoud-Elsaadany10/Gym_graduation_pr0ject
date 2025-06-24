@@ -74,13 +74,17 @@ login() {
 
         return this.sendToBackend.getCoachBusiness();
       } else {
+        this.router.navigate(['/layout/home']);
 
         return of(null);
       }
     })
   ).subscribe({
     next: (featuresResponse) => {
-      if (!featuresResponse) return;
+      if(featuresResponse?.isSuccess === false) {
+        this.router.navigate(['/layout/home']);
+      } else{
+        if (!featuresResponse) return;
 
       this.hasGym = featuresResponse.data.hasGym;
       this.hasOnlineTrainng = featuresResponse.data.hasOnlineTrainng;
@@ -97,7 +101,7 @@ login() {
       } else {
         this.router.navigate(["/layout/home"]);
       }
-    },
+    }},
     error: (err) => {
       console.error("Error during login or business fetch:", err);
     }
