@@ -25,6 +25,8 @@ import { ChatComponent } from './chat/chat/chat.component';
 import { roleGuard } from './core/guard/role.guard';
 import { isloggedGuard } from './core/guard/islogged.guard';
 import { ChatUserComponent } from './chat/chat-user/chat-user.component';
+import { ShopComponent } from './shop/shop/shop.component';
+import { PostsComponent } from './Posts/posts/posts.component';
 
 
 export const routes: Routes = [
@@ -51,7 +53,9 @@ export const routes: Routes = [
     {path : "coachDetails/:id" ,component :CoachDetailsComponent},
     {path : "profile" , component : ProfileComponent , canActivate:[isloggedGuard], data: { requireLogin: true }},
     {path : "chat/:id" , component : ChatComponent} ,
-    {path : "Chat" , component :ChatUserComponent}
+    {path : "Chat" , component :ChatUserComponent} ,
+    {path: "shop",component : ShopComponent} ,
+    {path :"posts" , component :PostsComponent}
 
   ]}
 

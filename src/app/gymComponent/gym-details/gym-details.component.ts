@@ -8,6 +8,7 @@ import { GymService } from '../service/gym.service';
 import { UpdateRateComponent } from '../../shared/update-rate/update-rate.component';
 import { SharedService } from '../../shared/services/shared.service';
 import { RegistrationService } from '../../Registration/service/registration.service';
+import { OnlineTrainingService } from '../../training/service/online-training.service';
 
 
 
@@ -44,6 +45,7 @@ export class GymDetailsComponent implements OnInit {
     private dialog: MatDialog ,
   private _gymService: GymService ,
   private _loadRate : SharedService ,
+   private _getDetails: OnlineTrainingService,
 private _Check: RegistrationService,
 ) {
 
@@ -126,10 +128,8 @@ private _Check: RegistrationService,
           this.sessionPrice=data.sessionPrice;
           this.yearlyPrice=data.yearlyPrice
           this.gymImage = data.pictureUrl
+          this.coachImage =data.coachProfilePictureUrl
           console.log(data);
-          // if (data.coachProfilePictureUrl) {
-          //   this.gymImage = data.;
-          // }
         },
         error: (err) => {
           console.error(err);
@@ -178,7 +178,21 @@ private _Check: RegistrationService,
   }
 
 
-
+  async payment(id: number) {
+    const model = { onlineTrainingId: id };
+    this._gymService.payment(model).subscribe({
+      next: async (res) => {
+        if (res.url) {
+          window.location.href = res.url;
+        } else {
+          console.error('Stripe Checkout URL not found in response');
+        }
+      },
+      error: (err) => {
+        console.error('Error creating payment session:', err);
+      }
+    });
+  }
 
   scrollToSection(sectionId: string, tabName: string) {
     const element = document.getElementById(sectionId);

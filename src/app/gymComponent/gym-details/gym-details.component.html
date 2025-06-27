@@ -1,5 +1,6 @@
 <app-navbar></app-navbar>
-<section class="hero-section" [ngStyle]="{'background-image': 'url(' + (gymImage || '/assets/gym.jpg') + ')'}">
+<section class="hero-section"
+  [ngStyle]="{'background-image': 'url(' + (gymImage || '/assets/gym.jpg') + ')'}">
   <div class="action-buttons">
     <button class="custom-btn">
       <i class="fas fa-comment-alt"></i> Chat
@@ -140,7 +141,7 @@
           <li>✅ Free consultation with the trainer</li>
           <li>✅ Unlimited gym access</li>
         </ul>
-        <button class="package-btn">Subscribe</button>
+        <button class="package-btn" (click)="payment(gymId)">Subscribe</button>
       </div>
 
       <div class="package-card">
@@ -151,7 +152,7 @@
           <li>✅ Free consultation with the trainer</li>
           <li>✅ Unlimited gym access</li>
         </ul>
-        <button class="package-btn">Get Started</button>
+        <button class="package-btn" (click)="payment(gymId)">Get Started</button>
       </div>
 
       <div class="package-card">
@@ -162,7 +163,7 @@
           <li>✅ Free consultation with the trainer</li>
           <li>✅ Unlimited gym access</li>
         </ul>
-        <button class="package-btn">Subscribe</button>
+        <button class="package-btn" (click)="payment(gymId)">Subscribe</button>
       </div>
 
       <div class="package-card">
@@ -173,7 +174,7 @@
           <li>✅ Free consultation with the trainer</li>
           <li>✅ Unlimited gym access</li>
         </ul>
-        <button class="package-btn">Subscribe</button>
+        <button class="package-btn" (click)="payment(gymId)">Subscribe</button>
       </div>
     </div>
 

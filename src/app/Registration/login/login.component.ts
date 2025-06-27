@@ -98,9 +98,9 @@ login() {
         this.router.navigate(["/logging/traningInfo"]);
       } else if (this.isCoach && this.hasGym && this.hasOnlineTrainng && !this.hasShop) {
         this.router.navigate(["/logging/shopInfo"]);
-      } else {
-        this.router.navigate(["/layout/home"]);
-      }
+      }else if (this.isCoach && this.hasGym && this.hasOnlineTrainng && this.hasShop) {
+  this.router.navigate(["/layout/home"]);
+}
     }},
     error: (err) => {
       console.error("Error during login or business fetch:", err);

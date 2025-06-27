@@ -247,3 +247,78 @@ export interface featuresResponse {
     hasShop: boolean;
   };
 }
+export interface Post {
+  coachId: string;
+  id: number;
+  content: string;
+  createdAt: string;
+  photoPass: string;
+  name: string;
+  pictureUrls: string[];
+  likesDetails: LikesDetails;
+  comments: Comment[];
+  isLikedByYou?: boolean;
+  likeType?: 'NORMAL' | 'LOVE' | 'CARE' | null;
+}
+
+export interface PostApiResponse {
+  success: boolean;
+  message?: string;
+  data: Post[];
+}
+export interface LikesDetails {
+  count: number;
+  orderedType: string[]; // e.g., ['NORMAL', 'CARE', 'LOVE']
+}
+export interface Comment {
+  id: number;
+  userName: string;
+  content: string;
+  date: string;
+  pictureUrl: string;
+  likesDetails:  LikesDetails [];
+  comments: Comment[];
+}
+export interface ShopDetailes {
+  shopId: number;
+  shopName: string;
+  pictureUrl: string;
+  address: string;
+  city: string;
+  governorate: string;
+  phoneNumber: string;
+  description: string;
+  ownerID: string;
+  ownerName: string;
+  followerNumber: number;
+}
+
+export interface Shop {
+  address: string;
+  city: string;
+  description: string;
+  followerNumber: number;
+  governorate: string;
+  ownerID: string;
+  ownerName: string;
+  phoneNumber: string;
+  pictureUrl: string;
+  shopId: number;
+  shopName: string;
+}
+
+export interface CommentResponse {
+  isSuccess: boolean;
+  data: {
+    id: number;
+    userName: string;
+    pictureUrl: string;
+    content: string;
+    date: string;
+    likesDetails: {
+      count: number;
+      orderedType: string[];
+    };
+    comments: any[];
+  };
+}

@@ -47,4 +47,7 @@ export class GymService {
     return this._http.get<any>(`${environment.mainurl}/Follow/is-following-gym/${id}`,
       { headers: { 'X-Skip-Error': 'true' } });
   }
+    payment(id : {onlineTrainingId: number }):Observable<any>{
+    return this._http.post<any>(`${environment.mainurl}/Payments/create-checkout-session`,id)
+  }
 }

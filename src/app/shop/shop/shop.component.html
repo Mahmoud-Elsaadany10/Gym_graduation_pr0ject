@@ -1,1 +1,43 @@
-<p>shop works!</p>
+<app-navbar></app-navbar>
+
+<div class="container py-5">
+  <div class="justify-content-center d-flex mb-5">
+    <div class="position-relative responsive">
+      <input type="text"
+             class="rounded-pill input"
+             [(ngModel)]="shopName"
+             placeholder="Search"
+             (input)="onSearchInput()">
+      <button [hidden]="hide" class="x" (click)="onClickButton()">
+        <i class="fa-solid fa-x"></i>
+      </button>
+    </div>
+    <button (click)="filterShops()" class="rounded-pill search">
+      <i class="fa-solid fa-magnifying-glass me-2"></i>Search
+    </button>
+  </div>
+
+  <div class="row" *ngIf="filteredShops.length > 0">
+    <div class="col-lg-4 col-md-6 mb-4" *ngFor="let shop of filteredShops">
+      <div class="card custom-card text-white">
+        <img [src]="shop.pictureUrl || 'assets/Rectangle 27.png'"
+             class="card-img-top p-2"
+             alt="Shop image">
+        <div class="card-body">
+          <h5 class="card-title fw-bold">{{ shop.shopName }}</h5>
+          <p class="card-text">Location: {{ shop.city }}, {{ shop.address }}</p>
+          <p class="card-text"><small>Owner: {{ shop.ownerName }}</small></p>
+          <p class="card-text"><small>Phone: {{ shop.phoneNumber }}</small></p>
+<a [routerLink]="['/layout/shop-details', shop.shopId]"
+   class="btn view-btn w-50 d-flex justify-content-center mx-auto">
+  View Shop
+</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="filteredShops.length === 0" class="text-center text-muted fs-5 mt-5">
+    No shops available at the moment.
+  </div>
+</div>

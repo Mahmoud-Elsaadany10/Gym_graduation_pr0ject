@@ -38,6 +38,7 @@ export class ProfileComponent implements OnInit {
 
 
   selectedFile: File | null = null;
+  shopFile : File | null = null;
 
 
   constructor(private fbulider: FormBuilder ,
@@ -325,14 +326,14 @@ export class ProfileComponent implements OnInit {
     onShopFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.selectedFile = input.files[0];
+      this.shopFile = input.files[0];
       this.uploadShopImage();
     }
   }
 
   uploadShopImage(): void {
-    if (!this.selectedFile) return;
-    this._profileServer.uploadShopImage(this.selectedFile, this.shopId).subscribe({
+    if (!this.shopFile) return;
+    this._profileServer.uploadShopImage(this.shopFile, this.shopId).subscribe({
       next: (res) => {
         console.log('Upload success:', res)
         this.toastService.show("Image Uploaded Successfully", "light");

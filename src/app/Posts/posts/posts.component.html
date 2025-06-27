@@ -1,0 +1,117 @@
+<app-navbar></app-navbar>
+
+<!-- زر إنشاء بوست -->
+<div style="display: flex; justify-content: flex-end; padding: 0 24px; margin-top: 20px;">
+  <button (click)="onCreatePost()" class="create-post-btn">Create a post</button>
+</div>
+
+<!-- المودال لإنشاء بوست -->
+<div *ngIf="isModalOpen" class="modal-overlay">
+  <div class="modal-box">
+    <h2 class="modal-title">Create Post</h2>
+    <textarea rows="4" placeholder="What's on your mind?" [(ngModel)]="newPostContent"></textarea>
+
+    <!-- اختيار الصور -->
+    <input type="file" (change)="onFileSelected($event)" multiple accept="image/*" style="margin: 10px 0;">
+
+    <div class="modal-actions">
+      <button class="btn primary" (click)="submitPost()">Post</button>
+      <button class="btn secondary" (click)="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- عرض البوستات -->
+<div *ngFor="let post of posts" class="post-card">
+
+  <div class="user-info">
+    <img [src]="post.photoPass || 'assets/avatardefault.svg'" class="user-avatar" />
+    <div>
+      <div class="user-name">{{ post.name }}</div>
+      <div class="post-date">{{ post.createdAt }}</div>
+    </div>
+  </div>
+
+  <!-- محتوى البوست -->
+  <img [src]="post.pictureUrls[0]" alt="" class="w-100 post-image" *ngIf="post.pictureUrls && post.pictureUrls.length > 0" >
+  <p class="post-content">{{ post.content }}</p>
+
+<!-- pictureUrls
+:
+Array(1)
+0
+:
+"https://fitnessproimages.blob.core.windows.net/images/34431668-b85d-4dd6-aa4b-3af79d779b35_Screenshot %2886%29.png"
+length
+:
+1 -->
+
+  <!-- Divider الأول -->
+  <hr class="reaction-divider" />
+
+  <!-- التفاعلات الأكثر شيوعًا -->
+  <div class="top-reactions" *ngIf="post.likesDetails?.count" (click)="openReactionsModal(post.id)">
+    <span class="reaction-count-text">{{ post.likesDetails.count }}</span>
+    <img *ngFor="let type of post.likesDetails?.orderedType"
+        [src]="getReactionIcon(type)"
+        class="reaction-icon-img" />
+  </div>
+
+  <!-- Divider الثاني -->
+  <hr class="reaction-divider" />
+
+  <!-- قسم أزرار اللايك والكومنت -->
+  <div class="interaction-section">
+    <div class="like-container"
+      [ngClass]="{ 'normal-liked': post.likeType === 'NORMAL' }"
+      (mousedown)="startLongPress(post)"
+      (mouseup)="cancelLongPress()"
+      (mouseleave)="cancelLongPress()"
+      (touchstart)="startLongPress(post)"
+      (touchend)="cancelLongPress()"
+      (click)="onLikeClick(post)">
+
+      <ng-container [ngSwitch]="post.likeType">
+        <img *ngSwitchCase="'NORMAL'" src="assets/ei_like.png" class="reaction-icon-img" />
+        <img *ngSwitchCase="'LOVE'" src="assets/lsicon_user-like-filled.svg" class="reaction-icon-img" />
+        <img *ngSwitchCase="'CARE'" src="assets/mask-group.svg" class="reaction-icon-img" />
+        <img *ngSwitchDefault src="assets/ei_like.png" class="reaction-icon-img" />
+      </ng-container>
+    </div>
+
+    <!-- قائمة الريأكشن -->
+    <div *ngIf="showReactionsForPostId === post.id" class="reactions-popup animate-popup">
+      <img src="assets/ei_like.png" (click)="toggleLike(post, 'NORMAL')" class="reaction-icon-img" alt="like" />
+      <img src="assets/lsicon_user-like-filled.svg" (click)="toggleLike(post, 'LOVE')" class="reaction-icon-img" alt="love" />
+      <img src="assets/mask-group.svg" (click)="toggleLike(post, 'CARE')" class="reaction-icon-img" alt="care" />
+    </div>
+
+    <!-- زر التعليق -->
+    <button class="comment-btn" (click)="onComment(post)">💬 Comment</button>
+    <!-- بوكس التعليق -->
+    <div *ngIf="activeCommentPostId === post.id" class="comment-box">
+      <img src="assets/lets-icons_send-duotone.png" class="send-icon" />
+      <input type="text" placeholder="Write your comment here" [(ngModel)]="commentText" class="comment-input" />
+      <button class="send-comment-btn" (click)="addComment(post.id)">Send</button>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- مودال عرض الريأكشنات -->
+<div *ngIf="isReactionsModalOpen" class="modal-overlay">
+  <div class="modal-box reactions-modal">
+    <h3 style="margin-bottom: 12px;">People who reacted</h3>
+    <div *ngFor="let user of selectedReactionsUsers" class="reaction-user-row">
+      <img [src]="user.pictureUrl || 'assets/default-user.png'" class="reaction-avatar" />
+      <div class="reaction-username">{{ user.userName }}</div>
+      <div class="reaction-actions">
+        <button class="btn chat-btn">💬 Chat</button>
+        <button class="btn follow-btn">➕ Follow</button>
+      </div>
+    </div>
+    <button class="btn close-btn" (click)="closeReactionsModal()">Close</button>
+  </div>
+</div>
