@@ -1,6 +1,6 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import { PostService } from '../service/posts-service.service';
-import { CommentResponse, Post } from '../../Model/Models';
+import {  Post, PostResponse , Comment, GetCommentByIdResponse} from '../../Model/Models';
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../../mainPage/navbar/navbar.component";
 import { FormsModule } from '@angular/forms';
@@ -27,31 +27,36 @@ export class PostsComponent implements OnInit {
   longPressTimeout: any;
   showReactionsForPostId: number | null = null;
   selectedImages: File[] = [];
-  commentData!: CommentResponse['data'];
+
+comments: { [id: number]: Comment[] } = {}; // holds both top-level comments and replies
+oneComment: GetCommentByIdResponse | null = null;
+
+  activeReplyCommentId: number | null = null;
+  replyText: string = '';
+  commentId: number  = 0;
+  activeReplyComment: Comment | null = null;
+
+
 
 
   constructor(private postService: PostService) {}
 
 ngOnInit() {
-  console.log('🔁 Component initialized. Loading posts...');
   this.loadPosts(this.currentPage);
 }
 
 loadPosts(page: number) {
-  // لو جاري التحميل بالفعل أو مفيش بوستات تانية، مفيش داعي نطلب تاني
   if (this.isLoading || this.noMorePosts) return;
 
-  console.log(`📦 جاري تحميل البوستات للصفحة رقم ${page}...`);
   this.isLoading = true;
 
-  // نطلب البوستات من السيرفر حسب رقم الصفحة
   this.postService.getPostsByPage(page).subscribe({
     next: (res: any) => {
       console.log('📡 الاستجابة من الـ API:', res);
 
       // لو الاستجابة فيها مفتاح isSuccess = false، نوقف التحميل
       if (res?.isSuccess === false || !res?.data) {
-        console.warn('⚠️ الاستجابة غير ناجحة أو مفيش بيانات');
+        // console.warn('⚠️ الاستجابة غير ناجحة أو مفيش بيانات');
         this.noMorePosts = true;
         this.isLoading = false;
         return;
@@ -60,7 +65,7 @@ loadPosts(page: number) {
       const newPosts = res.data;
 
       if (newPosts.length === 0) {
-        console.log('⚠️ لا يوجد بوستات جديدة');
+        // console.log('⚠️ لا يوجد بوستات جديدة');
         this.noMorePosts = true;
       } else {
         this.posts = [...this.posts, ...newPosts];
@@ -77,22 +82,21 @@ loadPosts(page: number) {
   });
 }
 
-
-@HostListener('window:scroll', [])
-onScroll(): void {
-  if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 200) {
-    console.log('📜 Scrolled to bottom. Trying to load more posts...');
-    this.loadPosts(this.currentPage);
-  }
-}
+// @HostListener('window:scroll', [])
+// onScroll(): void {
+//   if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 200) {
+//     console.log('📜 Scrolled to bottom. Trying to load more posts...');
+//     this.loadPosts(this.currentPage);
+//   }
+// }
 
 onCreatePost() {
-  console.log('📝 Create post modal opened');
+  // console.log('📝 Create post modal opened');
   this.isModalOpen = true;
 }
 
 closeModal() {
-  console.log('❎ Post modal closed');
+  // console.log('❎ Post modal closed');
   this.isModalOpen = false;
   this.newPostContent = '';
 }
@@ -104,11 +108,10 @@ closeModal() {
 }
 
 submitPost() {
-  console.log('📨 Submitting new post...');
 
   this.postService.addPost(this.newPostContent, this.selectedImages).subscribe({
     next: () => {
-      console.log('✅ Post added successfully');
+
       this.closeModal();
       this.posts = [];
       this.currentPage = 1;
@@ -123,7 +126,7 @@ submitPost() {
 
 
 toggleLike(post: Post, reactionType: 'NORMAL' | 'LOVE' | 'CARE') {
-  console.log(`👍 Toggling like for post ${post.id} with reaction: ${reactionType}`);
+  // console.log(`👍 Toggling like for post ${post.id} with reaction: ${reactionType}`);
   this.showReactionsForPostId = null;
 
   if (post.isLikedByYou) {
@@ -160,10 +163,10 @@ toggleLike(post: Post, reactionType: 'NORMAL' | 'LOVE' | 'CARE') {
 }
 
 startLongPress(post: Post) {
-  console.log(`🕐 Starting long press on post ${post.id}`);
+  // console.log(`🕐 Starting long press on post ${post.id}`);
   this.longPressTriggered = false;
   this.longPressTimeout = setTimeout(() => {
-    console.log('⏱️ Long press triggered, showing reactions');
+    // console.log('⏱️ Long press triggered, showing reactions');
     this.showReactionsForPostId = post.id;
     this.longPressTriggered = true;
   }, 600);
@@ -171,14 +174,14 @@ startLongPress(post: Post) {
 
 cancelLongPress() {
   if (!this.longPressTriggered) {
-    console.log('🚫 Long press cancelled');
+
     clearTimeout(this.longPressTimeout);
   }
 }
 
 onLikeClick(post: Post) {
   if (!this.longPressTriggered) {
-    console.log(`👆 Regular like click on post ${post.id}`);
+    // console.log(`👆 Regular like click on post ${post.id}`);
     if (!post.isLikedByYou) {
       this.toggleLike(post, 'NORMAL');
     } else {
@@ -188,30 +191,45 @@ onLikeClick(post: Post) {
 }
 
 openReactionsModal(postId: number) {
-  console.log(`📊 Opening reactions modal for post ${postId}`);
-  this.postService.getPostLikes(postId).subscribe({
-    next: (res: any) => {
-      if (res?.isSuccess) {
-        this.selectedReactionsUsers = res.data;
-        this.isReactionsModalOpen = true;
-        console.log('✅ Reactions data loaded');
-      }
-    },
-    error: (err) => {
-      console.error("❌ Error loading post reactions", err);
+console.log(`📊 Opening reactions modal for post ${postId}`);
+this.postService.getPostLikes(postId).subscribe({
+  next: (res: any) => {
+    if (res?.isSuccess) {
+      this.selectedReactionsUsers = res.data;
+      this.isReactionsModalOpen = true;
+      console.log('✅ Reactions data loaded');
     }
-  });
+  },
+  error: (err) => {
+    console.error("❌ Error loading post reactions", err);
+  }
+});
 }
 
-closeReactionsModal() {
-  console.log('❎ Reactions modal closed');
-  this.isReactionsModalOpen = false;
-}
+  closeReactionsModal() {
+    console.log('❎ Reactions modal closed');
+    this.isReactionsModalOpen = false;
+  }
 
   onComment(post: Post) {
-  this.activeCommentPostId = this.activeCommentPostId === post.id ? null : post.id;
-  console.log(`💬 Comment box toggled for post ${post.id}. Active post ID: ${this.activeCommentPostId}`);
+    // If this post is already active, close it
+    if (this.activeCommentPostId === post.id) {
+      this.activeCommentPostId = null;
+    } else {
+
+      this.activeCommentPostId = post.id;
+
+      this.getPostById(post.id);
+
+    }
+
   }
+
+
+
+
+
+
 
   addComment(postId: number){
     const model ={
@@ -220,9 +238,11 @@ closeReactionsModal() {
     }
     this.postService.addComment(model).subscribe({
       next: () => {
-        console.log('✅ Comment added successfully');
+
         this.commentText = '';
         this.activeCommentPostId = null;
+
+      this.getPostById(postId);
       },
       error: (err) => {
         console.error('❌ Error adding comment:', err);
@@ -230,16 +250,114 @@ closeReactionsModal() {
     });
   }
 
-
-  getComments(postId: number) {
-  this.postService.getComments(postId).subscribe({
-    next: (res: CommentResponse) => {
+getPostById(postId: number) {
+  this.postService.getPostById(postId).subscribe({
+    next: (res: PostResponse) => {
       if (res.isSuccess) {
-        this.commentData = res.data;
+        // Top-level comments for the post
+        this.comments[postId] = res.data.comments;
+
+        // For each comment, fetch replies
+        res.data.comments.forEach(comment => {
+          this.getComments(comment.id);
+        });
+
+      } else {
+        this.comments[postId] = [];
       }
+    },
+    error: (err) => {
+      console.error('❌ Error loading post data', err);
+      this.comments[postId] = [];
     }
   });
+}
+
+
+
+getComments(commentId: number) {
+  this.postService.getComments(commentId).subscribe({
+    next: (res: GetCommentByIdResponse) => {
+      if (res.isSuccess) {
+        // Optionally store the fetched comment details
+        this.oneComment = res;
+        console.log(res)
+
+        // Convert the replies to the Comment interface shape
+        this.comments[commentId] = res.data.comments.map(reply => ({
+          id: reply.id,
+          userName: reply.userName,
+          pictureUrl: reply.pictureUrl,
+          content: reply.content,
+          date: reply.date,
+          likesDetails: null, // Not provided by this endpoint
+          comments: []
+        }));
+      } else {
+        this.comments[commentId] = [];
+      }
+    },
+    error: () => {
+      this.comments[commentId] = [];
+    }
+  });
+}
+
+toggleReplyBox(comment: Comment) {
+  // Toggle open/close
+  if (this.activeReplyComment && this.activeReplyComment.id === comment.id) {
+    this.activeReplyComment = null;
+    this.replyText = '';
+    console.log(`💬 Reply box closed for comment ${comment.id}`);
+  } else {
+    this.activeReplyComment = comment;
+    this.replyText = '';
+    console.log(`💬 Reply box opened for comment ${comment.id}`);
   }
+}
+
+
+sendReply() {
+  if (!this.activeReplyComment) return;
+
+  const model = {
+    commentId: this.activeReplyComment.id,
+    content: this.replyText
+  };
+
+  this.postService.commentOnComment(model).subscribe({
+    next: () => {
+      console.log('✅ Reply added successfully.');
+      this.replyText = '';
+      this.activeReplyComment = null;
+      // You may reload replies if you wish:
+      console.log(`💬 Reloading replies for comment ${model.commentId}`);
+      this.getComments(model.commentId);
+    },
+    error: (err) => {
+      console.error('❌ Error adding reply:', err);
+    }
+  });
+}
+
+
+
+  closeReplyModal() {
+    this.activeReplyComment = null;
+    this.replyText = '';
+  }
+
+
+// toggleReplyBox(comment: any) {
+//   this.activeReplyCommentId =
+//     this.activeReplyCommentId === comment.id ? null : comment.id;
+//   this.replyText = '';
+// }
+
+
+
+
+
 
 toggleCommentBox(postId: number) {
   this.activeCommentPostId = this.activeCommentPostId === postId ? null : postId;

@@ -654,3 +654,16 @@
       margin: 0 0 10px 0;
     }
   }
+
+.middle-text p{
+  color: #2d2e4a;
+  font-weight: 700;
+  font-size: 33px;
+}
+
+
+.view{
+  background-color: var(--color-third);
+  color: white;
+  border-radius: 11px;
+}

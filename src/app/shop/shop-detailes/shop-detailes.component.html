@@ -1,0 +1,162 @@
+<app-navbar></app-navbar>
+
+<section
+
+  class="shop-header"
+
+>
+<img [src]="shop.pictureUrl || 'assets/shopImage.png'" alt=""
+  class="shop-image" >
+
+  <div class="overlay">
+    <div class="action-buttons">
+      <button class="custom-btn">
+        <i class="fas fa-comment-alt"></i> Chat
+      </button>
+
+      <button class="custom-btn" (click)="toggleFollow()" [ngClass]="followed ? 'followed-btn' : ''">
+        <ng-container *ngIf="!followed">
+          <i class="fas fa-user-plus"></i> Follow
+        </ng-container>
+        <ng-container *ngIf="followed">
+          <i class="fa-solid fa-check me-1"></i> Followed
+        </ng-container>
+      </button>
+    </div>
+
+    <div class="welcome-text">
+      <h1 class="title">Welcome to {{ shop.shopName }}</h1>
+    </div>
+  </div>
+</section>
+
+<!-- create post shop -->
+
+<div *ngIf="hasShop">
+  <div class="create-post-container">
+  <button class="btn bg-success" (click)="onCreatePost()">
+  <i class="fas fa-plus"></i> Create Post
+  </button>
+</div>
+</div>
+
+
+
+
+
+
+
+<section class="product-section">
+  <h2 class="section-title">Our Most Amazing<br />Products</h2>
+
+  <div *ngIf="products.length === 0" class="no-products-message">
+    No products available yet.
+  </div>
+
+  <div class="d-flex mt-4 justify-content-center" *ngIf="products.length > 0">
+
+    <div *ngFor="let product of products" class="col-md-6 d-flex justify-content-center col-lg-4 col-sm-12">
+      <div class="product-card" >
+        <div class="image-container"  >
+          <img [src]="product.imageUrl" alt="product" />
+        </div>
+
+        <div class="category-price-row d-flex flex-column">
+          <p class="category">{{ product.categoryName }}</p>
+          <p class="price">{{ product.price }}</p>
+        </div>
+
+        <div class="name-buy gap-2 d-flex">
+          <p class="name">{{ product.name }}</p>
+          <button class="buy-btn">Buy Now</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+<!-- <section class="posts-section">
+  <h2 class="section-title">Last Updated<br />Posts</h2>
+  <div class="d-flex flex-column mt-3 justify-content-center ">
+  <div *ngIf="posts.length > 0; else noPosts" >
+    <div class="col-md-6 d-flex justify-content-center col-lg-4 col-sm-12 " *ngFor="let post of posts" >
+      <div class="post-card p-4">
+        <div class="post-image">
+          <img  [src]="post.pictureUrls[0]" *ngIf="post.pictureUrls[0]" alt="post image" />
+            <p class="post-content" [innerHTML]="post.content"></p>
+            <p class="post-date">{{ post.createdAt }}</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  </div>
+
+
+
+  <ng-template #noPosts>
+    <p class="no-posts-message">No posts available yet.</p>
+  </ng-template>
+</section> -->
+
+  <div class="middle-text text-center my-5">
+    <h2 class="section-title">Last Updated<br />Posts</h2>
+  </div>
+
+  <div class="gy-5 gx-5 justify-content-center d-flex py-4 ">
+    <ng-container *ngIf="post && post.length > 0; else noPosts">
+    <div class="col-md-6 justify-content-center d-flex col-lg-4 col-sm-12" *ngFor="let p of post">
+      <div class="card" style="width: 17rem;">
+        <img [src]="p.pictureUrls[0]" *ngIf="p.pictureUrls[0]" class="card-img-top img-height" alt="...">
+        <div class="card-body text-center">
+          <div class="post pt-2">
+            <p>{{ p.content }}</p>
+          </div>
+          <div class="post-date pt-2">{{ p.createdAt }}</div>
+        </div>
+      </div>
+    </div>
+    </ng-container>
+
+
+    <ng-template #noPosts>
+      <div class="text-center  py-4">
+        <p>No posts available yet.</p>
+      </div>
+    </ng-template>
+
+  </div>
+
+    <div class="d-flex justify-content-center mt-4" *ngIf="post && post.length > 0">
+      <a routerLink="/layout/posts" class="text-decoration-none view p-3">View more</a>
+    </div>
+
+
+<div *ngIf="isModalOpen" class="modal-overlay">
+  <div class="modal-box">
+    <h2 class="modal-title">✍️ Create Your Post</h2>
+    <textarea
+      rows="5"
+      placeholder="Share your thoughts with the world..."
+      [(ngModel)]="newPostContent"
+      style="font-family: inherit; line-height: 1.6;">
+    </textarea>
+    <input
+      type="file"
+      (change)="onFileSelected($event)"
+      multiple
+      accept="image/*"
+      style="margin: 16px 0; display: block; padding: 12px; border-radius: 12px; border: 2px dashed #e2e8f0; background: rgba(248,250,252,0.5);"
+    >
+    <div class="modal-actions">
+      <button class="Publish btn" (click)="submitPost()">
+        🚀 Publish Post
+      </button>
+      <button class="Cancel btn" (click)="closeModal()">
+        ❌ Cancel
+      </button>
+    </div>
+  </div>
+</div>
+
+

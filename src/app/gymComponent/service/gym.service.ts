@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { APiRes, GymResponse } from '../../Model/Models';
+import { APiRes, CoachPostsResponse, GymResponse } from '../../Model/Models';
 
 @Injectable({
   providedIn: 'root'
@@ -49,5 +49,8 @@ export class GymService {
   }
     payment(id : {onlineTrainingId: number }):Observable<any>{
     return this._http.post<any>(`${environment.mainurl}/Payments/create-checkout-session`,id)
+  }
+  getGymPosts(id: number): Observable<CoachPostsResponse> {
+    return this._http.get<CoachPostsResponse>(`${environment.mainurl}/Post/GetLastThreePostsOfGym/${id}`);
   }
 }

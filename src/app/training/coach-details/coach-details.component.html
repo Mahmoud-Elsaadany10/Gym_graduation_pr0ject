@@ -96,38 +96,27 @@
   </div>
 
   <div class="gy-5 gx-5 justify-content-center py-4 row">
-    <div class="col-md-6 justify-content-center d-flex col-lg-4 col-sm-12">
+    <ng-container *ngIf="post && post.length > 0; else noPosts">
+    <div class="col-md-6 justify-content-center d-flex col-lg-4 col-sm-12" *ngFor="let p of post">
       <div class="card" style="width: 17rem;">
-        <img src="assets/background.jpg" class="card-img-top img-height" alt="...">
+        <img [src]="p.pictureUrls[0]" *ngIf="p.pictureUrls[0]" class="card-img-top img-height" alt="...">
         <div class="card-body text-center">
           <div class="post pt-2">
-            <p>Want to start Yoga? Here’s How</p>
+            <p>{{ p.content }}</p>
           </div>
-          <div class="post-date pt-2">4/17/2025</div>
+          <div class="post-date pt-2">{{ p.createdAt }}</div>
         </div>
       </div>
     </div>
-    <div class="col-md-6 justify-content-center d-flex col-lg-4 col-sm-12">
-      <div class="card" style="width: 17rem;">
-        <img src="assets/background.jpg" class="card-img-top img-height" alt="...">
-        <div class="card-body text-center">
-          <div class="post pt-2">
-            <p>Want to start Yoga? Here’s How</p>
-          </div>
-          <div class="post-date pt-2">4/17/2025</div>
-        </div>
-      </div>
+    <div class="d-flex justify-content-center m4-3">
+      <a routerLink="/layout/posts" class="text-decoration-none view p-3">View more</a>
     </div>
-    <div class="col-md-6 justify-content-center d-flex col-lg-4 col-sm-12">
-      <div class="card" style="width: 17rem;">
-        <img src="assets/background.jpg" class="card-img-top img-height" alt="...">
-        <div class="card-body text-center">
-          <div class="post pt-2">
-            <p>Want to start Yoga? Here’s How</p>
-          </div>
-          <div class="post-date pt-2">4/17/2025</div>
-        </div>
+    </ng-container>
+
+    <ng-template #noPosts>
+      <div class="text-center  py-4">
+        <p>No posts available yet.</p>
       </div>
-    </div>
-  </div>
+    </ng-template>
+
 </div>

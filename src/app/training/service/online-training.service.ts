@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { APiRes, ApiResponse, coachResponse, isFollowingResponse, TrainersResponse, TrainingSession } from '../../Model/Models';
+import { APiRes, ApiResponse, CoachPostsResponse, coachResponse, isFollowingResponse, TrainersResponse, TrainingSession } from '../../Model/Models';
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +56,10 @@ export class OnlineTrainingService {
 
   payment(id : any):Observable<any>{
     return this._http.post<any>(`${environment.mainurl}/Payments/create-checkout-session`,id)
+  }
+
+  getlastThreePosts(id: string): Observable<CoachPostsResponse> {
+    return this._http.get<CoachPostsResponse>(`${environment.mainurl}/Post/GetLastThreePostsOfCoach/${id}`);
   }
 
 }

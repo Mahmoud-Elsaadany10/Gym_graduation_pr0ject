@@ -3,7 +3,7 @@ import { NavbarComponent } from "../../mainPage/navbar/navbar.component";
 import { OnlineTrainingService } from '../service/online-training.service';
 
 import { CommonModule } from '@angular/common';
-import { coachDetails, TrainingSession } from '../../Model/Models';
+import { coachDetails, CoachPostsResponse, TrainingSession } from '../../Model/Models';
 import { RegistrationService } from '../../Registration/service/registration.service';
 import { NgbToastModule } from '@ng-bootstrap/ng-bootstrap';
 import { SharedService } from '../../shared/services/shared.service';
@@ -38,6 +38,8 @@ export class CoachDetailsComponent implements OnInit {
 
   rating = 0
   ifRate :boolean = false
+  post: CoachPostsResponse['data'] | null = null;
+
 
   stars = Array(5).fill(0);
   noTrainingMessage: string=""
@@ -57,6 +59,7 @@ export class CoachDetailsComponent implements OnInit {
     this.getGroupTrainingById();
     this.checkRate()
     this.getStatus()
+    this.getLastPosts()
     this.loadRate();
   }
 
@@ -75,6 +78,17 @@ export class CoachDetailsComponent implements OnInit {
         this.ifRate = res
       }
     })
+  }
+
+  getLastPosts() {
+    this._getDetails.getlastThreePosts(this.id).subscribe({
+      next: (res) => {
+        this.post = res.data;
+      },
+      error: (err) => {
+        console.error('Error fetching last posts:', err);
+      }
+    });
   }
 
 

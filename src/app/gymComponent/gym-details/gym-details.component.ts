@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { CommonModule, NgFor } from '@angular/common';
 import { NavbarComponent } from '../../mainPage/navbar/navbar.component';
@@ -9,14 +9,14 @@ import { UpdateRateComponent } from '../../shared/update-rate/update-rate.compon
 import { SharedService } from '../../shared/services/shared.service';
 import { RegistrationService } from '../../Registration/service/registration.service';
 import { OnlineTrainingService } from '../../training/service/online-training.service';
+import { CoachPostsResponse } from '../../Model/Models';
 
 
 
 @Component({
   standalone: true,
   selector: 'app-gym-details',
-  imports: [NavbarComponent, CommonModule,MatDialogModule
-  ],
+  imports: [NavbarComponent, CommonModule,MatDialogModule ,RouterModule],
   templateUrl: './gym-details.component.html',
   styleUrl: './gym-details.component.css'
 })
@@ -40,6 +40,7 @@ export class GymDetailsComponent implements OnInit {
   followed :boolean =false;
   rating : number = 0;
   gymImage: string =""
+  post: CoachPostsResponse['data'] | null = null;
 
   constructor(private route: ActivatedRoute,
     private dialog: MatDialog ,
@@ -229,6 +230,21 @@ private _Check: RegistrationService,
     }
 
   ];
+
+  getLastThreePost(){
+    this._gymService.getGymPosts(this.gymId).subscribe({
+      next: (res) => {
+        if (res.isSuccess) {
+          this.post = res.data;
+
+        }
+      },
+      error: (err) => {
+        console.error('Error fetching posts:', err);
+      }
+    });
+
+  }
 
 
 

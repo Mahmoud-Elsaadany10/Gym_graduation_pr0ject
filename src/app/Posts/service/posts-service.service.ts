@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { CommentResponse, Post } from '../../Model/Models';
+import {   GetCommentByIdResponse, Post, PostResponse } from '../../Model/Models';
 
 @Injectable({
   providedIn: 'root'
@@ -30,8 +30,8 @@ addPost(content: string, images: File[]): Observable<any> {
 }
 
 
-  getPostById(id: number): Observable<{ isSuccess: boolean, data: any }> {
-  return this.http.get<{ isSuccess: boolean, data: any }>(`${environment.mainurl}/Post/GetPost/${id}`);
+  getPostById(id: number): Observable<PostResponse> {
+  return this.http.get<PostResponse>(`${environment.mainurl}/Post/GetPost/${id}`);
   }
 
   // جلب الإعجابات الخاصة بالبوست
@@ -56,9 +56,13 @@ deleteLike(postId: number) {
     return this.http.post<any>(`${environment.mainurl}/Post/AddCommentOnPost`, model);
   }
 
-  getComments(postId: number): Observable<CommentResponse> {
-  return this.http.get<CommentResponse>(`${environment.mainurl}/Post/GetComment/${postId}`);
-}
+  getComments(commentId: number): Observable<GetCommentByIdResponse> {
+  return this.http.get<GetCommentByIdResponse>(`${environment.mainurl}/Post/GetComment/${commentId}`);
+  }
+
+  commentOnComment(model: { commentId: number, content: string }): Observable<any> {
+    return this.http.post(`${environment.mainurl}/Post/AddCommentOnComment`, model);
+  }
 
 
 

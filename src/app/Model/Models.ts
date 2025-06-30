@@ -261,24 +261,39 @@ export interface Post {
   likeType?: 'NORMAL' | 'LOVE' | 'CARE' | null;
 }
 
-export interface PostApiResponse {
-  success: boolean;
-  message?: string;
-  data: Post[];
+export interface PostResponse {
+  isSuccess: boolean;
+  data: PostData;
 }
+
+export interface PostData {
+  coachId: string;
+  id: number;
+  content: string;
+  createdAt: string;
+  photoPass: string;
+  name: string;
+  pictureUrls: string[];
+  likesDetails: LikesDetails;
+  comments: Comment[];
+}
+
 export interface LikesDetails {
   count: number;
-  orderedType: string[]; // e.g., ['NORMAL', 'CARE', 'LOVE']
+  orderedType: string[];
 }
+
 export interface Comment {
   id: number;
   userName: string;
+  pictureUrl: string;
   content: string;
   date: string;
-  pictureUrl: string;
-  likesDetails:  LikesDetails [];
+  likesDetails: LikesDetails | null;
   comments: Comment[];
+  haveComments?: boolean;
 }
+
 export interface ShopDetailes {
   shopId: number;
   shopName: string;
@@ -307,7 +322,7 @@ export interface Shop {
   shopName: string;
 }
 
-export interface CommentResponse {
+export interface GetCommentByIdResponse {
   isSuccess: boolean;
   data: {
     id: number;
@@ -319,6 +334,26 @@ export interface CommentResponse {
       count: number;
       orderedType: string[];
     };
-    comments: any[];
+    comments: {
+      id: number;
+      userName: string;
+      pictureUrl: string;
+      content: string;
+      date: string;
+      haveComments: boolean;
+    }[];
   };
 }
+
+
+export interface CoachPostsResponse {
+  isSuccess: boolean;
+  data: {
+    id: number;
+    content: string;
+    createdAt: string;
+    pictureUrls: string[];
+  }[];
+}
+
+

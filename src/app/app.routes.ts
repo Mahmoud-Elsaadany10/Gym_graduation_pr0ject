@@ -27,6 +27,7 @@ import { isloggedGuard } from './core/guard/islogged.guard';
 import { ChatUserComponent } from './chat/chat-user/chat-user.component';
 import { ShopComponent } from './shop/shop/shop.component';
 import { PostsComponent } from './Posts/posts/posts.component';
+import { ShopDetailsComponent } from './shop/shop-detailes/shop-detailes.component';
 
 
 export const routes: Routes = [
@@ -55,6 +56,7 @@ export const routes: Routes = [
     {path : "chat/:id" , component : ChatComponent} ,
     {path : "Chat" , component :ChatUserComponent} ,
     {path: "shop",component : ShopComponent} ,
+    {path: "shopDetails/:id", component: ShopDetailsComponent} ,
     {path :"posts" , component :PostsComponent}
 
   ]}

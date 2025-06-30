@@ -249,5 +249,8 @@ select{
 
 }
 
-
-
+.view{
+  background-color: var(--color-third);
+  color: white;
+  border-radius: 11px;
+}
