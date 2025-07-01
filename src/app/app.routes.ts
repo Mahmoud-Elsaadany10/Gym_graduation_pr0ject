@@ -28,6 +28,9 @@ import { ChatUserComponent } from './chat/chat-user/chat-user.component';
 import { ShopComponent } from './shop/shop/shop.component';
 import { PostsComponent } from './Posts/posts/posts.component';
 import { ShopDetailsComponent } from './shop/shop-detailes/shop-detailes.component';
+import { CoachDashboardComponent } from './dashboard/coach-dashboard/coach-dashboard.component';
+import { CoachComponent } from './dashboard/coach/coach.component';
+import { GymDashComponent } from './dashboard/gym-dash/gym-dash.component';
 
 
 export const routes: Routes = [
@@ -57,7 +60,12 @@ export const routes: Routes = [
     {path : "Chat" , component :ChatUserComponent} ,
     {path: "shop",component : ShopComponent} ,
     {path: "shopDetails/:id", component: ShopDetailsComponent} ,
-    {path :"posts" , component :PostsComponent}
+    {path :"posts" , component :PostsComponent} ,
+    {path: "dashboard", component: CoachDashboardComponent ,children:[
+      {path: "profile", component: CoachComponent},
+      {path: "gyms", component:GymDashComponent}
+
+    ]}
 
   ]}
 

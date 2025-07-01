@@ -1,0 +1,169 @@
+.content {
+  flex: 1;
+  padding: 30px;
+}
+
+/* Profile Section */
+.profile-section {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 30px;
+  align-items: start;
+}
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* دا بيخليها في النص بالطول */
+  text-align: center;
+  height: 100%; /* مهم جدًا */
+}
+
+.profile-info {
+  text-align: center;
+}
+
+
+
+.profile-pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.image-container {
+  position: relative;
+  width: 150px;
+  height: 150px;
+  margin: 0 auto;
+}
+
+.overlay-icon {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: #007bff;
+  padding: 6px;
+  border-radius: 50%;
+  color: white;
+  font-size: 14px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.social {
+  margin-top: 10px;
+}
+
+.social i {
+  margin: 0 5px;
+  cursor: pointer;
+}
+
+/* Profile Form */
+.profile-form {
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.row {
+  display: flex;
+  gap: 20px;
+}
+
+.half {
+  flex: 1;
+}
+
+input, textarea {
+  width: 100%;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.save-btn {
+  padding: 10px 20px;
+  background-color: #1b1f36;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.save-btn:hover {
+  background-color: #343b5e;
+}
+
+/* Hamburger Toggle (Mobile) */
+.menu-toggle {
+  display: none;
+  font-size: 24px;
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  background: #1b1f36;
+  color: white;
+  border: none;
+  z-index: 9999;
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+
+.close-btn {
+  display: none;
+  font-size: 22px;
+  background: transparent;
+  color: white;
+  border: none;
+  position: absolute;
+  top: 10px;
+  right: 15px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .dashboard {
+    flex-direction: column;
+  }
+
+  .menu-toggle {
+    display: block;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 250px;
+    height: 100vh;
+    background-color: #1b1f36;
+    z-index: 9998;
+    transition: left 0.3s ease-in-out;
+  }
+
+  .sidebar.active {
+    left: 0;
+  }
+
+  .close-btn {
+    display: block;
+  }
+
+  .content {
+    padding: 20px;
+  }
+
+  .profile-section {
+    grid-template-columns: 1fr;
+  }
+
+}

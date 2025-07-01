@@ -1,0 +1,49 @@
+<app-navbar></app-navbar>
+<div class="dashboard">
+  <!-- Hamburger Menu Button (for mobile) -->
+  <button class="menu-toggle" (click)="toggleSidebar()">☰</button>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" [class.active]="sidebarVisible">
+    <!-- Close button inside sidebar -->
+    <button class="close-btn" (click)="toggleSidebar()">×</button>
+
+    <!-- Top Section -->
+    <div>
+      <div class="top-section">
+        <img src="assets/coach.png" alt="Coach" class="coach-img" />
+        <h4 class="dashboard-title">Coach Dashboard</h4>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- Menu Items -->
+<ul class="menu">
+  <li routerLinkActive="active">
+    <a routerLink="/layout/dashboard/profile"><i class="fas fa-user"></i> Profile</a>
+  </li>
+  <li routerLinkActive="active">
+    <a routerLink="/layout/dashboard/gyms"><i class="fas fa-dumbbell"></i> Gyms</a>
+  </li>
+  <li routerLinkActive="active">
+    <a routerLink="/layout/dashboard/online-trainings"><i class="fas fa-video"></i> Online Trainings</a>
+  </li>
+  <li routerLinkActive="active">
+    <a routerLink="/layout/dashboard/shop"><i class="fas fa-shopping-cart"></i> Shop</a>
+  </li>
+</ul>
+
+    </div>
+
+    <!-- Bottom Settings & Logout -->
+    <div class="bottom-menu">
+      <li><i class="fas fa-cog"></i> Settings</li>
+      <li><i class="fas fa-sign-out-alt"></i> Logout</li>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="w-100">
+    <router-outlet></router-outlet>
+  </main>
+</div>
