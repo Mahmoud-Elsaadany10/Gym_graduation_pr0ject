@@ -19,16 +19,16 @@
 
       <!-- Menu Items -->
 <ul class="menu">
-  <li routerLinkActive="active">
+  <li routerLinkActive="active" >
     <a routerLink="/layout/dashboard/profile"><i class="fas fa-user"></i> Profile</a>
   </li>
-  <li routerLinkActive="active">
+  <li routerLinkActive="active" [hidden]="!hasGym">
     <a routerLink="/layout/dashboard/gyms"><i class="fas fa-dumbbell"></i> Gyms</a>
   </li>
-  <li routerLinkActive="active">
+  <li routerLinkActive="active" [hidden]="!hasOnlineTraining">
     <a routerLink="/layout/dashboard/online-trainings"><i class="fas fa-video"></i> Online Trainings</a>
   </li>
-  <li routerLinkActive="active">
+  <li routerLinkActive="active" [hidden]="!hasShop">
     <a routerLink="/layout/dashboard/shop"><i class="fas fa-shopping-cart"></i> Shop</a>
   </li>
 </ul>
@@ -36,7 +36,7 @@
     </div>
 
     <!-- Bottom Settings & Logout -->
-    <div class="bottom-menu">
+    <div class="bottom-menu d-none" >
       <li><i class="fas fa-cog"></i> Settings</li>
       <li><i class="fas fa-sign-out-alt"></i> Logout</li>
     </div>

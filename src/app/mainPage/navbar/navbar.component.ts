@@ -61,7 +61,14 @@ export class NavbarComponent implements OnInit{
   //     this.isCoach =false
   //   }
   // }
-
+  checkBusiness() {
+    this._Register.getCoachBusiness().subscribe({
+      next: (response) => {
+        this.isCoach = response.isSuccess;
+        console.log("Business Check Response:", response);
+      }
+    });
+  }
 
 
 

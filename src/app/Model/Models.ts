@@ -176,6 +176,7 @@ export interface OnlineTrainingForm {
   price: number;
   noOfSessionsPerWeek: number;
   durationOfSession: number;
+
 }
 export interface shopInfo {
   name: string;
@@ -188,7 +189,7 @@ export interface shopInfo {
 }
 export interface TrainingSession {
   id: number;
-  coachID: string;
+  coachID ?: string;
   title: string;
   description: string;
   trainingType: string;
@@ -354,6 +355,18 @@ export interface CoachPostsResponse {
     createdAt: string;
     pictureUrls: string[];
   }[];
+}
+
+
+export interface TrainingProfile {
+  id: string;
+  fullName: string;
+  gender: string;
+  joinedDate: string; // ISO date string
+  bio: string | null;
+  profilePictureUrl: string;
+  rating: number | null;
+  onlineTrainings: TrainingSession[];
 }
 
 

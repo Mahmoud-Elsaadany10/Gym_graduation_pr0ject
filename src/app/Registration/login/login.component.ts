@@ -92,15 +92,29 @@ login() {
       this.isCoach = true;
 
 
-      if (this.isCoach && !this.hasGym && !this.hasOnlineTrainng && !this.hasShop) {
+
+
+      if (this.isCoach && !this.hasGym && this.hasOnlineTrainng && this.hasShop) {
         this.router.navigate(["/logging/gymInfo"]);
-      } else if (this.isCoach && this.hasGym && !this.hasOnlineTrainng) {
+      }
+      else if (this.isCoach && !this.hasGym && !this.hasOnlineTrainng && this.hasShop) {
+        this.router.navigate(["/logging/gymInfo"]);
+      }
+      else if (this.isCoach && !this.hasGym && !this.hasOnlineTrainng && !this.hasShop) {
+        this.router.navigate(["/logging/gymInfo"]);
+      }
+      else if (this.isCoach && this.hasGym && !this.hasOnlineTrainng) {
         this.router.navigate(["/logging/traningInfo"]);
-      } else if (this.isCoach && this.hasGym && this.hasOnlineTrainng && !this.hasShop) {
+      }
+      else if (this.isCoach && this.hasGym && !this.hasOnlineTrainng && !this.hasShop) {
         this.router.navigate(["/logging/shopInfo"]);
-      }else if (this.isCoach && this.hasGym && this.hasOnlineTrainng && this.hasShop) {
-  this.router.navigate(["/layout/home"]);
-}
+      }
+      else if (this.isCoach && !this.hasGym && this.hasOnlineTrainng && !this.hasShop) {
+        this.router.navigate(["/logging/shopInfo"]);
+      }
+      else if (this.isCoach && this.hasGym && this.hasOnlineTrainng && this.hasShop) {
+        this.router.navigate(["/layout/home"]);
+      }
     }},
     error: (err) => {
       console.error("Error during login or business fetch:", err);

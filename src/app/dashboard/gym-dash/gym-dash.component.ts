@@ -29,9 +29,9 @@ export class GymDashComponent implements OnInit{
     private modalService: NgbModal,
     private _sharedService: SharedService) { }
 
-    ngOnInit(): void {
-      this.getGymInfo();
-    }
+  ngOnInit(): void {
+    this.getGymInfo();
+  }
 
   getToken(): string | null {
     return localStorage.getItem('token') || sessionStorage.getItem('token');
@@ -89,7 +89,7 @@ export class GymDashComponent implements OnInit{
   }
 
   submitPost() {
-  this._dashboardService.addPost(this.newPostContent, this.selectedImages , this.gymId).subscribe({
+  this._dashboardService.addGymPost(this.newPostContent, this.selectedImages , this.gymId).subscribe({
     next: () => {
       this.closeModal();
       this._sharedService.show("Post added successfully", "light");

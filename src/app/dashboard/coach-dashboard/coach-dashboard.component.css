@@ -42,16 +42,16 @@
 /* Menu Items */
 .menu li,
 .bottom-menu li {
-  list-style: none;
-  padding: 8px 0;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+list-style: none;
+
+    display: flex;
+    align-items: center;
+        margin-top: 11px;
 }
 a{
   text-decoration: none;
   color: white;
+  padding: 9px 14px;
 }
 
 .menu li.active,
@@ -59,7 +59,7 @@ a{
 .bottom-menu li:hover {
   background-color: #2e334d;
   border-radius: 5px;
-  padding-left: 10px;
+
 }
 
 /* Content Area */

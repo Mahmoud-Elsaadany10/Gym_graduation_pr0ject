@@ -31,6 +31,8 @@ import { ShopDetailsComponent } from './shop/shop-detailes/shop-detailes.compone
 import { CoachDashboardComponent } from './dashboard/coach-dashboard/coach-dashboard.component';
 import { CoachComponent } from './dashboard/coach/coach.component';
 import { GymDashComponent } from './dashboard/gym-dash/gym-dash.component';
+import { ShopDashComponent } from './dashboard/shop-dash/shop-dash.component';
+import { TrainingDashComponent } from './dashboard/training-dash/training-dash.component';
 
 
 export const routes: Routes = [
@@ -63,9 +65,10 @@ export const routes: Routes = [
     {path :"posts" , component :PostsComponent} ,
     {path: "dashboard", component: CoachDashboardComponent ,children:[
       {path: "profile", component: CoachComponent},
-      {path: "gyms", component:GymDashComponent}
-
-    ]}
+      {path: "gyms", component:GymDashComponent} ,
+      {path :"shop", component :ShopDashComponent},
+      {path :"online-trainings", component :TrainingDashComponent}
+    ], canActivate:[roleGuard], data: { requireLogin: true }}
 
   ]}
 

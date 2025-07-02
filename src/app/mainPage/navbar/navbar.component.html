@@ -31,15 +31,12 @@
         <li class="nav-item">
           <a class="nav-link"  routerLinkActive="active"  routerLink="/layout/Chat">Chat</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" [hidden]="!isCoach">
           <a class="nav-link"  routerLinkActive="active"  routerLink="/layout/dashboard/profile">Dashboard</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" *ngIf="isLogged" routerLink="/layout/profile">Profile</a>
+        <li class="nav-item" [hidden]="!isLogged || isCoach">
+          <a class="nav-link" routerLinkActive="active"  routerLink="/layout/profile">Profile</a>
         </li>
-        <!-- <li class="nav-item">
-          <a class="nav-link" routerLinkActive="active" *ngIf="isCoach" [routerLink]="['/layout/chat',getId()]">Chat</a>
-        </li> -->
       </ul>
 
       <div class="me-4">
