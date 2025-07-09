@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, map, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { ApiResponse, featuresResponse, GoogleAuthTokens, googleTokenResponse, loginResponse, ResetPasswordModel, TokenResponse, User, VerificationModel } from '../../Model/Models';
 import { environment } from '../../../environments/environment';
 import { jwtDecode } from 'jwt-decode';
@@ -15,6 +15,10 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class RegistrationService {
   userData = new BehaviorSubject<any>(null);
+  hasGym :boolean =false
+  hasShop :boolean = false
+  hasOnlineTrainng :boolean = false
+  isCoach :boolean = false
 
   constructor(private _http :HttpClient , private router : Router ,
     private socialAuthService: SocialAuthService ,
@@ -215,26 +219,56 @@ export class RegistrationService {
       })
     )
   }
-  googleLogin(payload :GoogleAuthTokens): Observable<any>{
-    return this._http.post<any>(`${environment.mainurl}/Account/GoogleLogin`, payload).pipe(
-      map((res: googleTokenResponse) => {
-        if (res.isSuccess && res.data.token && res.data.refreshToken) {
-          this.setTokens(res.data.token, res.data.refreshToken);
-          this.router.navigate(['/layout/home']);
-          this.saveUser();
-        }else if(res.data.checktoken){
-          this.openConfirmModal()
-          sessionStorage.setItem('checktoken', res.data.checktoken);
-        }
+googleLogin(payload: GoogleAuthTokens): Observable<any> {
+  return this._http.post<any>(`${environment.mainurl}/Account/GoogleLogin`, payload).pipe(
+    switchMap((res: googleTokenResponse) => {
+      if (res.isSuccess && res.data.token && res.data.refreshToken) {
+        this.setTokens(res.data.token, res.data.refreshToken);
+        this.saveUser();
 
-        return res;
-      }),
-      catchError((error) => {
-        console.error('Google login error:', error);
-        return throwError(() => new Error('Google login failed.'));
-      })
-    )
-  }
+        // Check if user is a coach
+        return this.getCoachBusiness().pipe(
+          tap((featuresResponse) => {
+            if (featuresResponse?.isSuccess === false || !featuresResponse) {
+              this.router.navigate(['/layout/home']);
+              return;
+            }
+
+            this.hasGym = featuresResponse.data.hasGym;
+            this.hasOnlineTrainng = featuresResponse.data.hasOnlineTrainng;
+            this.hasShop = featuresResponse.data.hasShop;
+            this.isCoach = true;
+
+            const key = `${+this.hasGym}${+this.hasOnlineTrainng}${+this.hasShop}`;
+            const routeMap: Record<string, string> = {
+              '000': '/logging/gymInfo',
+              '001': '/logging/gymInfo',
+              '010': '/logging/gymInfo',
+              '100': '/logging/traningInfo',
+              '101': '/logging/traningInfo',
+              '110': '/logging/shopInfo',
+              '111': '/layout/home'
+            };
+
+            this.router.navigate([routeMap[key]]);
+          })
+        );
+      } else if (res.data.checktoken) {
+        this.openConfirmModal();
+        sessionStorage.setItem('checktoken', res.data.checktoken);
+        return of(res);
+      } else {
+        this.router.navigate(['/layout/home']);
+        return of(res);
+      }
+    }),
+    catchError((error) => {
+      console.error('Google login error:', error);
+      return throwError(() => new Error('Google login failed.'));
+    })
+  );
+}
+
 
     private openConfirmModal(): void {
       this.modalService.open(SetRoleComponent, {

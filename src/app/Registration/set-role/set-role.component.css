@@ -43,6 +43,9 @@
   background-color: var(--secodanry-color);
   width: 40%;
 }
+.modal-title{
+  color: white !important;
+}
 
 .trainee-btn {
   background-color: var(--main-color);

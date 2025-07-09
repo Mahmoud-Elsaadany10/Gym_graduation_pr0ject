@@ -19,6 +19,7 @@ export class NavbarComponent implements OnInit{
 
   ngOnInit(): void {
     this.islOggedIn()
+    this.checkBusiness()
     // this.checheRole()
   }
   islOggedIn(){

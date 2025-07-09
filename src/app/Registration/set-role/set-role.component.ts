@@ -21,15 +21,23 @@ selectRole(role: string): void {
   const payload = { role };
   this._Reg.setRole(payload).subscribe({
     next: (res) => {
+      if(role == "Coach"){
+      console.log('Role set successfully:', res);
+      this.router.navigate(['/logging/gymInfo']);
+      this.activeModal.close(true);
+      }else{
       console.log('Role set successfully:', res);
       this.router.navigate(['/layout/home']);
       this.activeModal.close(true);
+      }
+
     },
     error: (err) => {
       console.error('Error setting role:', err);
     }
   });
 }
+
 
 
 }
