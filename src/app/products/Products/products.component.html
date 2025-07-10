@@ -1,0 +1,43 @@
+<app-navbar></app-navbar>
+
+<div class="container mt-5">
+  <!-- Search bar -->
+  <div class="search-bar d-flex justify-content-center mb-4">
+    <div class="position-relative">
+      <input type="text" class="rounded-pill input" [(ngModel)]="filters.name" placeholder="Find Another Product">
+      <button *ngIf="filters.name" class="x" (click)="clearName()"><i class="fa-solid fa-x"></i></button>
+    </div>
+    <button (click)="getProducts()" class="rounded-pill search">
+      <i class="fa-solid fa-magnifying-glass me-2"></i>Search
+    </button>
+  </div>
+
+  <!-- Filters under search bar -->
+  <div class="filters d-flex justify-content-center mb-4 flex-wrap gap-3">
+    <div class="filter-box">
+      <label>Sort</label>
+      <select [(ngModel)]="filters.sort">
+        <option value="">None</option>
+        <option value="desc">Price Descending</option>
+        <option value="asc">Price Ascending</option>
+        <option value="discount">Biggest Discount</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Product Cards Grid -->
+  <div class="product-grid-container">
+    <div class="product-card" *ngFor="let product of products">
+      <div class="image-wrapper">
+        <img [src]="product.imagePath" alt="product image" />
+      </div>
+      <div class="Prodcut-details d-flex align-items-center flex-column">
+        <p class="product"> <span class="clr">Name</span>  : {{ product.name }}</p>
+        <p class="product "> <span class="clr">Price</span> : {{ product.price }} L.E</p>
+        <p class="product "> <span class="clr">Description</span> : {{ product.description }} </p>
+      </div>
+
+      <button class="buy-btn">Buy Now</button>
+    </div>
+  </div>
+</div>

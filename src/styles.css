@@ -55,7 +55,6 @@
 
 }
 
-/* Disable active styles for "Prev" button */
 .pagination .page-item:first-child .page-link {
 
   display: none !important;
@@ -64,10 +63,18 @@
 
 
 
+input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 
 
-
-/* Ensure the active page looks distinct */
 .pagination .page-item.active .page-link {
   background-color: rgb(92, 75, 172) !important;
   color: white !important;

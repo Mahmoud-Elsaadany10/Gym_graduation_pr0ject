@@ -154,115 +154,109 @@
       </button>
       </div>
 
-
-
     <!-- Enhanced Comments List -->
- <div *ngIf="(comments[post.id] || []).length > 0" class="comments-list">
-  <div
-    style="margin-bottom: 16px; font-weight: 600; color: #475569; display: flex; align-items: center; gap: 8px;"
-  >
-    <span>💬</span>
-    <span>Comments ({{ comments[post.id].length }})</span>
-  </div>
-
-  <div *ngFor="let comment of comments[post.id]" class="single-comment">
-    <img
-      [src]="comment.pictureUrl || 'assets/avatardefault.svg'"
-      class="comment-avatar"
-      alt="Commenter Avatar"
-    />
-    <div style="flex: 1;">
-      <div class="comment-content">
-        <div style="margin-bottom: 8px;">
-          <strong style="color: #2C3552; font-weight: 700;">{{ comment.userName }}</strong>
-        </div>
-        <p style="margin: 0 0 8px 0; line-height: 1.5; color: #475569;">{{ comment.content }}</p>
-        <div style="display: flex; align-items: center; justify-content: space-between;">
-          <small style="color: #64748b; font-weight: 500;">🕒 {{ comment.date }}</small>
-          <button class="reply-btn" (click)="toggleReplyBox(comment)">
-            ↩️ Reply
-          </button>
-        </div>
-      </div>
-
-      <!-- Reply Input for Comment -->
+    <!-- Fixed: Use the correct comments array for the post -->
+    <div *ngIf="(comments[post.id] || []).length > 0" class="comments-list">
       <div
-        *ngIf="activeReplyComment?.id === comment.id"
-        style="margin-top: 12px; padding: 16px; background: #f9fafb; border-radius: 8px; border: 1px solid #e2e8f0;"
+        style="margin-bottom: 16px; font-weight: 600; color: #475569; display: flex; align-items: center; gap: 8px;"
       >
-        <textarea
-          [(ngModel)]="replyText"
-          placeholder="✍️ Write your reply..."
-          rows="3"
-          class="reply-textarea"
-          style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; resize: vertical;"
-        ></textarea>
-        <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px;">
-          <button class="btn send primary" (click)="sendReply()">✈️ Send Reply</button>
-          <button class="btn toggle secondary" (click)="toggleReplyBox(comment)">❌ Cancel</button>
-        </div>
+        <span>💬</span>
+        <span>Comments ({{ comments[post.id].length }})</span>
       </div>
 
-      <!-- Replies List -->
-      <div *ngIf="(comments[comment.id] || []).length > 0" class="replies-list" style="margin-top: 12px;">
-        <div
-          style="margin-bottom: 8px; font-size: 14px; font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 6px;"
-        >
-          <span>↩️</span>
-          <span>Replies ({{ comments[comment.id].length }})</span>
-        </div>
+      <div *ngFor="let comment of comments[post.id]" class="single-comment">
+        <img
+          [src]="comment.pictureUrl || 'assets/avatardefault.svg'"
+          class="comment-avatar"
+          alt="Commenter Avatar"
+        />
+        <div style="flex: 1;">
+          <div class="comment-content">
+            <div style="margin-bottom: 8px;">
+              <strong style="color: #2C3552; font-weight: 700;">{{ comment.userName }}</strong>
+            </div>
+            <p style="margin: 0 0 8px 0; line-height: 1.5; color: #475569;">{{ comment.content }}</p>
+            <div style="display: flex; align-items: center; justify-content: space-between;">
+              <small style="color: #64748b; font-weight: 500;">🕒 {{ comment.date }}</small>
+              <button class="reply-btn" (click)="toggleReplyBox(comment)">
+                ↩️ Reply
+              </button>
+            </div>
+          </div>
 
-        <div *ngFor="let reply of comments[comment.id]" class="single-reply" style="margin-bottom: 12px;">
-          <img
-            [src]="reply.pictureUrl || 'assets/avatardefault.svg'"
-            class="reply-avatar"
-            alt="Replier Avatar"
-          />
-          <div style="flex: 1;">
-            <div class="reply-content">
-              <div style="margin-bottom: 6px;">
-                <strong style="color: #2C3552; font-weight: 600; font-size: 14px;">{{ reply.userName }}</strong>
-              </div>
-              <p style="margin: 0 0 6px 0; line-height: 1.4; color: #475569; font-size: 14px;">
-                {{ reply.content }}
-              </p>
-              <div style="display: flex; align-items: center; justify-content: space-between;">
-                <small style="color: #64748b; font-weight: 500; font-size: 12px;">
-                  🕒 {{ reply.date }}
-                </small>
-                <button
-                  class="reply-btn"
-                  (click)="toggleReplyBox(reply)"
-                  style="font-size: 12px;"
-                >
-                  ↩️ Reply
-                </button>
-              </div>
+          <!-- Reply Input for Comment -->
+          <div
+            *ngIf="activeReplyComment?.id === comment.id"
+            style="margin-top: 12px; padding: 16px; background: #f9fafb; border-radius: 8px; border: 1px solid #e2e8f0;"
+          >
+            <textarea
+              [(ngModel)]="replyText"
+              placeholder="✍️ Write your reply..."
+              rows="3"
+              class="reply-textarea"
+              style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; resize: vertical;"
+            ></textarea>
+            <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px;">
+              <button class="btn send primary" (click)="sendReply()">✈️ Send Reply</button>
+              <button class="btn toggle secondary" (click)="toggleReplyBox(comment)">❌ Cancel</button>
+            </div>
+          </div>
+
+          <!-- Replies List -->
+          <!-- Fixed: Use the separate replies array for each comment -->
+          <div *ngIf="(replies[comment.id] || []).length > 0" class="replies-list" style="margin-top: 12px;">
+            <div
+              style="margin-bottom: 8px; font-size: 14px; font-weight: 600; color: #64748b; display: flex; align-items: center; gap: 6px;"
+            >
+              <span>↩️</span>
+              <span>Replies ({{ replies[comment.id].length }})</span>
             </div>
 
-            <!-- Reply Input for Nested Reply -->
-            <div
-              *ngIf="activeReplyComment?.id === reply.id"
-              style="margin-top: 8px; padding: 12px; background: #f1f5f9; border-radius: 8px; border: 1px solid #e2e8f0;"
-            >
-              <textarea
-                [(ngModel)]="replyText"
-                placeholder="✍️ Write your reply..."
-                rows="2"
-                class="reply-textarea"
-                style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #cbd5e1; resize: vertical;"
-              ></textarea>
-              <div style="display: flex; justify-content: flex-end; gap: 6px; margin-top: 6px;">
-                <button class="btn send send primary" (click)="sendReply()">✈️ Send Reply</button>
-                <button class="btn toggle secondary" (click)="toggleReplyBox(reply)">❌ Cancel</button>
+            <div *ngFor="let reply of replies[comment.id]" class="single-reply" style="margin-bottom: 12px;">
+              <img
+                [src]="reply.pictureUrl || 'assets/avatardefault.svg'"
+                class="reply-avatar"
+                alt="Replier Avatar"
+              />
+              <div style="flex: 1;">
+                <div class="reply-content">
+                  <div style="margin-bottom: 6px;">
+                    <strong style="color: #2C3552; font-weight: 600; font-size: 14px;">{{ reply.userName }}</strong>
+                  </div>
+                  <p style="margin: 0 0 6px 0; line-height: 1.4; color: #475569; font-size: 14px;">
+                    {{ reply.content }}
+                  </p>
+                  <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <small style="color: #64748b; font-weight: 500; font-size: 12px;">
+                      🕒 {{ reply.date }}
+                    </small>
+
+                  </div>
+                </div>
+
+                <!-- Reply Input for Nested Reply -->
+                <!-- <div
+                  *ngIf="activeReplyComment?.id === reply.id"
+                  style="margin-top: 8px; padding: 12px; background: #f1f5f9; border-radius: 8px; border: 1px solid #e2e8f0;"
+                >
+                  <textarea
+                    [(ngModel)]="replyText"
+                    placeholder="✍️ Write your reply..."
+                    rows="2"
+                    class="reply-textarea"
+                    style="width: 100%; padding: 8px; border-radius: 6px; border: 1px solid #cbd5e1; resize: vertical;"
+                  ></textarea>
+                  <div style="display: flex; justify-content: flex-end; gap: 6px; margin-top: 6px;">
+                    <button class="btn send send primary" (click)="sendReply()">✈️ Send Reply</button>
+                    <button class="btn toggle secondary" (click)="toggleReplyBox(reply)">❌ Cancel</button>
+                  </div>
+                </div> -->
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</div>
 
     </div>
   </div>
@@ -292,3 +286,4 @@
     </button>
   </div>
 </div>
+

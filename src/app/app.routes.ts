@@ -33,6 +33,7 @@ import { CoachComponent } from './dashboard/coach/coach.component';
 import { GymDashComponent } from './dashboard/gym-dash/gym-dash.component';
 import { ShopDashComponent } from './dashboard/shop-dash/shop-dash.component';
 import { TrainingDashComponent } from './dashboard/training-dash/training-dash.component';
+import { ProductsComponent } from './products/Products/products.component';
 
 
 export const routes: Routes = [
@@ -63,6 +64,7 @@ export const routes: Routes = [
     {path: "shop",component : ShopComponent} ,
     {path: "shopDetails/:id", component: ShopDetailsComponent} ,
     {path :"posts" , component :PostsComponent} ,
+    {path :"Products" , component :ProductsComponent} ,
     {path: "dashboard", component: CoachDashboardComponent ,children:[
       {path: "profile", component: CoachComponent},
       {path: "gyms", component:GymDashComponent} ,

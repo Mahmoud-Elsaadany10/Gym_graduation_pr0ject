@@ -43,4 +43,24 @@ export class DashboardService {
     return this._http.post(`${environment.mainurl}/Post/AddShopPost`, formData);
   }
 
+  addProduct(productData :any , image:File):Observable<any>{
+   const formData = new FormData();
+
+    formData.append('Name', productData.name);
+    formData.append('Description', productData.description);
+    formData.append('Price', productData.price.toString());
+    formData.append('OfferPrice', productData.offerPrice.toString());
+    formData.append('Quantity', productData.quantity.toString());
+    formData.append('CategoriesName', productData.categoriesName);
+    formData.append('ShopId', productData.shopId.toString());
+
+    if (image) {
+      formData.append('Image', image);
+    }
+
+    return this._http.post<any>(`${environment.mainurl}/Product`,formData)
+
+
+  }
+
 }

@@ -22,17 +22,23 @@ export class ShopDashComponent implements OnInit {
   shopId: number = 0
   newPostContent: string = '';
   selectedImages: File[] = [];
+  isOpen = false;
+
+  ProductImage: File | null = null;
+  product: any = null;
+
 
   constructor(private _profileServer: ProfileService
         , private _dashboardService: DashboardService ,
         private _router: Router ,
       private modalService: NgbModal,
       private _sharedService: SharedService) {
-    // Initialization logic can go here
+
   }
 
   ngOnInit(): void {
     this.getShopDetails();
+
 
   }
 
@@ -44,6 +50,16 @@ export class ShopDashComponent implements OnInit {
         this.shopImage = res.data[0].pictureUrl
         this.shopId = res.data[0].shopId
         this.shopInfo = res.data[0];
+
+          this.product = {
+          name: '',
+          description: '',
+          price: 0,
+          offerPrice: 0,
+          quantity: 0,
+          categoriesName: '',
+          shopId: this.shopId
+          };
       },
       error: (err) => {
         console.error('Failed to load shop details:', err);
@@ -75,6 +91,7 @@ closeModal() {
   }
 
   submitPost() {
+
   this._dashboardService.addShopPost(this.newPostContent, this.selectedImages , this.shopId).subscribe({
     next: () => {
       this.closeModal();
@@ -98,6 +115,53 @@ closeModal() {
         console.error('Failed to delete gym:', err);
       }
     });
+  }
+
+
+  openModal() {
+    this.isOpen = true;
+    console.log(this.shopId)
+  }
+
+  close() {
+    this.isOpen = false;
+    this.resetForm();
+  }
+
+  onFile(event: any) {
+    this.ProductImage = event.target.files[0];
+  }
+
+    submitProduct() {
+    if (!this.ProductImage) {
+      alert("Please select an image.");
+      return;
+    }
+    console.log(this.product)
+
+    this._dashboardService.addProduct(this.product, this.ProductImage).subscribe({
+      next: (res) => {
+        this._sharedService.show("Product Added successfully" ,"light")
+
+        this.close();
+      },
+      error: (err) => {
+        console.error("❌ Error adding product:", err);
+      }
+    });
+  }
+
+  resetForm() {
+    this.product = {
+      name: '',
+      description: '',
+      price: 0,
+      offerPrice: 0,
+      quantity: 0,
+      categoriesName: '',
+      shopId: 0
+    };
+    this.ProductImage = null;
   }
 
 

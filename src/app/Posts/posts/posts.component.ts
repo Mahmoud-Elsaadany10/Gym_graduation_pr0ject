@@ -28,16 +28,14 @@ export class PostsComponent implements OnInit {
   showReactionsForPostId: number | null = null;
   selectedImages: File[] = [];
 
-comments: { [id: number]: Comment[] } = {}; // holds both top-level comments and replies
-oneComment: GetCommentByIdResponse | null = null;
+
+  comments: { [postId: number]: Comment[] } = {};
+  replies: { [commentId: number]: Comment[] } = {};
 
   activeReplyCommentId: number | null = null;
   replyText: string = '';
   commentId: number  = 0;
   activeReplyComment: Comment | null = null;
-
-
-
 
   constructor(private postService: PostService) {}
 
@@ -82,13 +80,6 @@ loadPosts(page: number) {
   });
 }
 
-// @HostListener('window:scroll', [])
-// onScroll(): void {
-//   if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 200) {
-//     console.log('📜 Scrolled to bottom. Trying to load more posts...');
-//     this.loadPosts(this.currentPage);
-//   }
-// }
 
 onCreatePost() {
   // console.log('📝 Create post modal opened');
@@ -216,20 +207,10 @@ this.postService.getPostLikes(postId).subscribe({
     if (this.activeCommentPostId === post.id) {
       this.activeCommentPostId = null;
     } else {
-
       this.activeCommentPostId = post.id;
-
       this.getPostById(post.id);
-
     }
-
   }
-
-
-
-
-
-
 
   addComment(postId: number){
     const model ={
@@ -238,11 +219,9 @@ this.postService.getPostLikes(postId).subscribe({
     }
     this.postService.addComment(model).subscribe({
       next: () => {
-
         this.commentText = '';
-        this.activeCommentPostId = null;
-
-      this.getPostById(postId);
+        // Don't close the comment section, just reload the comments
+        this.getPostById(postId);
       },
       error: (err) => {
         console.error('❌ Error adding comment:', err);
@@ -254,10 +233,10 @@ getPostById(postId: number) {
   this.postService.getPostById(postId).subscribe({
     next: (res: PostResponse) => {
       if (res.isSuccess) {
-        // Top-level comments for the post
+        // Store top-level comments for the post
         this.comments[postId] = res.data.comments;
 
-        // For each comment, fetch replies
+        // For each comment, fetch replies and store them separately
         res.data.comments.forEach(comment => {
           this.getComments(comment.id);
         });
@@ -273,18 +252,15 @@ getPostById(postId: number) {
   });
 }
 
-
-
+// Fixed: Store replies separately from top-level comments
 getComments(commentId: number) {
   this.postService.getComments(commentId).subscribe({
     next: (res: GetCommentByIdResponse) => {
       if (res.isSuccess) {
-        // Optionally store the fetched comment details
-        this.oneComment = res;
-        console.log(res)
+        console.log('✅ Comments fetched for comment ID:', commentId, res);
 
-        // Convert the replies to the Comment interface shape
-        this.comments[commentId] = res.data.comments.map(reply => ({
+        // Store replies in the separate replies object
+        this.replies[commentId] = res.data.comments.map(reply => ({
           id: reply.id,
           userName: reply.userName,
           pictureUrl: reply.pictureUrl,
@@ -294,11 +270,11 @@ getComments(commentId: number) {
           comments: []
         }));
       } else {
-        this.comments[commentId] = [];
+        this.replies[commentId] = [];
       }
     },
     error: () => {
-      this.comments[commentId] = [];
+      this.replies[commentId] = [];
     }
   });
 }
@@ -330,7 +306,7 @@ sendReply() {
       console.log('✅ Reply added successfully.');
       this.replyText = '';
       this.activeReplyComment = null;
-      // You may reload replies if you wish:
+      // Reload replies for the comment
       console.log(`💬 Reloading replies for comment ${model.commentId}`);
       this.getComments(model.commentId);
     },
@@ -340,29 +316,16 @@ sendReply() {
   });
 }
 
-
-
   closeReplyModal() {
     this.activeReplyComment = null;
     this.replyText = '';
   }
 
-
-// toggleReplyBox(comment: any) {
-//   this.activeReplyCommentId =
-//     this.activeReplyCommentId === comment.id ? null : comment.id;
-//   this.replyText = '';
-// }
-
-
-
-
-
-
 toggleCommentBox(postId: number) {
   this.activeCommentPostId = this.activeCommentPostId === postId ? null : postId;
   console.log(`💭 Toggling comment input for post ${postId}`);
 }
+
 getReactionIcon(type: string): string {
   switch (type) {
     case 'NORMAL':
@@ -376,5 +339,5 @@ getReactionIcon(type: string): string {
   }
 }
 
-
 }
+

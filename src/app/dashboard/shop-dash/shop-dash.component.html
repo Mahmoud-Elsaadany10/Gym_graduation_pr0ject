@@ -2,11 +2,12 @@
   <div class="d-flex  flex-column responsive flex-sm-row justify-content-between align-items-start align-items-sm-center mb-4 gap-3">
     <h2 class="h4 mb-0 text-dark">{{shopInfo?.shopName}} Shop</h2>
     <div class="d-flex gap-3">
-      <button class="btn add d-flex align-items-center gap-2">
-        <i class="bi bi-plus-lg"></i> Add New Shop
-      </button>
+
       <button class="btn post d-flex align-items-center gap-2" (click)="onCreatePost()">
         <i class="bi bi-plus-lg"></i> Create Posts
+      </button>
+      <button class="btn post d-flex align-items-center gap-2" (click)="openModal()">
+        <i class="bi bi-plus-lg"></i> add Products
       </button>
     </div>
   </div>
@@ -80,3 +81,28 @@
     </div>
   </div>
 </div>
+
+
+<div class="modal-backdrop" *ngIf="isOpen">
+  <div class="modal-box">
+    <h2>Add Product</h2>
+
+    <form (ngSubmit)="submitProduct()" #productForm="ngForm">
+      <input type="text" [(ngModel)]="product.name" name="name" placeholder="Name" required />
+      <input type="text" [(ngModel)]="product.description" name="description" placeholder="Description" required />
+      <input type="number" [(ngModel)]="product.price" name="price" placeholder="Price" required />
+      <input type="number" [(ngModel)]="product.offerPrice" name="offerPrice" placeholder="Offer Price" />
+      <input type="number" [(ngModel)]="product.quantity" name="quantity" placeholder="Quantity" />
+      <input type="text" [(ngModel)]="product.categoriesName" name="categoriesName" placeholder="Category Name" />
+      <!-- <input type="number" [(ngModel)]="product.shopId" name="shopId" placeholder="Shop ID" /> -->
+
+      <input type="file" (change)="onFile($event)" accept="image/*" />
+
+      <div class="modal-actions">
+        <button type="submit" class="btn btn-success">✅ Submit</button>
+        <button type="button" class="btn btn-secondary" (click)="close()">❌ Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
