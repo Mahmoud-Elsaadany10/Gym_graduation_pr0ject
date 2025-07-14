@@ -65,6 +65,17 @@ export class DashboardService {
 
   getOnlinetrainingDetails(id : number):Observable<any>{
     return this._http.get(`${environment.mainurl}/OnlineTrainingSubscription/${id}`)
+  }
 
-}
+  getProductForOwner(id : number):Observable<any>{
+    return this._http.get(`${environment.mainurl}/Product/Products?ShopID=${id}`)
+  }
+
+  getShopOwner():Observable<any>{
+    return this._http.get(`${environment.mainurl}/Shop/ShopsOfOwner`)
+  }
+
+  deleteProduct(id:number):Observable<any>{
+    return this._http.delete(`${environment.mainurl}/Product/${id}`)
+  }
 }

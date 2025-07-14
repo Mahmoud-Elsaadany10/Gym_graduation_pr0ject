@@ -260,12 +260,23 @@ export interface Post {
   comments: Comment[];
   isLikedByYou?: boolean;
   likeType?: 'NORMAL' | 'LOVE' | 'CARE' | null;
+  sourceId ?:string
 }
 
 export interface PostResponse {
   isSuccess: boolean;
   data: PostData;
 }
+export interface Product {
+  id: number;
+  name: string;
+  description: string;
+  price: number;
+  offerPrice: number;
+  discount: number;
+  imagePath: string;
+}
+
 
 export interface PostData {
   coachId: string;

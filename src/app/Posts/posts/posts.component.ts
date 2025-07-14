@@ -4,6 +4,8 @@ import {  Post, PostResponse , Comment, GetCommentByIdResponse} from '../../Mode
 import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../../mainPage/navbar/navbar.component";
 import { FormsModule } from '@angular/forms';
+import { jwtDecode } from 'jwt-decode';
+import { SharedService } from '../../shared/services/shared.service';
 
 @Component({
   selector: 'app-posts',
@@ -37,10 +39,13 @@ export class PostsComponent implements OnInit {
   commentId: number  = 0;
   activeReplyComment: Comment | null = null;
 
-  constructor(private postService: PostService) {}
+  constructor(private postService: PostService ,
+    private _shared : SharedService
+  ) {}
 
 ngOnInit() {
   this.loadPosts(this.currentPage);
+  this.getId()
 }
 
 loadPosts(page: number) {
@@ -52,7 +57,6 @@ loadPosts(page: number) {
     next: (res: any) => {
       console.log('📡 الاستجابة من الـ API:', res);
 
-      // لو الاستجابة فيها مفتاح isSuccess = false، نوقف التحميل
       if (res?.isSuccess === false || !res?.data) {
         // console.warn('⚠️ الاستجابة غير ناجحة أو مفيش بيانات');
         this.noMorePosts = true;
@@ -80,9 +84,30 @@ loadPosts(page: number) {
   });
 }
 
+  getToken(): string | null {
+    return localStorage.getItem('token') || sessionStorage.getItem('token');
+  }
+
+  getId(){
+  const token = this.getToken()
+  if(token){
+    const decodedToken: any = jwtDecode(token);
+    const id = decodedToken["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
+    return id
+    }
+  }
+
+  deletePost(id :number){
+    this.postService.deletePost(id).subscribe({
+      next:() =>{
+        this._shared.show("deleted successfully","light")
+        window.location.reload();
+
+      }
+    })
+  }
 
 onCreatePost() {
-  // console.log('📝 Create post modal opened');
   this.isModalOpen = true;
 }
 
@@ -252,7 +277,7 @@ getPostById(postId: number) {
   });
 }
 
-// Fixed: Store replies separately from top-level comments
+
 getComments(commentId: number) {
   this.postService.getComments(commentId).subscribe({
     next: (res: GetCommentByIdResponse) => {

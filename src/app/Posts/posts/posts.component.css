@@ -485,7 +485,9 @@
   display: flex;
   justify-content: flex-end;
 }
-
+.trash{
+  border: none;
+}
 
 @media (max-width: 768px) {
   .post-card {

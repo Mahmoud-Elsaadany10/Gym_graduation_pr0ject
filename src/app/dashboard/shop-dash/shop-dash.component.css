@@ -111,4 +111,13 @@
   margin-top: 16px;
 }
 
+.buy-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
 

@@ -37,7 +37,6 @@
   </div>
 </div>
 
-<!-- Enhanced Posts List -->
 <div style="display: flex; flex-direction: column; align-items: center; padding: 0 24px;">
   <div *ngFor="let post of posts" class="post-card">
 
@@ -48,12 +47,15 @@
         <div class="user-name">{{ post.name }}</div>
         <div class="post-date">📅 {{ post.createdAt }}</div>
       </div>
+      <button *ngIf="getId() == post.sourceId" class="trash" (click)="deletePost(post.id)">
+        <i class="fa-solid fa-trash"></i>
+      </button>
     </div>
 
-    <!-- Enhanced Post Content -->
+
+
     <div class="post-content">{{ post.content }}</div>
 
-    <!-- Enhanced Post Image -->
     <img
       [src]="post.pictureUrls[0]"
       alt="Post Image"
@@ -61,7 +63,8 @@
       *ngIf="post.pictureUrls && post.pictureUrls.length > 0"
     >
 
-    <!-- Enhanced Top Reactions Display -->
+
+
     <hr class="reaction-divider" />
     <div
       class="top-reactions"

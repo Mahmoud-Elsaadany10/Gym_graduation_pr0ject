@@ -40,6 +40,36 @@
       </div>
     </div>
   </div>
+
+  <div *ngIf="products.length !== 0">
+      <div class="text-center my-4">
+    <h3>Your Products</h3>
+  </div>
+
+<div class="row gy-5 ">
+  <div class="col-md-6 col-lg-4" *ngFor="let product of products">
+    <div class="card h-100 shadow rounded-4">
+      <img [src]="product.imagePath" class="card-img-top rounded-top-4" alt="Product Image" style="height: 250px; object-fit: cover;" />
+      <div class="card-body">
+        <h5 class="card-title"><strong>Name:</strong>{{ product.name }}</h5>
+        <p class="card-text"><strong>description:</strong>{{ product.description }}</p>
+        <p class="card-text"><strong>Price:</strong>{{ product.price }}</p>
+        <p class="text-success fw-bold" *ngIf="product.discount > 0">
+          Discount: {{ product.discount }}%
+        </p>
+
+      <div class="d-flex justify-content-evenly align-items-center w-100 my-2">
+        <button class="buy-btn" (click)="deleteProduct(product.id)">delete</button>
+      </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+
+
 </div>
 
 <ng-template #deleteModal let-modal>
@@ -105,4 +135,3 @@
     </form>
   </div>
 </div>
-
