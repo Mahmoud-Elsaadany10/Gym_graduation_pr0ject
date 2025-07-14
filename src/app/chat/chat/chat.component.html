@@ -13,7 +13,7 @@
           routerLinkActive="active"
         >
           <img
-            [src]="contact.user.profilePictureUrl || 'https://via.placeholder.com/40'"
+            [src]="contact.user.profilePictureUrl || '/assets/avatardefault.svg'"
             alt="Profile"
             class="rounded-circle me-2"
             style="width: 40px; height: 40px"
@@ -70,10 +70,10 @@
         />
       </div>
 
-      <div *ngIf="!isConnected && !isLoading" class="text-center text-danger small mb-2">
+      <!-- <div *ngIf="!isConnected && !isLoading" class="text-center text-danger small mb-2">
         <i class="fa-solid fa-exclamation-circle me-1"></i>
         Disconnected from chat server. Trying to reconnect...
-      </div>
+      </div> -->
     </div>
   </div>
 </div>

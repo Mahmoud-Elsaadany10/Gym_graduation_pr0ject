@@ -30,7 +30,6 @@ loadContacts(): void {
     next: (res) => {
       this.contacts = res.data || [];
       this.dataLoaded = true;
-      console.log(res)
     },
     error: () => {
       this.dataLoaded = true;

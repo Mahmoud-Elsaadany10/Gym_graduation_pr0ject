@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RoutSignUpComponent } from "../../Registration/rout-sign-up/rout-sign-up.component";
 import { Router, RouterModule } from '@angular/router';
 import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
 import { SendDataService } from '../service/send-data.service';
 import { CommonModule } from '@angular/common';
 import { RegistrationService } from '../../Registration/service/registration.service';
+import { of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-training-info',
@@ -12,8 +13,9 @@ import { RegistrationService } from '../../Registration/service/registration.ser
   templateUrl: './training-info.component.html',
   styleUrl: './training-info.component.css'
 })
-export class TrainingInfoComponent {
+export class TrainingInfoComponent implements OnInit {
   OnlineTrainingForm!: FormGroup;
+  hasShop : boolean =false
 
   constructor(private router: Router, private fb: FormBuilder
     , private _send: SendDataService ,
@@ -26,6 +28,9 @@ export class TrainingInfoComponent {
       noOfSessionsPerWeek: ['', [Validators.required, Validators.min(1)]],
       durationOfSession :['', [Validators.required, Validators.min(1)]]
     });
+  }
+  ngOnInit(): void {
+
   }
 
   get trainingType() {
@@ -57,23 +62,32 @@ export class TrainingInfoComponent {
 
       const trainingData = { ...this.OnlineTrainingForm.value };
 
-      console.log(trainingData)
-      this._send.sendTrainingInfo(trainingData).subscribe({
-        next: (response) => {
-          if(response.coachID){
-            this.router.navigate(["/logging/shopInfo"]);
-          }
-
-        },
-        error: (err) => {
-          console.error("Error sending data:", err);
+      this._send.sendTrainingInfo(trainingData).pipe(
+    switchMap((response) => {
+      if (response.coachID) {
+        return this._check.getCoachBusiness();
+      } else {
+        this.router.navigate(["/layout/home"])
+        return of(null);
+      }
+    })
+      ).subscribe({
+        next :(featuresResponse)=>{
+            if(!featuresResponse?.data.hasShop){
+              this.router.navigate(["/logging/shopInfo"])
+            }else{
+              this.router.navigate(["/layout/home"]);
+            }
         }
-      });
+      })
     }
   }
+
   skipForNow(){
     this._check.getCoachBusiness().subscribe({
       next: (response) => {
+        this.hasShop =response.data.hasShop
+
         if(!response.data.hasShop){
           this.router.navigate(["/logging/shopInfo"]);
         }else{

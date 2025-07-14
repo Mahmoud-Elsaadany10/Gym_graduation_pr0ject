@@ -74,22 +74,18 @@
   }
 }
 .modal-content {
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.2);
 }
 
-.modal-header {
-  border-bottom: 1px solid #e5e5e5;
+.input-group-text {
+  background-color: #f8f9fa;
 }
 
-.modal-title {
-  font-weight: 600;
+textarea {
+  resize: vertical;
 }
 
-.form-label {
-  font-weight: 500;
-  margin-bottom: 4px;
-}
 
 .form-control,
 .form-select {

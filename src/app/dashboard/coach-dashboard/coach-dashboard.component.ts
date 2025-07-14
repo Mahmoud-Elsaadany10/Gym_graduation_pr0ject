@@ -3,6 +3,7 @@ import { RouterModule } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { NavbarComponent } from "../../mainPage/navbar/navbar.component";
 import { RegistrationService } from '../../Registration/service/registration.service';
+import { ProfileService } from '../../profile/service/profile.service';
 
 
 @Component({
@@ -12,14 +13,17 @@ import { RegistrationService } from '../../Registration/service/registration.ser
   styleUrl: './coach-dashboard.component.css'
 })
 export class CoachDashboardComponent implements OnInit{
-    hasGym: boolean = false;
+  hasGym: boolean = false;
   hasOnlineTraining: boolean = false;
   hasShop: boolean = false;
   isCoach: boolean = false;
+  coachImage : string | null = ""
 
   sidebarVisible = false;
   id : string | null = null;
-  constructor(private _check: RegistrationService) { }
+  constructor(private _check: RegistrationService ,
+    private _ProfileService : ProfileService
+  ) { }
 
   ngOnInit(): void {
     this.checkBusiness()
@@ -53,5 +57,21 @@ export class CoachDashboardComponent implements OnInit{
 
     });
   }
+    getCoachInfo() {
+    this._ProfileService.getCoachInfo().subscribe({
+      next: (coach) => {
+
+
+        this.coachImage = coach.profilePictureUrl
+          ? coach.profilePictureUrl + '?t=' + new Date().getTime()
+          : null;
+
+      },
+      error: (err) => {
+        console.error('Failed to load profile info:', err);
+      }
+    });
+  }
+
 
 }

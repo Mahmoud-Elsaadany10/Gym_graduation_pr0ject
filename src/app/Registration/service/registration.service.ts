@@ -27,6 +27,7 @@ export class RegistrationService {
     if (localStorage.getItem('token') || sessionStorage.getItem("token")) {
       this.saveUser();
     }
+    this.getCoachBusiness()
   }
 
   signupTrainee(tarinee :User):Observable<ApiResponse>{

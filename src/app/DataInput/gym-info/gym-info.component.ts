@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { SendDataService } from '../service/send-data.service';
 import { FooterComponent } from "../../shared/footer/footer.component";
 import { RegistrationService } from '../../Registration/service/registration.service';
+import { switchMap, of } from 'rxjs';
 
 @Component({
   selector: 'app-gym-info',
@@ -75,12 +76,30 @@ export class GymInfoComponent {
   }
   sendData(){
     const gymModel ={...this.GymInfo.value}
-    this._send.sendGymData(gymModel).subscribe({
-      next :(reponse)=>{
-        this.router.navigate(["/logging/traningInfo"])
-      }
-    })
+    this._send.sendGymData(gymModel).pipe(
+          switchMap((response) => {
+            if (response.isSuccess) {
+              return this._check.getCoachBusiness();
+            } else {
+              this.router.navigate(["/layout/home"])
+              return of(null);
+
+            }
+          })
+            ).subscribe({
+              next :(featuresResponse)=>{
+                  if(featuresResponse?.data.hasShop && !featuresResponse.data.hasOnlineTrainng ){
+                    this.router.navigate(["/logging/traningInfo"])
+                  }else if(featuresResponse?.data.hasOnlineTrainng && !featuresResponse.data.hasShop){
+                    this.router.navigate(["/logging/shopInfo"]);
+                  }else{
+                    this.router.navigate(["/layout/home"])
+                  }
+              }
+            })
+
   }
+
     skipForNow(){
     this._check.getCoachBusiness().subscribe({
       next: (response) => {
