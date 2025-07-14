@@ -16,28 +16,58 @@
   <div class="filters d-flex justify-content-center mb-4 flex-wrap gap-3">
     <div class="filter-box">
       <label>Sort</label>
-      <select [(ngModel)]="filters.sort">
-        <option value="">None</option>
-        <option value="desc">Price Descending</option>
-        <option value="asc">Price Ascending</option>
-        <option value="discount">Biggest Discount</option>
+    <select class="form-select w-100" [(ngModel)]="selectedFilter" (change)="onFilterChange()">
+      <option [ngValue]="null" disabled selected>Sort by</option>
+      <option *ngFor="let option of filterOptions" [ngValue]="option.value">
+        {{ option.label }}
+      </option>
+
       </select>
     </div>
   </div>
 
-  <!-- Product Cards Grid -->
+
   <div class="product-grid-container">
     <div class="product-card" *ngFor="let product of products">
       <div class="image-wrapper">
         <img [src]="product.imagePath" alt="product image" />
       </div>
       <div class="Prodcut-details d-flex align-items-center flex-column">
-        <p class="product"> <span class="clr">Name</span>  : {{ product.name }}</p>
-        <p class="product "> <span class="clr">Price</span> : {{ product.price }} L.E</p>
-        <p class="product "> <span class="clr">Description</span> : {{ product.description }} </p>
+        <p class="product  pb-2"> <span class="clr">Name</span>  : {{ product.name }}</p>
+        <p class="product pb-2 "> <span class="clr">Price</span> : {{ product.price }} L.E</p>
+        <p class="product  pb-2 "> <span class="clr">Description</span> : {{ product.description }} </p>
       </div>
 
-      <button class="buy-btn">Buy Now</button>
+      <div class="d-flex justify-content-evenly align-items-center w-100 my-2">
+        <button class="buy-btn">Buy Now</button>
+        <button class="buy-btn" (click)="openVerticallyCentered(content);getProductBy(product.id)">
+        Details
+        </button>
+      </div>
+
     </div>
   </div>
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title">{{ product.name }}</h5>
+  </div>
+
+  <div class="modal-body text-center">
+    <img [src]="product.imagePath" class="img-fluid mb-3" style="max-height: 200px;" alt="Product Image" />
+    <p><strong>Description:</strong> {{ product.description }}</p>
+    <p><strong>Price:</strong> {{ product.price }} L.E</p>
+    <div class="d-flex align-items-center justify-content-center mt-3">
+      <img [src]="product.shopImage" class="rounded-circle me-2" style="width: 40px; height: 40px;" alt="Shop" />
+      <span><strong>Shop:</strong> {{ product.shopName }}</span>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button class="btn btn-secondary" (click)="modal.close()">Close</button>
+  </div>
+</ng-template>
+
+
+
 </div>

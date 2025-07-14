@@ -157,6 +157,14 @@ onSubmit() {
     });
   }
 
+  getDetailsOfSubsriber(id:number){
+    this._dashboardService.getOnlinetrainingDetails(id).subscribe({
+      next :(res)=>{
+        console.log(res)
+      }
+    })
+  }
+
 
 
 }

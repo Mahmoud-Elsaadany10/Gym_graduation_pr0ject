@@ -7,30 +7,39 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class ProductService {
-  private baseUrl = `${environment.mainurl}/Product/Products`;
+
 
   constructor(private http: HttpClient) {}
 
-  getProducts(filters: {
-    PageNumber?: number;
-    PageSize?: number;
-    Name?: string;
-    MinimumPrice?: number;
-    MaximumPrice?: number;
-    ShopID?: number;
-    CategoryID?: number;
-    SearchByBiggetDiscount?: boolean;
-    SearchByPriceDescending?: boolean;
-    SearchByPriceAscending?: boolean;
-  }): Observable<any> {
-    let params = new HttpParams();
+  // getProducts(filters: {
+  //   PageNumber?: number;
+  //   PageSize?: number;
+  //   Name?: string;
+  //   MinimumPrice?: number;
+  //   MaximumPrice?: number;
+  //   ShopID?: number;
+  //   CategoryID?: number;
+  //   SearchByBiggetDiscount?: boolean;
+  //   SearchByPriceDescending?: boolean;
+  //   SearchByPriceAscending?: boolean;
+  // }): Observable<any> {
+  //   let params = new HttpParams();
 
-    Object.entries(filters).forEach(([key, value]) => {
-      if (value !== undefined && value !== null && value !== '') {
-        params = params.set(key, value);
-      }
-    });
+  //   Object.entries(filters).forEach(([key, value]) => {
+  //     if (value !== undefined && value !== null && value !== '') {
+  //       params = params.set(key, value);
+  //     }
+  //   });
 
-    return this.http.get<any>(this.baseUrl, { params });
+  //   return this.http.get<any>(this.baseUrl, { params });
+  // }
+
+  getProducts(filters: { [key: string]: boolean }) {
+    const params = new HttpParams({ fromObject: filters });
+    return this.http.get(`${environment.mainurl}/Product/Products`, { params });
+  }
+
+  getProductById(id :number):Observable<any>{
+    return this.http.get(`${environment.mainurl}/Product/${id}`);
   }
 }

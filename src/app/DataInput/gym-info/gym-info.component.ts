@@ -100,12 +100,19 @@ export class GymInfoComponent {
 
   }
 
-    skipForNow(){
+  skipForNow(){
     this._check.getCoachBusiness().subscribe({
       next: (response) => {
-        if(!response.data.hasOnlineTrainng && response.data.hasShop){
+        if(!response.data.hasOnlineTrainng && !response.data.hasShop ){
           this.router.navigate(["/logging/traningInfo"]);
-        }else if(!response.data.hasShop && response.data.hasOnlineTrainng){
+        }
+        else if(!response.data.hasOnlineTrainng && response.data.hasShop && !response.data.hasGym){
+          this.router.navigate(["/logging/traningInfo"]);
+        }
+        else if(response.data.hasOnlineTrainng && !response.data.hasShop && !response.data.hasGym){
+          this.router.navigate(["/logging/shopInfo"]);
+        }
+        else if(response.data.hasOnlineTrainng && !response.data.hasShop && response.data.hasGym){
           this.router.navigate(["/logging/shopInfo"]);
         }
         else{

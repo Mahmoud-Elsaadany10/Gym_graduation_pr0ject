@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
 import { NavbarComponent } from '../../mainPage/navbar/navbar.component';
 import { ProductService } from '../sevice/product.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-products',
@@ -21,47 +22,50 @@ export class ProductsComponent implements OnInit {
     maxPrice: '',
     sort: ''
   };
+  selectedFilter: any = null;
+  product : any ={}
 
-  constructor(private productService: ProductService) {}
+
+  filterOptions = [
+    { label: 'All Products', value: 'all' },
+    { label: 'Biggest Discount', value: { SearchByBiggetDiscount: true } },
+    { label: 'Price Descending', value: { SearchByPriceDescending: true } },
+    { label: 'Price Ascending', value: { SearchByPriceAscending: true } }
+  ];
+
+  constructor(private productService: ProductService ,
+    private modalService: NgbModal
+  ) {}
 
   ngOnInit(): void {
     this.getProducts();
-    // this.getCategories(); // فعليها لو عندك API للفئات
   }
 
-  getProducts(): void {
-    const params: any = {
-      PageNumber: 1,
-      PageSize: 10,
-    };
 
-    if (this.filters.name) params.Name = this.filters.name;
-    if (this.filters.categoryId) params.CategoryID = this.filters.categoryId;
-    if (this.filters.minPrice) params.MinimumPrice = this.filters.minPrice;
-    if (this.filters.maxPrice) params.MaximumPrice = this.filters.maxPrice;
 
-    if (this.filters.sort === 'desc') params.SearchByPriceDescending = true;
-    else if (this.filters.sort === 'asc') params.SearchByPriceAscending = true;
-    else if (this.filters.sort === 'discount') params.SearchByBiggetDiscount = true;
+    getProducts(filters: any = {}) {
+    this.productService.getProducts(filters).subscribe((res: any) => {
+      this.products = res.data || res;
 
-    this.productService.getProducts(params).subscribe({
-    next: (res) => {
-      console.log('✅ API Response:', res); // هنا بتطبع كل الريسبونس
-      if (res?.isSuccess) {
-        this.products = res.data;
-        console.log('✅ Products Loaded:', this.products); // هنا بتطبع المنتجات بس
-      } else {
-        console.warn('⚠️ API returned isSuccess = false');
-      }
-    },
-    error: (err) => {
-      console.error('❌ Error fetching products:', err);
-    }
-  });
+    });
+}
+  onFilterChange() {
+    this.getProducts(this.selectedFilter);
   }
 
   clearName() {
-    this.filters.name = '';
-    this.getProducts();
+  this.filters.name = '';
+  this.getProducts();
   }
+
+  getProductBy(id :number){
+    this.productService.getProductById(id).subscribe((res: any) => {
+      this.product = res.data
+      console.log(res)
+    })
+  }
+
+  openVerticallyCentered(content: TemplateRef<any>) {
+		this.modalService.open(content, { centered: true });
+	}
 }

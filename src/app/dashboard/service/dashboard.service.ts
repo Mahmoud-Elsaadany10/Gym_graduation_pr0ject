@@ -63,4 +63,8 @@ export class DashboardService {
 
   }
 
+  getOnlinetrainingDetails(id : number):Observable<any>{
+    return this._http.get(`${environment.mainurl}/OnlineTrainingSubscription/${id}`)
+
+}
 }
