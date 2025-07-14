@@ -235,6 +235,10 @@ googleLogin(payload: GoogleAuthTokens): Observable<any> {
               return;
             }
 
+            // this.router.navigate(['/layout/home']);
+
+
+
             this.hasGym = featuresResponse.data.hasGym;
             this.hasOnlineTrainng = featuresResponse.data.hasOnlineTrainng;
             this.hasShop = featuresResponse.data.hasShop;
@@ -244,6 +248,7 @@ googleLogin(payload: GoogleAuthTokens): Observable<any> {
             const routeMap: Record<string, string> = {
               '000': '/logging/gymInfo',
               '001': '/logging/gymInfo',
+              '011': '/logging/gymInfo',
               '010': '/logging/gymInfo',
               '100': '/logging/traningInfo',
               '101': '/logging/traningInfo',
