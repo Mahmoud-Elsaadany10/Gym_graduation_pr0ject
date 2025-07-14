@@ -2,7 +2,7 @@
 
 <!-- Enhanced Create Post Section -->
 <div style="display: flex; justify-content: center; padding: 24px; margin-top: 20px;">
-  <div style="width: 80%; max-width: 800px; display: flex; justify-content: flex-end;">
+  <div class="create-post">
     <button (click)="onCreatePost()" class="create-post-btn">
       ✨ Create a post
     </button>
@@ -142,15 +142,15 @@
 
     <!-- Enhanced Comment Input Section -->
     <div *ngIf="activeCommentPostId === post.id" class="comment-box">
-      <div class="d-flex  w-100 gap-2 align-items-center">
+      <div class="d-flex reponsive w-100 gap-2 align-items-center">
       <input
         type="text"
         placeholder="💭 Share your thoughts..."
         [(ngModel)]="commentText"
-        class="comment-input"
+        class="comment-in comment-input"
       />
       <button class="send-comment-btn" (click)="addComment(post.id)">
-        ✈️ Send
+        Send
       </button>
       </div>
 
@@ -177,9 +177,9 @@
             </div>
             <p style="margin: 0 0 8px 0; line-height: 1.5; color: #475569;">{{ comment.content }}</p>
             <div style="display: flex; align-items: center; justify-content: space-between;">
-              <small style="color: #64748b; font-weight: 500;">🕒 {{ comment.date }}</small>
+              <small style="color: #64748b; font-weight: 500;"> {{ comment.date }}</small>
               <button class="reply-btn" (click)="toggleReplyBox(comment)">
-                ↩️ Reply
+                 Reply
               </button>
             </div>
           </div>
@@ -197,8 +197,8 @@
               style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #cbd5e1; resize: vertical;"
             ></textarea>
             <div style="display: flex; justify-content: flex-end; gap: 8px; margin-top: 8px;">
-              <button class="btn send primary" (click)="sendReply()">✈️ Send Reply</button>
-              <button class="btn toggle secondary" (click)="toggleReplyBox(comment)">❌ Cancel</button>
+              <button class="btn send primary" (click)="sendReply()">Send </button>
+              <button class="btn toggle secondary" (click)="toggleReplyBox(comment)">Cancel</button>
             </div>
           </div>
 
@@ -260,9 +260,7 @@
 
     </div>
   </div>
-</div>
-
-<!-- Enhanced Reactions Modal -->
+  <!-- Enhanced Reactions Modal -->
 <div *ngIf="isReactionsModalOpen" class="modal-overlay">
   <div class="modal-box reactions-modal">
     <h3 style="margin-top: 0; margin-bottom: 24px; font-size: 1.5rem; font-weight: 700; color: #2C3552; text-align: center; display: flex; align-items: center; justify-content: center; gap: 8px;">
@@ -286,4 +284,7 @@
     </button>
   </div>
 </div>
+</div>
+
+
 

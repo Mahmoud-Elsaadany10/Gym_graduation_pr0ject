@@ -137,7 +137,8 @@ input[type="date"]::-moz-calendar-picker-indicator {
 }
 
 input[type="date"] ,
-input::placeholder
+input::placeholder,
+.sel
 {
   color: var(--color-third);
 }

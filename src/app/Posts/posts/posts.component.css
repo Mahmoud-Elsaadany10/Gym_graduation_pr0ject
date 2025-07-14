@@ -479,7 +479,12 @@
   color: #475569;
   transition: all 0.3s ease;
 }
-
+.create-post{
+  width: 80%;
+  max-width: 800px;
+  display: flex;
+  justify-content: flex-end;
+}
 
 
 @media (max-width: 768px) {
@@ -487,6 +492,12 @@
     width: 95%;
     padding: 1.5rem;
     border-radius: 16px;
+  }
+  .create-post{
+    width: fit-content;
+  }
+  .modal-box{
+    width: 77% !important;
   }
 
   .modal-box {
@@ -500,4 +511,92 @@
     margin-left: 20px;
     padding-left: 0.75rem;
   }
+
+  .comment-box {
+    padding: 0.75rem;
+  }
+
+  .comment-input {
+    font-size: 13px;
+    padding: 0.6rem 0.8rem;
+    border-radius: 20px;
+  }
+
+  .send-comment-btn {
+    padding: 0.6rem 1rem;
+    font-size: 13px;
+  }
+
+  .comments-list {
+    padding: 1rem;
+  }
+
+  .single-comment {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0.75rem;
+  }
+
+  .comment-avatar {
+    width: 36px;
+    height: 36px;
+  }
+
+  .comment-content {
+    padding: 0.75rem 1rem;
+  }
+
+  .reply-btn {
+    font-size: 13px;
+    padding: 0.4rem 0.8rem;
+  }
+
+  .replies-list {
+    margin-left: 0;
+    padding-left: 0;
+    margin-top: 1rem;
+  }
+
+  .single-reply {
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.6rem;
+  }
+
+  .reply-avatar {
+    width: 28px;
+    height: 28px;
+  }
+
+  .reply-content {
+    padding: 0.6rem 0.8rem;
+  }
+
+  .reply-content p,
+  .reply-content small {
+    font-size: 13px;
+  }
+
+  .reply-content strong {
+    font-size: 13.5px;
+  }
+
+  .reply-textarea {
+    font-size: 13px;
+    padding: 0.6rem;
+  }
+
+  .btn.send,
+  .btn.toggle {
+    font-size: 12px;
+    padding: 0.4rem 0.75rem;
+  }
+
+  .replies-list > div:first-child {
+    font-size: 13.5px;
+  }
+  .comment-in,.reponsive{
+    width: 100%;
+  }
 }
+
