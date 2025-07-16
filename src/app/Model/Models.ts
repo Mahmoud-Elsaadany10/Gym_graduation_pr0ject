@@ -304,6 +304,7 @@ export interface Comment {
   likesDetails: LikesDetails | null;
   comments: Comment[];
   haveComments?: boolean;
+  userId ?: string
 }
 
 export interface ShopDetailes {

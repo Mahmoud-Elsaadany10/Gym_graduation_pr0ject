@@ -175,12 +175,16 @@
         />
         <div style="flex: 1;">
           <div class="comment-content">
-            <div style="margin-bottom: 8px;">
+            <div class="mb-1 d-flex justify-content-between">
               <strong style="color: #2C3552; font-weight: 700;">{{ comment.userName }}</strong>
+              <button *ngIf="comment.userId == getId()"  class="trash" (click)="deleteComment(comment.id)">
+                <i class="fa-solid fa-trash"></i>
+              </button>
             </div>
             <p style="margin: 0 0 8px 0; line-height: 1.5; color: #475569;">{{ comment.content }}</p>
             <div style="display: flex; align-items: center; justify-content: space-between;">
               <small style="color: #64748b; font-weight: 500;"> {{ comment.date }}</small>
+
               <button class="reply-btn" (click)="toggleReplyBox(comment)">
                  Reply
               </button>

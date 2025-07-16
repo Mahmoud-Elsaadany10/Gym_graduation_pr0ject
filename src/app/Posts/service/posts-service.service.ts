@@ -68,6 +68,10 @@ deleteLike(postId: number) {
     return this.http.delete(`${environment.mainurl}/Post/DeletePost/${id}`)
   }
 
+  deleteComment(id :number):Observable<any>{
+    return this.http.delete(`${environment.mainurl}/Post/DeleteComment/${id}`)
+  }
+
 
 
 

@@ -102,7 +102,14 @@ loadPosts(page: number) {
       next:() =>{
         this._shared.show("deleted successfully","light")
         window.location.reload();
-
+      }
+    })
+  }
+  deleteComment(id :number){
+    this.postService.deleteComment(id).subscribe({
+      next:() =>{
+        this._shared.show("deleted successfully","light")
+      this.activeCommentPostId = null;
       }
     })
   }
@@ -131,7 +138,8 @@ submitPost() {
       this.closeModal();
       this.posts = [];
       this.currentPage = 1;
-      this.noMorePosts = false;
+      this.noMorePosts = true
+
       this.loadPosts(this.currentPage);
     },
     error: (err) => {
