@@ -131,22 +131,27 @@ closeModal() {
 }
 
 submitPost() {
-
   this.postService.addPost(this.newPostContent, this.selectedImages).subscribe({
     next: () => {
-
       this.closeModal();
-      this.posts = [];
-      this.currentPage = 1;
-      this.noMorePosts = true
+      this.newPostContent = '';
+      this.selectedImages = [];
+      this.noMorePosts = false;
 
-      this.loadPosts(this.currentPage);
+      this.postService.getPostsByPage(1).subscribe({
+        next: (res: any) => {
+          if (res?.data) {
+            this.posts.unshift(...res.data); // ضيف البوستات الجديدة فوق
+          }
+        }
+      });
     },
     error: (err) => {
       console.error('❌ Error adding post:', err);
     }
   });
 }
+
 
 
 toggleLike(post: Post, reactionType: 'NORMAL' | 'LOVE' | 'CARE') {
