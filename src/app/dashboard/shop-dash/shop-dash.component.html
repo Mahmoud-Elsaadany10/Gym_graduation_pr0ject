@@ -51,16 +51,18 @@
     <div class="card h-100 shadow rounded-4">
       <img [src]="product.imagePath" class="card-img-top rounded-top-4" alt="Product Image" style="height: 250px; object-fit: cover;" />
       <div class="card-body">
-        <h5 class="card-title"><strong>Name:</strong>{{ product.name }}</h5>
-        <p class="card-text"><strong>description:</strong>{{ product.description }}</p>
-        <p class="card-text"><strong>Price:</strong>{{ product.price }}</p>
+        <h5 class="card-title mb-2"><strong>Name :</strong>{{ product.name }}</h5>
+        <p class="card-text mb-2"><strong>description :</strong>{{ product.description }}</p>
+        <p class="card-text"><strong>Price :</strong>{{ product.price }}</p>
         <p class="text-success fw-bold" *ngIf="product.discount > 0">
           Discount: {{ product.discount }}%
         </p>
 
       <div class="d-flex justify-content-evenly align-items-center w-100 my-2">
-        <button class="buy-btn" (click)="deleteProduct(product.id)">delete</button>
+        <button class="buy-btn edit-btn " (click)="editProduct(product)">Edit</button>
+        <button class="buy-btn delete-btn" (click)="deleteProduct(product.id)">delete</button>
       </div>
+
 
       </div>
     </div>
@@ -117,21 +119,47 @@
   <div class="modal-box">
     <h2>Add Product</h2>
 
+
     <form (ngSubmit)="submitProduct()" #productForm="ngForm">
       <input type="text" [(ngModel)]="product.name" name="name" placeholder="Name" required />
       <input type="text" [(ngModel)]="product.description" name="description" placeholder="Description" required />
       <input type="number" [(ngModel)]="product.price" name="price" placeholder="Price" required />
       <input type="number" [(ngModel)]="product.offerPrice" name="offerPrice" placeholder="Offer Price" />
-      <input type="number" [(ngModel)]="product.quantity" name="quantity" placeholder="Quantity" />
-      <input type="text" [(ngModel)]="product.categoriesName" name="categoriesName" placeholder="Category Name" />
-      <!-- <input type="number" [(ngModel)]="product.shopId" name="shopId" placeholder="Shop ID" /> -->
+      <input type="number" [(ngModel)]="product.quantity" name="quantity" required="dd" placeholder="Quantity" />
+      <input type="text" [(ngModel)]="product.categoriesName" name="categoriesName" required  placeholder="Category Name" />
+
 
       <input type="file" (change)="onFile($event)" accept="image/*" />
 
       <div class="modal-actions">
-        <button type="submit" class="btn btn-success">✅ Submit</button>
-        <button type="button" class="btn btn-secondary" (click)="close()">❌ Cancel</button>
+        <button type="submit" class="btn btn-success">Submit</button>
+        <button type="button" class="btn btn-secondary" (click)="close()">Cancel</button>
       </div>
     </form>
+
+  </div>
+
+
+
+</div>
+
+<div class="modal-backdrop" *ngIf="isUpdateModalOpen">
+  <div class="modal-box">
+    <h2>Update Product</h2>
+
+    <form (ngSubmit)="updateProduct()" #updateForm="ngForm">
+      <input type="text" [(ngModel)]="updateProductData.name" name="name" placeholder="Name" required />
+      <input type="text" [(ngModel)]="updateProductData.description" name="description" placeholder="Description" required />
+      <input type="number" [(ngModel)]="updateProductData.price" name="price" placeholder="Price" required />
+      <input type="number" [(ngModel)]="updateProductData.offerPrice" name="offerPrice" placeholder="Offer Price" />
+      <input type="number" [(ngModel)]="updateProductData.quantity" name="quantity" placeholder="Quantity" required />
+      <input type="text" [(ngModel)]="updateProductData.categoriesName" name="categoriesName" placeholder="Category Name" required />
+
+      <div class="modal-actions">
+        <button type="submit" class="btn btn-warning">Update</button>
+        <button type="button" class="btn btn-secondary" (click)="closeUpdateModal()">Cancel</button>
+      </div>
+    </form>
+
   </div>
 </div>

@@ -30,6 +30,7 @@ export class GymDetailsComponent implements OnInit {
   monthlyPrice:number=0;
   yearlyPrice:number=0;
   sessionPrice:number=0;
+  coachID : string =""
   gymId : number = 0
 
   averageRating: number = 0;
@@ -128,7 +129,9 @@ private _Check: RegistrationService,
           this.monthlyPrice=data.monthlyPrice;
           this.sessionPrice=data.sessionPrice;
           this.yearlyPrice=data.yearlyPrice
+          this.coachID = data.coachID
           this.gymImage = data.pictureUrl
+
           this.coachImage =data.coachProfilePictureUrl
           console.log(data);
         },

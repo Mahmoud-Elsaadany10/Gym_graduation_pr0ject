@@ -35,7 +35,6 @@
         <div *ngFor="let msg of messages" class="mb-3">
           <!-- Incoming -->
           <div *ngIf="msg.senderId !== senderId" class="d-flex justify-content-start">
-            <img src="https://via.placeholder.com/40" class="rounded-circle me-2" />
             <div>
               <div class="p-2 bg-light-purple rounded-3">{{ msg.content }}</div>
               <small class="text-muted">{{ msg.timeStamp | date: 'shortTime' }}</small>

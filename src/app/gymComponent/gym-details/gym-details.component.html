@@ -2,7 +2,7 @@
 <section class="hero-section"
   [ngStyle]="{'background-image': 'url(' + (gymImage || '/assets/gym.jpg') + ')'}">
   <div class="action-buttons">
-    <button class="custom-btn">
+    <button class="custom-btn" [routerLink]="['/layout/chat', coachID]">
       <i class="fas fa-comment-alt"></i> Chat
     </button>
     <button class="custom-btn" *ngIf="!followed" (click)="follow()">

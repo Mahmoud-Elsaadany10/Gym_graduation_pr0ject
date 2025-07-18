@@ -62,6 +62,12 @@ export class DashboardService {
 
 
   }
+  updateProduct(productData :any , id :number ):Observable<any>{
+
+    return this._http.put<any>(`${environment.mainurl}/Product/UpdateDetails/${id}`,productData)
+
+
+  }
 
   getOnlinetrainingDetails(id : number):Observable<any>{
     return this._http.get(`${environment.mainurl}/OnlineTrainingSubscription/${id}`)

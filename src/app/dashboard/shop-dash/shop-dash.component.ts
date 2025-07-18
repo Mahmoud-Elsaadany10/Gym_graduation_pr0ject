@@ -28,6 +28,9 @@ export class ShopDashComponent implements OnInit {
   ProductImage: File | null = null;
   product: any = null;
   products : Product[]=[]
+  isUpdateModalOpen = false;
+  updateProductData: any = {};
+  currentProductId: number | null = null;
 
 
   constructor(private _profileServer: ProfileService
@@ -72,6 +75,8 @@ this._dashboardService.getShopOwner().pipe(
       }
     })
   }
+
+
 
     getShopDetails() {
     this._profileServer.getShopInfo().subscribe({
@@ -153,7 +158,6 @@ closeModal() {
 
   openModal() {
     this.isOpen = true;
-    console.log(this.shopId)
   }
 
   close() {
@@ -175,6 +179,7 @@ closeModal() {
     this._dashboardService.addProduct(this.product, this.ProductImage).subscribe({
       next: (res) => {
         this._sharedService.show("Product Added successfully" ,"light")
+        this.getProductDetails()
 
         this.close();
       },
@@ -183,6 +188,30 @@ closeModal() {
       }
     });
   }
+
+updateProduct() {
+  if (this.currentProductId) {
+    this._dashboardService.updateProduct(this.updateProductData, this.currentProductId).subscribe({
+      next: () => {
+        this._sharedService.show(' Product updated successfully', 'light');
+        this.closeUpdateModal();
+        this.getProductDetails();
+      }
+    });
+  }
+}
+
+  editProduct(product: any) {
+  this.isUpdateModalOpen = true;
+  this.currentProductId = product.id;
+  this.updateProductData = { ...product };
+}
+
+closeUpdateModal() {
+  this.isUpdateModalOpen = false;
+  this.updateProductData = {};
+  this.currentProductId = null;
+}
 
   resetForm() {
     this.product = {
